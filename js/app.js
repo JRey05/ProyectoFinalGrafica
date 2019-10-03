@@ -20,6 +20,7 @@ var parsedOBJ = null; //Parsed OBJ file
 
 var axis;	//Objeto auxiliar "Ejes"
 var camera = null;
+var camera2 = null;
 
 // Locaciones de datos de los shaders.
 // var loc_pos;
@@ -47,7 +48,7 @@ var request;
 /**
 *	Define y carga los objetos, especificando la locación de la posición de sus vértices.
 	*/
-function loadObjects(loc_pos) {
+	function loadObjects(loc_pos) {
 	let table_y = 0.5;
 	let table_scale = 0.007;
 	let rotors_distance = 0.00001;
@@ -102,9 +103,9 @@ function loadObjects(loc_pos) {
 	rotors2_translation = vec3.fromValues(drone2_x, drone2_translation[1] + rotors_distance, drone2_z); //TODO ídem.
 	transformations.push([rotors2_scaling, rotors2_rotation, rotors2_translation]);
 	// transformations.set('rotors2', [rotors2_scaling, rotors2_rotation, rotors2_translation]); FIXME Mapeo.
-}
-
-/**
+	}
+	
+	/**
 *	Realiza las transformaciones de modelado y posicionamiento, es decir transforma las coordenadas del objecto a coordenadas del mundo.
 	*/
 //function setObjTransformations(k) { FIXME Mapeo.
@@ -148,6 +149,7 @@ function setObjTransformations(i) {
 	// model_mats.set(k, model_mat);
 	// objects.get(k)._model_mat = model_mat;
 }
+
 
 function onLoad() {
 	canvas = document.getElementById('canvas');
@@ -204,6 +206,8 @@ function onLoad() {
 	axis = new Axis();
 	axis.load();
 	camera = new FreeCamera(55, canvas.clientWidth/canvas.clientHeight);
+	// Create the camera using canvas dimension
+	camera2 = new SphericalCamera(55, canvas.clientWidth/canvas.clientHeight);
 
 	if (isAnimated) {
 		request = requestAnimationFrame(onRender);

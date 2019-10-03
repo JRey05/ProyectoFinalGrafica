@@ -12,6 +12,7 @@
 	<script src="common/primitives/Axis.js"></script>
 	<script src="common/cameras/Camera.js"></script>
 	<script src="common/cameras/FreeCamera.js"></script>
+	<script src="common/cameras/SphericalCamera.js"></script>
 	<script src="files/shaders/vertex.glsl"></script>
 	<script src="files/shaders/fragment.glsl"></script>
 	<script src="js/app.js"></script>
@@ -112,6 +113,14 @@
 			<td>Rotors Rotation on Y</td>
 			<td>0º&le;<input type="range" min="1" max="360" step="1" value="0" oninput="onSliderRotation(this, 'lbl_rotation_y');">&le;360º</td>
 			<td id='lbl_rotation_y'>0</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="btn btn-success" type="button" id="camaraManual" onclick="camaraManual()" onkeypress="onKeyDown(event);">Cámara manual</button>
+				<button class="btn btn-success" type="button" id="camaraAutomatica" onclick="camaraAutomatica();">Cámara automática
+				 <span class="glyphicon glyphicon-arrow-up"></span>
+				</button>
+			</td>
 		</tr>
 	</table>
 

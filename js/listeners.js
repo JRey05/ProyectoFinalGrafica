@@ -98,6 +98,62 @@ window.addEventListener("keydown", function(evt) {
     }
 }, false);
 
+// Key Listeners
+// *************
+var radius_step = 1.0;
+var theta_step =1.0;
+var phi_step = 1.0;
+
+function increaseRadius() {
+	let radius = camera2.getRadius();
+	radius = radius + radius_step;
+	if (radius <= 10.0) {
+		camera2.setRadius(radius);
+
+	}	
+}
+
+function decreaseRadius() {
+	let radius = camera2.getRadius();
+	radius = radius - radius_step;
+	if (radius >= 0.0) {
+		camera2.setRadius(radius);	
+
+	}	
+}
+
+function increaseTheta() {
+	let theta = camera2.getTheta();
+	theta = theta + theta_step;
+	//if (theta <= 360.0) {
+		camera2.setTheta(theta);
+	//}	
+}
+
+function decreaseTheta() {
+	let theta = camera2.getTheta();
+	theta = theta - theta_step;
+//	if (theta >= 0.0) {
+		camera2.setTheta(theta);
+	//}	
+}
+
+function increasePhi() {
+	let phi = camera2.getPhi();
+	phi = phi + phi_step;
+	if (phi <= 359.0) {
+		camera2.setPhi(phi);
+	}	
+}
+
+function decreasePhi() {
+	let phi = camera2.getPhi();
+	phi = phi - phi_step;
+	if (phi >= 1.0) {
+		camera2.setPhi(phi);
+	}	
+}
+
 function onKeyDown(evt) {
 	switch(evt.code) {
 		case "KeyW":
@@ -148,6 +204,18 @@ function onKeyDown(evt) {
 		case "KeyP":
 			// onCheckboxAnimated();
 			toggleAnimated();
+		break;
+		case "KeyY":
+			increasePhi();
+		break;
+		case "KeyB":
+			decreasePhi();
+		break;
+		case "KeyG":
+			decreaseTheta();
+		break;
+		case "KeyH":
+			increaseTheta();
 		break;
 		default:
 			return;
@@ -222,6 +290,27 @@ function toggleFullscreen() {
 
 	refresh();
 }
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  let automatico = 1;
+  let manual = 1;
+  
+  async function camaraAutomatica(){
+	  manual = 0;
+	  automatico = 1;
+	  while(automatico){
+		increaseTheta();
+		await sleep (50);
+		onRender();
+	  }
+  }
+  
+  function camaraManual(){
+	  automatico = 0;
+  }
 
 function refresh() {
 	if (!isAnimated) {
