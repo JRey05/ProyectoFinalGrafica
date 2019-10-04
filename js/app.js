@@ -4,7 +4,7 @@ var canvas = null;
 var gl = null;
 
 // Programa de shaders.
-var shader_program  = null;
+var shader_program = null;
 
 // Almacenamiento.
 var vao_solid = null; //Geometry to render (stored in VAO).
@@ -18,9 +18,10 @@ var indexCountWire = 0;
 
 var parsedOBJ = null; //Parsed OBJ file
 
-var axis;	//Objeto auxiliar "Ejes"
+var axis; //Objeto auxiliar "Ejes"
 var camera = null;
-var camera2 = null;
+var free_cam = null;
+var sherical_cam = null;
 
 // Locaciones de datos de los shaders.
 // var loc_pos;
@@ -46,9 +47,9 @@ var rotationSpeed = 30;
 var request;
 
 /**
-*	Define y carga los objetos, especificando la locación de la posición de sus vértices.
-	*/
-	function loadObjects(loc_pos) {
+ *	Define y carga los objetos, especificando la locación de la posición de sus vértices.
+ */
+function loadObjects(loc_pos) {
 	let table_y = 0.5;
 	let table_scale = 0.007;
 	let rotors_distance = 0.00001;
@@ -103,16 +104,16 @@ var request;
 	rotors2_translation = vec3.fromValues(drone2_x, drone2_translation[1] + rotors_distance, drone2_z); //TODO ídem.
 	transformations.push([rotors2_scaling, rotors2_rotation, rotors2_translation]);
 	// transformations.set('rotors2', [rotors2_scaling, rotors2_rotation, rotors2_translation]); FIXME Mapeo.
-	}
-	
-	/**
-*	Realiza las transformaciones de modelado y posicionamiento, es decir transforma las coordenadas del objecto a coordenadas del mundo.
-	*/
+}
+
+/**
+ *	Realiza las transformaciones de modelado y posicionamiento, es decir transforma las coordenadas del objecto a coordenadas del mundo.
+ */
 //function setObjTransformations(k) { FIXME Mapeo.
 function setObjTransformations(i) {
 	let scaling = transformations[i][0],
-			rotation = transformations[i][1],
-			translation = transformations[i][2];
+		rotation = transformations[i][1],
+		translation = transformations[i][2];
 
 	// FIXME Mapeo.
 	// let transformation = transformations.get(k);
@@ -121,12 +122,12 @@ function setObjTransformations(i) {
 	// 		translation = transformation[2];
 
 	let scaling_mat = mat4.create(),
-			x_rotation_mat = mat4.create(),
-			y_rotation_mat = mat4.create(),
-			z_rotation_mat = mat4.create(),
-			rotation_mat = mat4.create(),
-			translation_mat = mat4.create(),
-			model_mat = mat4.create();
+		x_rotation_mat = mat4.create(),
+		y_rotation_mat = mat4.create(),
+		z_rotation_mat = mat4.create(),
+		rotation_mat = mat4.create(),
+		translation_mat = mat4.create(),
+		model_mat = mat4.create();
 
 	if (scaling != null && !vec3.exactEquals(scaling, vec3.create())) {
 		mat4.fromScaling(scaling_mat, scaling);
@@ -205,9 +206,11 @@ function onLoad() {
 
 	axis = new Axis();
 	axis.load();
-	camera = new FreeCamera(55, canvas.clientWidth/canvas.clientHeight);
+
 	// Create the camera using canvas dimension
-	camera2 = new SphericalCamera(55, canvas.clientWidth/canvas.clientHeight);
+	free_cam = new FreeCamera(55, canvas.clientWidth / canvas.clientHeight);
+	spherical_cam = new SphericalCamera(55, canvas.clientWidth / canvas.clientHeight);
+	camera = spherical_cam;
 
 	if (isAnimated) {
 		request = requestAnimationFrame(onRender);
@@ -230,7 +233,7 @@ function onRender(now) {
 	}
 
 	let view_mat = camera.view_mat,
-			proj_mat = camera.proj_mat;
+		proj_mat = camera.proj_mat;
 
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	axis.render(proj_mat, view_mat);

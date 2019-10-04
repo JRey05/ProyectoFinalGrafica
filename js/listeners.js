@@ -91,132 +91,166 @@ function writeValue(labelId, value) {
 }
 
 window.addEventListener("keydown", function(evt) {
-    // space and arrow keys
-    if([32, 37, 38, 39, 40].indexOf(evt.keyCode) > -1) {
-        evt.preventDefault();
-				onKeyDown(evt);
-    }
+	// space and arrow keys
+	if ([32, 37, 38, 39, 40].indexOf(evt.keyCode) > -1) {
+		evt.preventDefault();
+		onKeyDown(evt);
+	}
 }, false);
 
 // Key Listeners
 // *************
 var radius_step = 1.0;
-var theta_step =1.0;
+var theta_step = 1.0;
 var phi_step = 1.0;
 
 function increaseRadius() {
-	let radius = camera2.getRadius();
+	let radius = camera.getRadius();
 	radius = radius + radius_step;
 	if (radius <= 10.0) {
-		camera2.setRadius(radius);
+		camera.setRadius(radius);
 
-	}	
+	}
 }
 
 function decreaseRadius() {
-	let radius = camera2.getRadius();
+	let radius = camera.getRadius();
 	radius = radius - radius_step;
 	if (radius >= 0.0) {
-		camera2.setRadius(radius);	
+		camera.setRadius(radius);
 
-	}	
+	}
 }
 
 function increaseTheta() {
-	let theta = camera2.getTheta();
+	let theta = camera.getTheta();
 	theta = theta + theta_step;
 	//if (theta <= 360.0) {
-		camera2.setTheta(theta);
-	//}	
+	camera.setTheta(theta);
+	//}
 }
 
 function decreaseTheta() {
-	let theta = camera2.getTheta();
+	let theta = camera.getTheta();
 	theta = theta - theta_step;
-//	if (theta >= 0.0) {
-		camera2.setTheta(theta);
-	//}	
+	//	if (theta >= 0.0) {
+	camera.setTheta(theta);
+	//}
 }
 
 function increasePhi() {
-	let phi = camera2.getPhi();
+	let phi = camera.getPhi();
 	phi = phi + phi_step;
 	if (phi <= 359.0) {
-		camera2.setPhi(phi);
-	}	
+		camera.setPhi(phi);
+	}
 }
 
 function decreasePhi() {
-	let phi = camera2.getPhi();
+	let phi = camera.getPhi();
 	phi = phi - phi_step;
 	if (phi >= 1.0) {
-		camera2.setPhi(phi);
-	}	
+		camera.setPhi(phi);
+	}
 }
 
-function onKeyDown(evt) {
-	switch(evt.code) {
+let is_free = false;
+let is_spherical = true;
+	function onKeyDown(evt) {
+	switch (evt.code) {
 		case "KeyW":
-			camera.moveForward();
+		if (is_free) {
+				camera.moveForward();
+			}
 			break;
 		case "KeyS":
-			camera.moveBackward();
+			if (is_free){
+				camera.moveBackward();
+			}
 			break;
 		case "KeyA":
-			camera.moveLeft();
+			if (is_free) {
+				camera.moveLeft();
+			}
 			break;
 		case "KeyD":
-			camera.moveRight();
+			if (is_free) {
+				camera.moveRight();
+			}
 			break;
 		case "ArrowUp":
-			camera.moveUp();
+			if (is_free) {
+				camera.moveUp();
+			}
 			break;
 		case "ArrowDown":
-			camera.moveDown();
+			if (is_free) {
+				camera.moveDown();
+			}
 			break;
 		case "KeyJ":
-			camera.yawLeft();
+			if (is_free) {
+				camera.yawLeft();
+			}
 			break;
 		case "KeyL":
-			camera.yawRight();
+			if (is_free) {
+				camera.yawRight();
+			}
 			break;
 		case "KeyI":
-			camera.pitchUp();
+			if (is_free) {
+				camera.pitchUp();
+			}
 			break;
 		case "KeyK":
-			camera.pitchDown();
+			if (is_free) {
+				camera.pitchDown();
+			}
 			break;
 		case "KeyU":
-			camera.rollLeft();
+			if (is_free) {
+				camera.rollLeft();
+			}
 			break;
 		case "KeyO":
-			camera.rollRight();
+			if (is_free) {
+				camera.rollRight();
+			}
 			break;
 		case "KeyF":
 			// Cross-platform.
-		 	canvas.requestFullscreen = canvas.requestFullscreen || canvas.mozRequestFullscreen || canvas.webkitRequestFullscreen;
+			canvas.requestFullscreen = canvas.requestFullscreen || canvas.mozRequestFullscreen || canvas.webkitRequestFullscreen;
 			canvas.requestFullscreen();
 			break;
 		case "KeyM":
 			// onCheckboxSolid();
 			toggleSolid();
-		break;
+			break;
 		case "KeyP":
 			// onCheckboxAnimated();
 			toggleAnimated();
-		break;
+			break;
 		case "KeyY":
-			increasePhi();
-		break;
+			if (is_spherical) {
+				increasePhi();
+			}
+			break;
 		case "KeyB":
-			decreasePhi();
-		break;
+			if (is_spherical) {
+				decreasePhi();
+			}
+			break;
 		case "KeyG":
-			decreaseTheta();
-		break;
+			if (is_spherical) {
+				decreaseTheta();
+			}
+			break;
 		case "KeyH":
-			increaseTheta();
-		break;
+			if (is_spherical) {
+				increaseTheta();
+			}
+			break;
 		default:
 			return;
 	}
@@ -232,36 +266,39 @@ function onClick() {
 document.addEventListener('pointerlockerror', lockError, false);
 document.addEventListener('mozpointerlockerror', lockError, false);
 document.addEventListener('webkitpointerlockerror', lockError, false);
-
 function lockError() {
-  alert("Pointer lock failed");
+	alert("Pointer lock failed");
 }
 
 if ("onpointerlockchange" in document) {
-  document.addEventListener('pointerlockchange', lockChangeAlert, false);
+	document.addEventListener('pointerlockchange', lockChangeAlert, false);
 } else if ("onmozpointerlockchange" in document) {
-  document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
+	document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
 } else if ("onwebkitpointerlockchange" in document) {
 	document.addEventListener('webkitpointerlockchange', lockChangeAlert, false);
 }
 
 function lockChangeAlert() {
-  if(document.pointerLockElement === canvas || document.mozPointerLockElement === canvas || document.webkitPointerLockElement) {
-    document.addEventListener("mousemove", moveCallback, false);
-  } else {
+	if (document.pointerLockElement === canvas || document.mozPointerLockElement === canvas || document.webkitPointerLockElement) {
+		document.addEventListener("mousemove", moveCallback, false);
+	} else {
 		document.removeEventListener("mousemove", moveCallback, false);
-  }
+	}
 }
 
 function moveCallback(evt) {
+	if (!is_free) {
+		return;
+	}
+
 	var delta_x = evt.movementX || evt.mozMovementX || evt.webkitMovementX || 0,
-	delta_y = evt.movementY || evt.mozMovementY || evt.webkitMovementY || 0;
+		delta_y = evt.movementY || evt.mozMovementY || evt.webkitMovementY || 0;
 
 	if (delta_x != 0) {
-		camera.yaw(-1 * delta_x/1000);
+		camera.yaw(-1 * delta_x / 1000);
 	}
 	if (delta_y != 0) {
-		camera.pitch(-1 * delta_y/1000);
+		camera.pitch(-1 * delta_y / 1000);
 	}
 	refresh();
 }
@@ -273,44 +310,62 @@ if ("onfullscreenchange" in document) {
 } else if ("onwebkitfullscreenchange" in document) {
 	document.addEventListener('webkitfullscreenchange', toggleFullscreen, false);
 }
-
 function toggleFullscreen() {
 	let devicePixelRatio = window.devicePixelRatio || 1;
-  if(document.fullscreenElement === canvas || document.mozFullscreenElement === canvas || document.webkitFullscreenElement === canvas) {
+	if (document.fullscreenElement === canvas || document.mozFullscreenElement === canvas || document.webkitFullscreenElement === canvas) {
 		canvas.width = screen.width * devicePixelRatio;
 		canvas.height = screen.height * devicePixelRatio;
-  } else if (document.exitFullscreen) {
+	} else if (document.exitFullscreen) {
 		// canvas.width = canvas.clientWidth * devicePixelRatio;
 		// canvas.height = canvas.clientHeight * devicePixelRatio;
 		canvas.width = 1024 * devicePixelRatio;
 		canvas.height = 768 * devicePixelRatio;
-  }
+	}
 	gl.viewport(0, 0, canvas.width, canvas.height);
-	mat4.perspective(camera.proj_mat, 45.0, canvas.width/canvas.height, 1.0, 4096.0);
+	mat4.perspective(camera.proj_mat, 45.0, canvas.width / canvas.height, 1.0, 4096.0);
 
 	refresh();
 }
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  
-  let automatico = 1;
-  let manual = 1;
-  
-  async function camaraAutomatica(){
-	  manual = 0;
-	  automatico = 1;
-	  while(automatico){
+}
+
+let automatica = false;
+async function camaraAutomatica() {
+	if (automatica) {
+		return;
+	}
+
+	if (is_free) {
+		is_free = false;
+		is_spherical = true;
+		camera = spherical_cam;
+	}
+
+	automatica = true;
+	while (automatica) {
 		increaseTheta();
-		await sleep (50);
-		onRender();
-	  }
-  }
-  
-  function camaraManual(){
-	  automatico = 0;
-  }
+		await sleep(50);
+		refresh();
+	}
+}
+
+function camaraEsferica() {
+	camera = spherical_cam;
+	is_spherical = true;
+	is_free = false;
+	automatica = false;
+	refresh();
+}
+
+function camaraLibre(){
+	camera = free_cam;
+	is_free = true;
+	is_spherical = false;
+	automatica = false;
+	refresh();
+}
 
 function refresh() {
 	if (!isAnimated) {

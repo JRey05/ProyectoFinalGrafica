@@ -12,18 +12,18 @@ class SphericalCamera extends Camera {
 		this.r = 3;
 		this.theta = 90;//degrees
         this.phi = 75; //degrees
-       
+
 	}
 
 	get view_mat() {
 		let eye = this._toCartesianArray();
 		let target = [0, 0, 0];
 		let up = [0, 1, 0];
-        console.log(this._view_mat);
+        // console.log(this._view_mat);
 		mat4.lookAt(this._view_mat, eye, target, up);
 		return this._view_mat;
     }
-	
+
 	setRadius(radius) {
 		this.r = radius;
 	}
