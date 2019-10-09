@@ -17,12 +17,13 @@
 	<script src="files/shaders/fragment.glsl"></script>
 	<script src="js/app.js"></script>
 	<script src="js/listeners.js"></script>
-	<script src="js/Object.js"></script>
+	<script src="js/Model.js"></script>
 
-	<script src="assets/table.obj"></script>
-	<script src="assets/drone.obj"></script>
-	<script src="assets/drone-body.obj"></script>
-	<script src="assets/drone-rotors.obj"></script>
+	<script src="assets/drone/drone-body.obj"></script>
+	<script src="assets/drone/drone-rotors.obj"></script>
+	<script src="assets/champions/champions.obj"></script>
+	<script src="assets/champions/champions-base.obj"></script>
+	<script src="assets/champions/champions-stand.obj"></script>
 </head>
 <body onkeypress='onKeyDown(event);' onload='onLoad();'>
 	<button onclick="onRender();">Render Method!</button>
@@ -36,34 +37,18 @@
 			<td id="lbl_fovy">55</td>
 		</tr>
 		<tr>
-			<td>Table Color</td>
-			<td><input type='color' value="#FFFFFF" oninput="onTableColor(this)"></td>
-			<td id='lbl_table_color'></td>
-		</tr>
-		<tr>
-			<td>Drone1 Body Color</td>
+			<td>Drone Body Color</td>
 			<td><input type='color' value="#FFFFFF" oninput="onDrone1BodyColor(this)"></td>
 			<td id='lbl_drone1_body_color'></td>
 		</tr>
 		<tr>
-			<td>Drone1 Rotors Color</td>
+			<td>Drone Rotors Color</td>
 			<td><input type='color' value="#FFFFFF" oninput="onDrone1RotorsColor(this)"></td>
 			<td id='lbl_drone1_rotors_color'></td>
 		</tr>
 		<tr>
-			<td>Drone2 Body Color</td>
-			<td><input type='color' value="#FFFFFF" oninput="onDrone2BodyColor(this)"></td>
-			<td id='lbl_drone2_body_color'></td>
-		</tr>
-		<tr>
-			<td>Drone2 Rotors Color</td>
-			<td><input type='color' value="#FFFFFF" oninput="onDrone2RotorsColor(this)"></td>
-			<td id='lbl_drone2_rotors_color'></td>
-		</tr>
-		<tr>
 			<td>Model Mode</td>
 			<td>
-				<!-- <input type="checkbox" onchange="onCheckboxSolid(this)" autocomplete="off"> -->
 				Solid mode (M)
 			</td>
 			<td></td>
@@ -71,7 +56,6 @@
 		<tr>
 			<td>Scene Mode</td>
 			<td>
-				<!-- <input type="checkbox" onchange="onCheckboxAnimated(this)" autocomplete="off"> -->
 				Animated mode (P)
 				<br>
 				Fullscreen (F)
@@ -79,36 +63,50 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td>Camera forward/backward</td>
+			<td>Free cam forward/backward</td>
 			<td>W/S</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Camera left/right</td>
+			<td>Free cam left/right</td>
 			<td>A/D</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Camera up/down</td>
+			<td>Free cam up/down</td>
 			<td>ArrowUp/ArrowDown</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Camera pitch <font color="red">(X)</font></td>
+			<td>Free cam pitch <font color="red">(X)</font></td>
 			<td>I/K</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Camera yaw <font color="gree ">(Y)</font></td>
+			<td>Free cam yaw <font color="gree">(Y)</font></td>
 			<td>J/L</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Camera roll <font color="blue">(Z)</font></td>
+			<td>Free cam roll <font color="blue">(Z)</font></td>
 			<td>U/O</td>
 			<td></td>
 		</tr>
 		<tr>
+			<td>Spherical cam radius</td>
+			<td>+/-</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Spherical cam phi</td>
+			<td>Y/B</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Spherical cam theta</td>
+			<td>G/H</td>
+			<td></td>
+		</tr>
 		<tr>
 			<td>Rotors Rotation on Y</td>
 			<td>0º&le;<input type="range" min="1" max="360" step="1" value="0" oninput="onSliderRotation(this, 'lbl_rotation_y');">&le;360º</td>
@@ -116,7 +114,7 @@
 		</tr>
 		<tr>
 			<td>
-				<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()" onkeypress="onKeyDown(event);">Cámara manual</button>
+				<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()" onkeypress="onKeyDown(event);">Cámara esférica</button>
 				<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()" onkeypress="onKeyDown(event);">Cámara libre</button>
 				<button class="btn btn-success" type="button" id="camaraAutomatica" onclick="camaraAutomatica();">Cámara automática
 				 <span class="glyphicon glyphicon-arrow-up"></span>

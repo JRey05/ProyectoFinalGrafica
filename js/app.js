@@ -1,154 +1,157 @@
+// Elemento de la ventana donde se dibujara.
 var canvas = null;
 
-// Contexto renderizable.
+// Contexto renderizable del canvas.
 var gl = null;
 
 // Programa de shaders.
 var shader_program = null;
 
 // Almacenamiento.
-var vao_solid = null; //Geometry to render (stored in VAO).
+var vao_solid = null;
 var vao_wire = null;
 
 // Datos globales auxiliares.
-var isSolid = false;
-var isAnimated = false;
-var indexCountSolid = 0;
-var indexCountWire = 0;
+var is_solid = false;
+var is_animated = false;
+var request;
 
-var parsedOBJ = null; //Parsed OBJ file
+// Parsed OBJ file
+var parsed_model = null;
 
-var axis; //Objeto auxiliar "Ejes"
+var axis;
 var camera = null;
 var free_cam = null;
 var sherical_cam = null;
 
 // Locaciones de datos de los shaders.
-// var loc_pos;
-// var loc_model_mat;
-// var loc_view_mat;
 var loc_world_mat;
 var loc_proj_mat;
 var loc_color;
 
-// FIXME Mapeo.
-// var objects = new Map();
-// var transformations = new Map();
-// var model_mats = new Map();
-// var colors = new Map();
+// Arreglo de modelos.
+var models = [];
 
-var objects = [];
+// Arreglo de transformaciones. Cada elemento se corresponde con un modelo y almacena su escalado, rotación alrededor de sus ejes, traslación, y rotación con respecto a un punto; respectivamente.
+// Las primeras tres transformaciones están representadas mediante vectores (vec3) mientras que la última está representada mediante una terna constituida por el punto
+// alrededor del cual se rotará, el eje que define la rotación, y el ángulo de rotación; respectivamente.
 var transformations = [];
+
+// Arreglo de matrices de modelado. Cada elemento se corresponde con modelo y almacena la matriz que lo modela.
 var model_mats = [];
+
+// Arreglo de colores. Cada elemento se corresponde con un modelo y almacena su color.
 var colors = [];
 
+// Tiempo del frame anterior.
 var then = 0;
-var rotationSpeed = 30;
-var request;
+
+// Tiempo transcurrido.
+var delta_time = 0;
+
+// Velocidad de rotación.
+var rotation_speed = 22;
 
 /**
- *	Define y carga los objetos, especificando la locación de la posición de sus vértices.
+ *	Define y carga los modelos, especificando la locación de la posición de sus vértices.
+ *	A su vez, establece las transformaciones a aplicar posteriormente.
  */
-function loadObjects(loc_pos) {
-	let table_y = 0.5;
-	let table_scale = 0.007;
-	let rotors_distance = 0.00001;
-	let drone2_scale = 0.005;
-	let drone1_scale = drone2_scale * 1.5;
-	let drone2_x = 0.6;
-	let drone2_z = 0.25;
-	let drone2_y_rot = 90;
+function loadModels(loc_pos) {
+	let champions = new Model(champions_source);
+	champions.generateModel(loc_pos);
+	models.push(champions);
+	let champions_translation = vec3.fromValues(0, 0, 1);
+	vec3.add(champions._center, champions._center, champions_translation);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_translation]);
 
-	let table = new Object(table_source);
-	table.generateModel(loc_pos);
-	// objects.set('table', table); FIXME Mapeo.
-	objects.push(table);
-	let table_scaling = vec3.fromValues(table_scale, table_scale, table_scale);
-	let table_translation = vec3.fromValues(0, 0, 0);
-	transformations.push([table_scaling, vec3.fromValues(0, 0, 0), table_translation]);
-	// transformations.set('table', [table_scaling, vec3.fromValues(0, 0, 0), table_translation]); FIXME Mapeo.
+	let champions_base = new Model(champions_base_source);
+	champions_base.generateModel(loc_pos);
+	models.push(champions_base);
+	let champions_base_translation = vec3.fromValues(0, 0, 1);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation]);
 
-	let drone = new Object(drone_source);
+	let champions_stand = new Model(champions_stand_source);
+	champions_stand.generateModel(loc_pos);
+	models.push(champions_stand);
+	let champions_stand_translation = vec3.fromValues(0, 0, 1);
+	vec3.add(champions_stand._center, champions_stand._center, champions_stand_translation);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_stand_translation]);
+
+	let drone = new Model(drone_source);
 	drone.generateModel(loc_pos);
-	objects.push(drone);
-	// objects.set('drone1', drone); FIXME Mapeo.
-	let drone1_scaling = vec3.fromValues(drone1_scale, drone1_scale, drone1_scale);
-	let drone1_translation = vec3.fromValues(0, table_y, 0); //TODO obtener la altura del objeto a partir del parser.
-	transformations.push([drone1_scaling, vec3.fromValues(0, 0, 0), drone1_translation]);
-	// transformations.set('drone1', [drone1_scaling, vec3.fromValues(0, 0, 0), drone1_translation]); FIXME Mapeo.
+	models.push(drone);
+	let drone1_translation = vec3.fromValues(0, champions._center[1], 0);
+	let drone1_orbitation = [];
+	drone1_orbitation.push(champions._center);
+	drone1_orbitation.push(vec3.fromValues(0, 1, 0));
+	drone1_orbitation.push(0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), drone1_translation, drone1_orbitation]);
 
-	let rotors = new Object(rotors_source);
+	let rotors = new Model(rotors_source);
 	rotors.generateModel(loc_pos);
-	objects.push(rotors);
-	// objects.set('rotors1', rotors); FIXME Mapeo.
-	let rotors1_scaling = vec3.create();
-	vec3.copy(rotors1_scaling, drone1_scaling);
-	let rotors1_translation = vec3.fromValues(0, drone1_translation[1] + rotors_distance, 0); //TODO ídem.
-	transformations.push([rotors1_scaling, vec3.fromValues(0, 0, 0), rotors1_translation]);
-	// transformations.set('rotors1', [rotors1_scaling, vec3.fromValues(0, 0, 0), rotors1_translation]); FIXME Mapeo.
-
-	objects.push(drone);
-	// objects.set('drone2', drone); FIXME Mapeo.
-	let drone2_scaling = vec3.fromValues(drone2_scale, drone2_scale, drone2_scale);
-	let drone2_rotation = vec3.fromValues(0, drone2_y_rot, 0);
-	let drone2_translation = vec3.fromValues(drone2_x, table_y, drone2_z); //TODO ídem.
-	transformations.push([drone2_scaling, drone2_rotation, drone2_translation]);
-	// transformations.set('drone2', [drone2_scaling, drone2_rotation, drone2_translation]); FIXME Mapeo.
-
-	objects.push(rotors);
-	// objects.set('rotors2', rotors); FIXME Mapeo.
-	let rotors2_scaling = vec3.create();
-	vec3.copy(rotors2_scaling, drone2_scaling);
-	rotors2_rotation = vec3.create();
-	rotors2_rotation = vec3.copy(rotors2_rotation, drone2_rotation);
-	rotors2_translation = vec3.fromValues(drone2_x, drone2_translation[1] + rotors_distance, drone2_z); //TODO ídem.
-	transformations.push([rotors2_scaling, rotors2_rotation, rotors2_translation]);
-	// transformations.set('rotors2', [rotors2_scaling, rotors2_rotation, rotors2_translation]); FIXME Mapeo.
+	models.push(rotors);
+	let rotors1_translation = vec3.fromValues(0, drone1_translation[1], 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), rotors1_translation, drone1_orbitation]);
 }
 
 /**
- *	Realiza las transformaciones de modelado y posicionamiento, es decir transforma las coordenadas del objecto a coordenadas del mundo.
+ *	Aplica las transformaciones de modelado y posicionamiento en el mundo del modelo correspondiente al índice i.
  */
-//function setObjTransformations(k) { FIXME Mapeo.
-function setObjTransformations(i) {
+function applyTransformations(i) {
 	let scaling = transformations[i][0],
 		rotation = transformations[i][1],
-		translation = transformations[i][2];
+		translation = transformations[i][2],
+		orbitation = transformations[i][3];
 
-	// FIXME Mapeo.
-	// let transformation = transformations.get(k);
-	// let scaling = transformation[0],
-	// 		rotation = transformation[1],
-	// 		translation = transformation[2];
-
-	let scaling_mat = mat4.create(),
-		x_rotation_mat = mat4.create(),
-		y_rotation_mat = mat4.create(),
-		z_rotation_mat = mat4.create(),
-		rotation_mat = mat4.create(),
-		translation_mat = mat4.create(),
+	let scaling_mat = null,
+		x_rotation_mat = null,
+		y_rotation_mat = null,
+		z_rotation_mat = null,
+		rotation_mat = null,
+		translation_mat = null,
 		model_mat = mat4.create();
 
-	if (scaling != null && !vec3.exactEquals(scaling, vec3.create())) {
+	if (scaling != null && !vec3.exactEquals(scaling, vec3.create(1, 1, 1))) {
+		scaling_mat = mat4.create();
 		mat4.fromScaling(scaling_mat, scaling);
+		mat4.mul(model_mat, scaling_mat, model_mat);
 	}
-
-	if (rotation != null && !vec3.exactEquals(rotation, vec3.fromValues(0, 0, 0))) {
+	if (rotation != null && !vec3.exactEquals(rotation, vec3.create())) {
+		x_rotation_mat = mat4.create();
+		y_rotation_mat = mat4.create();
+		z_rotation_mat = mat4.create();
+		rotation_mat = mat4.create();
 		mat4.fromXRotation(x_rotation_mat, glMatrix.toRadian(rotation[0]));
 		mat4.fromYRotation(y_rotation_mat, glMatrix.toRadian(rotation[1]));
 		mat4.fromZRotation(z_rotation_mat, glMatrix.toRadian(rotation[2]));
-		mat4.multiply(rotation_mat, x_rotation_mat, y_rotation_mat);
-		mat4.multiply(rotation_mat, z_rotation_mat, rotation_mat);
+		mat4.mul(rotation_mat, x_rotation_mat, y_rotation_mat);
+		mat4.mul(rotation_mat, z_rotation_mat, rotation_mat);
+		mat4.mul(model_mat, rotation_mat, model_mat);
 	}
 
-	mat4.fromTranslation(translation_mat, translation);
-	mat4.multiply(model_mat, rotation_mat, scaling_mat);
-	mat4.multiply(model_mat, translation_mat, model_mat);
-	model_mats[i] = model_mat;
+	if (translation != null) {
+		translation_mat = mat4.create();
+		mat4.fromTranslation(translation_mat, translation);
+		mat4.mul(model_mat, translation_mat, model_mat);
+	}
 
-	// FIXME Mapeo.
-	// model_mats.set(k, model_mat);
-	// objects.get(k)._model_mat = model_mat;
+	if (orbitation != null) {
+		let target = orbitation[0];
+		let target_axis = orbitation[1];
+		let quat_rot = quat.create();
+		let inverse = mat4.create();
+		let inv_target = vec3.create();
+		inv_target = vec3.negate(inv_target, target);
+		let rotation = mat4.create();
+		let angle = orbitation[2];
+		quat.setAxisAngle(quat_rot, target_axis, glMatrix.toRadian(angle));
+		mat4.fromRotationTranslation(rotation, quat_rot, target);
+		mat4.fromTranslation(inverse, inv_target);
+		mat4.mul(rotation, rotation, inverse);
+		mat4.mul(model_mat, rotation, model_mat);
+	}
+
+	model_mats[i] = model_mat;
 }
 
 
@@ -163,42 +166,23 @@ function onLoad() {
 	loc_world_mat = gl.getUniformLocation(shader_program, 'world_mat');
 	loc_proj_mat = gl.getUniformLocation(shader_program, 'proj_mat');
 
-	loadObjects(loc_pos);
+	loadModels(loc_pos);
 
-	for (let i = 0; i < objects.length; i++) {
-		setObjTransformations(i);
+	for (let i = 0; i < models.length; i++) {
+		applyTransformations(i);
 	}
 
-	// FIXME Mapeo.
-	// let keys = transformations.keys(),
-	// 		element = keys.next(),
-	// 		done = element.done,
-	// 		k = element.value;
-	// while (!done) {
-	// 	setObjTransformations(k);
-	// 	element = keys.next();
-	// 	done = element.done;
-	// 	k = element.value;
-	// }
+	let champions_color = Utils.hex2RgbFloat("#A9A9A9");
+	let champions_base_color = Utils.hex2RgbFloat("#DCDCDC");
+	let champions_stand_color = Utils.hex2RgbFloat("#8B4513");
+	let drone1_color = Utils.hex2RgbFloat("#000000");
+	let rotors1_color = Utils.hex2RgbFloat("#9400D3");
 
-	let table_color = Utils.hex2RgbFloat("#FFFFFF");
-	let drone1_color = Utils.hex2RgbFloat("#FFFFFF");
-	let rotors1_color = Utils.hex2RgbFloat("#FFFFFF");
-	let drone2_color = Utils.hex2RgbFloat("#FFFFFF");
-	let rotors2_color = Utils.hex2RgbFloat("#FFFFFF");
-
-	colors.push(vec3.fromValues(table_color.r, table_color.g, table_color.b));
+	colors.push(vec3.fromValues(champions_color.r, champions_color.g, champions_color.b));
+	colors.push(vec3.fromValues(champions_base_color.r, champions_base_color.g, champions_base_color.b));
+	colors.push(vec3.fromValues(champions_stand_color.r, champions_stand_color.g, champions_stand_color.b));
 	colors.push(vec3.fromValues(drone1_color.r, drone1_color.g, drone1_color.b));
 	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
-	colors.push(vec3.fromValues(drone2_color.r, drone2_color.g, drone2_color.b));
-	colors.push(vec3.fromValues(rotors2_color.r, rotors2_color.g, rotors2_color.b));
-
-	// FIXME Mapeo.
-	// colors.set('table', vec3.fromValues(table_color.r, table_color.g, table_color.b));
-	// colors.set('drone1', vec3.fromValues(drone1_color.r, drone1_color.g, drone1_color.b));
-	// colors.set('rotors1', vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
-	// colors.set('drone2', vec3.fromValues(drone2_color.r, drone2_color.g, drone2_color.b));
-	// colors.set('rotors2', vec3.fromValues(rotors2_color.r, rotors2_color.g, rotors2_color.b));
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.18, 1.0);
@@ -207,31 +191,21 @@ function onLoad() {
 	axis = new Axis();
 	axis.load();
 
-	// Create the camera using canvas dimension
+	// Crea las cámaras en base a las dimensiones del canvas.
 	free_cam = new FreeCamera(55, canvas.clientWidth / canvas.clientHeight);
 	spherical_cam = new SphericalCamera(55, canvas.clientWidth / canvas.clientHeight);
-	camera = spherical_cam;
+	camera = free_cam;
 
-	if (isAnimated) {
+	if (is_animated) {
 		request = requestAnimationFrame(onRender);
 	} else {
 		onRender();
 	}
 }
 
+let angle = 0;
+
 function onRender(now) {
-	// Convert the time to seconds
-	if (now !== undefined) {
-		now *= 0.001;
-		// Subtract the previous time from the current time
-		var deltaTime = now - then;
-		// Remember the current time for the next frame.
-		then = now;
-
-		transformations[4][1][1] += rotationSpeed * deltaTime;
-		// transformations.get('rotors2')[1][1] += rotationSpeed * deltaTime; FIXME Mapeo.
-	}
-
 	let view_mat = camera.view_mat,
 		proj_mat = camera.proj_mat;
 
@@ -241,33 +215,36 @@ function onRender(now) {
 	gl.useProgram(shader_program);
 	gl.uniformMatrix4fv(loc_proj_mat, false, proj_mat);
 
-	for (let i = 0; i < objects.length; i++) {
-		setObjTransformations(i)
-		objects[i].model_mat = model_mats[i];
-		gl.uniform3fv(loc_color, colors[i]);
-		objects[i].draw(isSolid);
+	if (is_animated) {
+		// Milisegundos a segundos.
+		now *= 0.001;
+
+		if (then == -1) {
+			delta_time = 0;
+		} else {
+			// Obtiene el tiempo transcurrido entre el último frame y el actual.
+			delta_time = now - then;
+		}
+		// Almacena el tiempo actual para el próximo frame.
+		then = now;
+
+		transformations[0][1][1] += rotation_speed * delta_time;
+		transformations[1][1][1] -= rotation_speed * delta_time;
+		transformations[3][1][1] -= rotation_speed * delta_time;
+		transformations[3][3][2] -= rotation_speed * delta_time;
+		transformations[4][3][2] -= rotation_speed * delta_time;
+	} else {
+		then = -1;
 	}
 
-	// FIXME Mapeo.
-	// let keys = transformations.keys(),
-	// 		element = keys.next(),
-	// 		done = element.done,
-	// 		k = element.value;
-	// while (!done) {
-	// 	let obj = objects.get(k),
-	// 			model_mat = model_mats.get(k),
-	// 			color = colors.get(k);
-	// 	setObjTransformations(k)
-	// 	// console.log(model_mat);
-	// 	obj._model_mat = model_mat;
-	// 	gl.uniform3fv(loc_color, color);
-	// 	obj.draw(isSolid);
-	// 	element = keys.next();
-	// 	done = element.done;
-	// 	k = element.value;
-	// }
+	for (let i = 0; i < models.length; i++) {
+		applyTransformations(i);
+		models[i].model_mat = model_mats[i];
+		gl.uniform3fv(loc_color, colors[i]);
+		models[i].draw(is_solid);
+	}
 
-	if (isAnimated) {
+	if (is_animated) {
 		request = requestAnimationFrame(onRender);
 	}
 }

@@ -5,65 +5,26 @@ function onSliderFovy(slider, labelId) {
 	refresh();
 }
 
-function onTableColor(picker) {
-	let color = Utils.hex2RgbFloat(picker.value);
-	colors[0] = vec3.fromValues(color.r, color.g, color.b);
-	// colors.set('table', vec3.fromValues(color.r, color.g, color.b)); FIXME Mapeo.
-	refresh();
-}
-
 function onDrone1BodyColor(picker) {
 	let color = Utils.hex2RgbFloat(picker.value);
-	// colors[1] = vec3.fromValues(color.r, color.g, color.b);
-	colors.set('drone1', vec3.fromValues(color.r, color.g, color.b));
+	colors[3] = vec3.fromValues(color.r, color.g, color.b);
 	refresh();
 }
 
 function onDrone1RotorsColor(picker) {
 	let color = Utils.hex2RgbFloat(picker.value);
-	colors[2] = vec3.fromValues(color.r, color.g, color.b);
-	// colors.set('rotors1', vec3.fromValues(color.r, color.g, color.b)); FIXME Mapeo.
-	refresh();
-}
-
-function onDrone2BodyColor(picker) {
-	let color = Utils.hex2RgbFloat(picker.value);
-	colors[3] = vec3.fromValues(color.r, color.g, color.b);
-	// colors.set('drone2', vec3.fromValues(color.r, color.g, color.b)); FIXME Mapeo.
-	refresh();
-}
-
-function onDrone2RotorsColor(picker) {
-	let color = Utils.hex2RgbFloat(picker.value);
 	colors[4] = vec3.fromValues(color.r, color.g, color.b);
-	// colors.set('rotors2', vec3.fromValues(color.r, color.g, color.b)); FIXME Mapeo.
 	refresh();
 }
-
-// function onCheckboxSolid() {
-// 	isSolid = !isSolid;
-// 	refresh();
-// }
 
 function toggleSolid() {
-	isSolid = !isSolid;
+	is_solid = !is_solid;
 	refresh();
 }
 
-// function onCheckboxAnimated() {
-// 	isAnimated = !isAnimated;
-// 	if (isAnimated) {
-// 		// Cross-platform.
-// 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
-// 		window.requestAnimationFrame(onRender);
-// 	} else {
-// 		onRender();
-// 	}
-// }
-
 function toggleAnimated() {
-	isAnimated = !isAnimated;
-	if (isAnimated) {
+	is_animated = !is_animated;
+	if (is_animated) {
 		// Cross-platform.
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
@@ -76,11 +37,6 @@ function onSliderRotation(slider, labelId) {
 	angle = parseFloat(slider.value);
 	writeValue(labelId, angle);
 	transformations[4][1][1] = angle;
-	transformations[2][1][1] = angle;
-
-	// FIXME Mapeo.
-	// transformations.get('rotors1')[1][1] = angle;
-	// transformations.get('rotors2')[1][1] = angle;
 	refresh();
 }
 
@@ -98,33 +54,27 @@ window.addEventListener("keydown", function(evt) {
 	}
 }, false);
 
-// Key Listeners
-// *************
-var radius_step = 1.0;
-var theta_step = 1.0;
-var phi_step = 1.0;
-
+let radius_step = 0.5;
 function increaseRadius() {
 	let radius = camera.getRadius();
-	radius = radius + radius_step;
+	radius += radius_step;
 	if (radius <= 10.0) {
 		camera.setRadius(radius);
-
 	}
 }
 
 function decreaseRadius() {
 	let radius = camera.getRadius();
-	radius = radius - radius_step;
+	radius -= radius_step;
 	if (radius >= 0.0) {
 		camera.setRadius(radius);
-
 	}
 }
 
+let theta_step = 1.0;
 function increaseTheta() {
 	let theta = camera.getTheta();
-	theta = theta + theta_step;
+	theta += theta_step;
 	//if (theta <= 360.0) {
 	camera.setTheta(theta);
 	//}
@@ -132,39 +82,38 @@ function increaseTheta() {
 
 function decreaseTheta() {
 	let theta = camera.getTheta();
-	theta = theta - theta_step;
+	theta -= theta_step;
 	//	if (theta >= 0.0) {
 	camera.setTheta(theta);
 	//}
 }
 
+let phi_step = 1.0;
 function increasePhi() {
 	let phi = camera.getPhi();
-	phi = phi + phi_step;
-	if (phi <= 359.0) {
+	phi += phi_step;
+	if (phi < 180) {
 		camera.setPhi(phi);
 	}
 }
 
 function decreasePhi() {
 	let phi = camera.getPhi();
-	phi = phi - phi_step;
-	if (phi >= 1.0) {
+	phi -= phi_step;
+	if (phi > 0) {
 		camera.setPhi(phi);
 	}
 }
 
-let is_free = false;
-let is_spherical = true;
-	function onKeyDown(evt) {
+function onKeyDown(evt) {
 	switch (evt.code) {
 		case "KeyW":
-		if (is_free) {
+			if (is_free) {
 				camera.moveForward();
 			}
 			break;
 		case "KeyS":
-			if (is_free){
+			if (is_free) {
 				camera.moveBackward();
 			}
 			break;
@@ -251,6 +200,16 @@ let is_spherical = true;
 				increaseTheta();
 			}
 			break;
+		case "NumpadAdd":
+			if (is_spherical) {
+				increaseRadius();
+			}
+			break;
+		case "NumpadSubtract":
+			if (is_spherical) {
+				decreaseRadius();
+			}
+			break;
 		default:
 			return;
 	}
@@ -266,6 +225,7 @@ function onClick() {
 document.addEventListener('pointerlockerror', lockError, false);
 document.addEventListener('mozpointerlockerror', lockError, false);
 document.addEventListener('webkitpointerlockerror', lockError, false);
+
 function lockError() {
 	alert("Pointer lock failed");
 }
@@ -310,6 +270,7 @@ if ("onfullscreenchange" in document) {
 } else if ("onwebkitfullscreenchange" in document) {
 	document.addEventListener('webkitfullscreenchange', toggleFullscreen, false);
 }
+
 function toggleFullscreen() {
 	let devicePixelRatio = window.devicePixelRatio || 1;
 	if (document.fullscreenElement === canvas || document.mozFullscreenElement === canvas || document.webkitFullscreenElement === canvas) {
@@ -342,7 +303,6 @@ async function camaraAutomatica() {
 		is_spherical = true;
 		camera = spherical_cam;
 	}
-
 	automatica = true;
 	while (automatica) {
 		increaseTheta();
@@ -351,24 +311,37 @@ async function camaraAutomatica() {
 	}
 }
 
+let is_spherical = false;
+
 function camaraEsferica() {
-	camera = spherical_cam;
-	is_spherical = true;
-	is_free = false;
+	if (!is_spherical) {
+		camera = spherical_cam;
+		is_spherical = true;
+		is_free = false;
+	}
 	automatica = false;
 	refresh();
 }
 
-function camaraLibre(){
-	camera = free_cam;
-	is_free = true;
-	is_spherical = false;
+let is_free = true;
+
+function camaraLibre() {
+	if (!is_free) {
+		camera = free_cam;
+		camera._eye = spherical_cam._eye;
+		let forward = vec3.create();
+		vec3.sub(forward, spherical_cam._target, spherical_cam._eye);
+		vec3.normalize(camera._forward, forward);
+		vec3.cross(camera._right, camera._forward, spherical_cam._up);
+		is_free = true;
+		is_spherical = false;
+	}
 	automatica = false;
 	refresh();
 }
 
 function refresh() {
-	if (!isAnimated) {
+	if (!is_animated) {
 		onRender();
 	}
 }

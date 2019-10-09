@@ -12,7 +12,6 @@ A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850d00
 A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-AnonymousClass7a0df4730101	js/Object.js	/^class Object {$/;"	c
 AnonymousFunction954053350100	js/listeners.js	/^window.addEventListener("keydown", function(evt) {$/;"	f
 AnonymousFunctionf1105c850100	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f
 AnonymousFunctionf1105c850200	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850100
@@ -72,6 +71,7 @@ M	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 M	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 M	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 M	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+Model	js/Model.js	/^class Model {$/;"	c
 N	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 N	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 N	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -142,8 +142,10 @@ a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+angle	js/app.js	/^let angle = 0;$/;"	v
+applyTransformations	js/app.js	/^function applyTransformations(i) {$/;"	f
 automatica	js/listeners.js	/^let automatica = false;$/;"	v
-axis	js/app.js	/^var axis; \/\/Objeto auxiliar "Ejes"$/;"	v
+axis	js/app.js	/^var axis;$/;"	v
 b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -166,7 +168,7 @@ camaraAutomatica	js/listeners.js	/^async function camaraAutomatica() {$/;"	f
 camaraEsferica	index.html	/^				<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"/;"	I
 camaraEsferica	js/listeners.js	/^function camaraEsferica() {$/;"	f
 camaraLibre	index.html	/^				<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()" onkey/;"	I
-camaraLibre	js/listeners.js	/^function camaraLibre(){$/;"	f
+camaraLibre	js/listeners.js	/^function camaraLibre() {$/;"	f
 camera	js/app.js	/^var camera = null;$/;"	v
 canvas	index.html	/^	<canvas id='canvas' width = "1024" height = "768" style="border: 1px solid gray" onclick="onCli/;"	I
 canvas	js/app.js	/^var canvas = null;$/;"	v
@@ -175,7 +177,7 @@ constructor	common/VertexAttributeInfo.js	/^	constructor(data, loc, size) {$/;"	
 constructor	common/cameras/Camera.js	/^	constructor(fovy, aspect) {$/;"	m	class:Camera
 constructor	common/cameras/FreeCamera.js	/^	constructor(fovy, aspect) {$/;"	m	class:FreeCamera
 constructor	common/cameras/SphericalCamera.js	/^	constructor(fovy, aspect) {$/;"	m	class:SphericalCamera
-constructor	js/Object.js	/^	constructor(obj_source) {$/;"	m	class:AnonymousClass7a0df4730101
+constructor	js/Model.js	/^	constructor(model_source) {$/;"	m	class:Model
 create	common/ShaderProgramHelper.js	/^	static create(vertex_shader_source, fragment_shader_source, attribute_bindings) {$/;"	m	class:ShaderProgramHelper
 create	common/VAOHelper.js	/^	static create(indices, vertex_attributes_info) {$/;"	m	class:VAOHelper
 createEBO	common/VAOHelper.js	/^	static createEBO(indices) {$/;"	m	class:VAOHelper
@@ -194,7 +196,8 @@ decreasePhi	js/listeners.js	/^function decreasePhi() {$/;"	f
 decreaseRadius	js/listeners.js	/^function decreaseRadius() {$/;"	f
 decreaseTheta	js/listeners.js	/^function decreaseTheta() {$/;"	f
 deltaPos2Vec	common/cameras/FreeCamera.js	/^	deltaPos2Vec(unit_dir) {$/;"	m	class:FreeCamera
-draw	js/Object.js	/^	draw(solid) {$/;"	m	class:AnonymousClass7a0df4730101
+delta_time	js/app.js	/^var delta_time = 0;$/;"	v
+draw	js/Model.js	/^	draw(solid) {$/;"	m	class:Model
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850300
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
@@ -218,7 +221,7 @@ g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-generateModel	js/Object.js	/^	generateModel(loc_pos) {$/;"	m	class:AnonymousClass7a0df4730101
+generateModel	js/Model.js	/^	generateModel(loc_pos) {$/;"	m	class:Model
 getPhi	common/cameras/SphericalCamera.js	/^	getPhi() {$/;"	m	class:SphericalCamera
 getRadius	common/cameras/SphericalCamera.js	/^	getRadius() {$/;"	m	class:SphericalCamera
 getTheta	common/cameras/SphericalCamera.js	/^	getTheta() {$/;"	m	class:SphericalCamera
@@ -244,12 +247,10 @@ i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 increasePhi	js/listeners.js	/^function increasePhi() {$/;"	f
 increaseRadius	js/listeners.js	/^function increaseRadius() {$/;"	f
 increaseTheta	js/listeners.js	/^function increaseTheta() {$/;"	f
-indexCountSolid	js/app.js	/^var indexCountSolid = 0;$/;"	v
-indexCountWire	js/app.js	/^var indexCountWire = 0;$/;"	v
-isAnimated	js/app.js	/^var isAnimated = false;$/;"	v
-isSolid	js/app.js	/^var isSolid = false;$/;"	v
-is_free	js/listeners.js	/^let is_free = false;$/;"	v
-is_spherical	js/listeners.js	/^let is_spherical = true;$/;"	v
+is_animated	js/app.js	/^var is_animated = false;$/;"	v
+is_free	js/listeners.js	/^let is_free = true;$/;"	v
+is_solid	js/app.js	/^var is_solid = false;$/;"	v
+is_spherical	js/listeners.js	/^let is_spherical = false;$/;"	v
 j	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 j	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 j	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
@@ -264,13 +265,10 @@ l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 lbl_drone1_body_color	index.html	/^			<td id='lbl_drone1_body_color'><\/td>$/;"	I
 lbl_drone1_rotors_color	index.html	/^			<td id='lbl_drone1_rotors_color'><\/td>$/;"	I
-lbl_drone2_body_color	index.html	/^			<td id='lbl_drone2_body_color'><\/td>$/;"	I
-lbl_drone2_rotors_color	index.html	/^			<td id='lbl_drone2_rotors_color'><\/td>$/;"	I
 lbl_fovy	index.html	/^			<td id="lbl_fovy">55<\/td>$/;"	I
 lbl_rotation_y	index.html	/^			<td id='lbl_rotation_y'>0<\/td>$/;"	I
-lbl_table_color	index.html	/^			<td id='lbl_table_color'><\/td>$/;"	I
 load	common/primitives/Axis.js	/^	load() {$/;"	m	class:Axis
-loadObjects	js/app.js	/^function loadObjects(loc_pos) {$/;"	f
+loadModels	js/app.js	/^function loadModels(loc_pos) {$/;"	f
 loc_color	js/app.js	/^var loc_color;$/;"	v
 loc_proj_mat	js/app.js	/^var loc_proj_mat;$/;"	v
 loc_world_mat	js/app.js	/^var loc_world_mat;$/;"	v
@@ -285,6 +283,7 @@ m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 model_mats	js/app.js	/^var model_mats = [];$/;"	v
+models	js/app.js	/^var models = [];$/;"	v
 moveBackward	common/cameras/FreeCamera.js	/^	moveBackward() {$/;"	m	class:FreeCamera
 moveCallback	js/listeners.js	/^function moveCallback(evt) {$/;"	f
 moveDown	common/cameras/FreeCamera.js	/^	moveDown() {$/;"	m	class:FreeCamera
@@ -303,19 +302,15 @@ o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:n
-objects	js/app.js	/^var objects = [];$/;"	v
 onClick	js/listeners.js	/^function onClick() {$/;"	f
 onDrone1BodyColor	js/listeners.js	/^function onDrone1BodyColor(picker) {$/;"	f
 onDrone1RotorsColor	js/listeners.js	/^function onDrone1RotorsColor(picker) {$/;"	f
-onDrone2BodyColor	js/listeners.js	/^function onDrone2BodyColor(picker) {$/;"	f
-onDrone2RotorsColor	js/listeners.js	/^function onDrone2RotorsColor(picker) {$/;"	f
 onFileChooser	common/Utils.js	/^	static onFileChooser(event, onLoadFileHandler) {$/;"	m	class:Utils
-onKeyDown	js/listeners.js	/^	function onKeyDown(evt) {$/;"	f
+onKeyDown	js/listeners.js	/^function onKeyDown(evt) {$/;"	f
 onLoad	js/app.js	/^function onLoad() {$/;"	f
 onRender	js/app.js	/^function onRender(now) {$/;"	f
 onSliderFovy	js/listeners.js	/^function onSliderFovy(slider, labelId) {$/;"	f
 onSliderRotation	js/listeners.js	/^function onSliderRotation(slider, labelId) {$/;"	f
-onTableColor	js/listeners.js	/^function onTableColor(picker) {$/;"	f
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -325,8 +320,8 @@ p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 parseFile	common/OBJParser.js	/^	static parseFile(fileContent) {$/;"	m	class:OBJParser
-parsedOBJ	js/app.js	/^var parsedOBJ = null; \/\/Parsed OBJ file$/;"	v
-phi_step	js/listeners.js	/^var phi_step = 1.0;$/;"	v
+parsed_model	js/app.js	/^var parsed_model = null;$/;"	v
+phi_step	js/listeners.js	/^let phi_step = 1.0;$/;"	v
 pitch	common/cameras/FreeCamera.js	/^	pitch(angle) {$/;"	m	class:FreeCamera
 pitchDown	common/cameras/FreeCamera.js	/^	pitchDown() {$/;"	m	class:FreeCamera
 pitchUp	common/cameras/FreeCamera.js	/^	pitchUp() {$/;"	m	class:FreeCamera
@@ -338,7 +333,7 @@ q	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 q	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 q	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 r	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	v
-radius_step	js/listeners.js	/^var radius_step = 1.0;$/;"	v
+radius_step	js/listeners.js	/^let radius_step = 0.5;$/;"	v
 rearrange2Lines	common/Utils.js	/^	static rearrange2Lines(indices) {$/;"	m	class:Utils
 refresh	js/listeners.js	/^function refresh() {$/;"	f
 render	common/primitives/Axis.js	/^	render(proj_mat, view_mat) {$/;"	m	class:Axis
@@ -346,7 +341,7 @@ request	js/app.js	/^var request;$/;"	v
 roll	common/cameras/FreeCamera.js	/^	roll(angle) {$/;"	m	class:FreeCamera
 rollLeft	common/cameras/FreeCamera.js	/^	rollLeft() {$/;"	m	class:FreeCamera
 rollRight	common/cameras/FreeCamera.js	/^	rollRight() {$/;"	m	class:FreeCamera
-rotationSpeed	js/app.js	/^var rotationSpeed = 30;$/;"	v
+rotation_speed	js/app.js	/^var rotation_speed = 22;$/;"	v
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -355,7 +350,6 @@ s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-setObjTransformations	js/app.js	/^function setObjTransformations(i) {$/;"	f
 setPhi	common/cameras/SphericalCamera.js	/^	setPhi(phi) {$/;"	m	class:SphericalCamera
 setRadius	common/cameras/SphericalCamera.js	/^	setRadius(radius) {$/;"	m	class:SphericalCamera
 setTheta	common/cameras/SphericalCamera.js	/^	setTheta(theta) {$/;"	m	class:SphericalCamera
@@ -363,7 +357,7 @@ shader_program	js/app.js	/^var shader_program = null;$/;"	v
 sherical_cam	js/app.js	/^var sherical_cam = null;$/;"	v
 sleep	js/listeners.js	/^function sleep(ms) {$/;"	f
 then	js/app.js	/^var then = 0;$/;"	v
-theta_step	js/listeners.js	/^var theta_step = 1.0;$/;"	v
+theta_step	js/listeners.js	/^let theta_step = 1.0;$/;"	v
 toggleAnimated	js/listeners.js	/^function toggleAnimated() {$/;"	f
 toggleFullscreen	js/listeners.js	/^function toggleFullscreen() {$/;"	f
 toggleSolid	js/listeners.js	/^function toggleSolid() {$/;"	f
@@ -385,7 +379,7 @@ v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-vao_solid	js/app.js	/^var vao_solid = null; \/\/Geometry to render (stored in VAO).$/;"	v
+vao_solid	js/app.js	/^var vao_solid = null;$/;"	v
 vao_wire	js/app.js	/^var vao_wire = null;$/;"	v
 vertex_shader_source	common/primitives/Axis.js	/^	vertex_shader_source() {$/;"	m	class:Axis
 w	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
