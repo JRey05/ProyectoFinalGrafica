@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>404</title>
@@ -24,106 +25,126 @@
 	<script src="assets/champions/champions.obj"></script>
 	<script src="assets/champions/champions-base.obj"></script>
 	<script src="assets/champions/champions-stand.obj"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body onkeypress='onKeyDown(event);' onload='onLoad();'>
-	<button onclick="onRender();">Render Method!</button>
+	<!-- <button onclick="onRender();">Render Method!</button> -->
 	<br>
 	<br>
-	<table border="2" style='float:left;'>
-		<tr><th>Param</th><th>Control</th><th>Value</th></tr>
+	<table class="table table-striped" border="2" style='float:left; width: 40%;font-style: Georgia;font-size: 17px;'>
+		<thead class="table-info">
+			<tr style="font-size: 22px;">
+				<th scope="col" style="width: 15%">Param</th>
+				<th scope="col" style="width: 15%">Control</th>
+				<th scope="col" style="width: 10%">Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Camera FovY</td>
+				<td>10º&le;<input type="range" min="10" max="90" step="1" value="55"
+						oninput="onSliderFovy(this, 'lbl_fovy');">&le;90</td>
+				<td id="lbl_fovy">55</td>
+			</tr>
+			<tr>
+				<td>Drone Body Color</td>
+				<td><input type='color' value="#FFFFFF" oninput="onDrone1BodyColor(this)"></td>
+				<td id='lbl_drone1_body_color'></td>
+			</tr>
+			<tr>
+				<td>Drone Rotors Color</td>
+				<td><input type='color' value="#FFFFFF" oninput="onDrone1RotorsColor(this)"></td>
+				<td id='lbl_drone1_rotors_color'></td>
+			</tr>
+			<tr>
+				<td>Model Mode</td>
+				<td>
+					Solid mode (M)
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Scene Mode</td>
+				<td>
+					Animated mode (P)
+					<br>
+					Fullscreen (F)
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Free cam forward/backward</td>
+				<td>W/S</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Free cam left/right</td>
+				<td>A/D</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Free cam up/down</td>
+				<td>ArrowUp/ArrowDown</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Free cam pitch <font color="red">(X)</font>
+				</td>
+				<td>I/K</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Free cam yaw <font color="gree">(Y)</font>
+				</td>
+				<td>J/L</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Free cam roll <font color="blue">(Z)</font>
+				</td>
+				<td>U/O</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Spherical cam radius</td>
+				<td>+/-</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Spherical cam phi</td>
+				<td>Y/B</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Spherical cam theta</td>
+				<td>G/H</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Rotors Rotation on Y</td>
+				<td>0º&le;<input type="range" min="1" max="360" step="1" value="0"
+						oninput="onSliderRotation(this, 'lbl_rotation_y');">&le;360º</td>
+				<td id='lbl_rotation_y'>0</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray" onclick="onClick(event);"></canvas>
+	<table class="table" style='position: relative;left: 275px; width: 500px;'>
 		<tr>
-			<td>Camera FovY</td>
-			<td>10º&le;<input type="range" min="10" max="90" step="1" value="55" oninput="onSliderFovy(this, 'lbl_fovy');">&le;90</td>
-			<td id="lbl_fovy">55</td>
-		</tr>
-		<tr>
-			<td>Drone Body Color</td>
-			<td><input type='color' value="#FFFFFF" oninput="onDrone1BodyColor(this)"></td>
-			<td id='lbl_drone1_body_color'></td>
-		</tr>
-		<tr>
-			<td>Drone Rotors Color</td>
-			<td><input type='color' value="#FFFFFF" oninput="onDrone1RotorsColor(this)"></td>
-			<td id='lbl_drone1_rotors_color'></td>
-		</tr>
-		<tr>
-			<td>Model Mode</td>
-			<td>
-				Solid mode (M)
-			</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Scene Mode</td>
-			<td>
-				Animated mode (P)
-				<br>
-				Fullscreen (F)
-			</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Free cam forward/backward</td>
-			<td>W/S</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Free cam left/right</td>
-			<td>A/D</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Free cam up/down</td>
-			<td>ArrowUp/ArrowDown</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Free cam pitch <font color="red">(X)</font></td>
-			<td>I/K</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Free cam yaw <font color="gree">(Y)</font></td>
-			<td>J/L</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Free cam roll <font color="blue">(Z)</font></td>
-			<td>U/O</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Spherical cam radius</td>
-			<td>+/-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Spherical cam phi</td>
-			<td>Y/B</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Spherical cam theta</td>
-			<td>G/H</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Rotors Rotation on Y</td>
-			<td>0º&le;<input type="range" min="1" max="360" step="1" value="0" oninput="onSliderRotation(this, 'lbl_rotation_y');">&le;360º</td>
-			<td id='lbl_rotation_y'>0</td>
-		</tr>
-		<tr>
-			<td>
-				<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()" onkeypress="onKeyDown(event);">Cámara esférica</button>
-				<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()" onkeypress="onKeyDown(event);">Cámara libre</button>
-				<button class="btn btn-success" type="button" id="camaraAutomatica" onclick="camaraAutomatica();">Cámara automática
-				 <span class="glyphicon glyphicon-arrow-up"></span>
-				</button>
-			</td>
+			<td><button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"
+					onkeypress="onKeyDown(event);">Cámara esférica</button></td>
+			<td><button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"
+					onkeypress="onKeyDown(event);">Cámara libre</button></td>
+			<td><button class="btn btn-success" type="button" id="camaraAutomatica" onclick="camaraAutomatica();">Cámara
+					automática
+					<span class="glyphicon glyphicon-arrow-up"></span>
+				</button></td>
 		</tr>
 	</table>
 
-	<canvas id='canvas' width = "1024" height = "768" style="border: 1px solid gray" onclick="onClick(event);"></canvas>
-
 </body>
+
 </html>

@@ -306,7 +306,7 @@ async function camaraAutomatica() {
 	automatica = true;
 	while (automatica) {
 		increaseTheta();
-		await sleep(50);
+		await sleep(15);
 		refresh();
 	}
 }
