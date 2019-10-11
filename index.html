@@ -20,6 +20,7 @@
 	<script src="js/listeners.js"></script>
 	<script src="js/Model.js"></script>
 
+	<script src="assets/copaDescargada/copaV2.obj"></script>
 	<script src="assets/drone/drone-body.obj"></script>
 	<script src="assets/drone/drone-rotors.obj"></script>
 	<script src="assets/champions/champions.obj"></script>
@@ -29,11 +30,12 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body onkeypress='onKeyDown(event);' onload='onLoad();'>
+<body onkeypress='onKeyDown(event);' onload='onLoad();' style="background-color: rgb(37, 40, 80);">
 	<!-- <button onclick="onRender();">Render Method!</button> -->
 	<br>
 	<br>
-	<table class="table table-striped" border="2" style='float:left; width: 40%;font-style: Georgia;font-size: 17px;'>
+	<table class="table table-striped" border="2"
+		style='float:left; width: 40%;font-style: Georgia;font-size: 17px; background-color: seashell;'>
 		<thead class="table-info">
 			<tr style="font-size: 22px;">
 				<th scope="col" style="width: 15%">Param</th>
@@ -130,21 +132,83 @@
 			</tr>
 		</tbody>
 	</table>
-
-	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray" onclick="onClick(event);"></canvas>
-	<table class="table" style='position: relative;left: 275px; width: 500px;'>
-		<tr>
-			<td><button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"
-					onkeypress="onKeyDown(event);">Cámara esférica</button></td>
-			<td><button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"
-					onkeypress="onKeyDown(event);">Cámara libre</button></td>
-			<td><button class="btn btn-success" type="button" id="camaraAutomatica" onclick="camaraAutomatica();">Cámara
-					automática
-					<span class="glyphicon glyphicon-arrow-up"></span>
-				</button></td>
-		</tr>
+	<br>
+	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30px"
+		onclick="onClick(event);"></canvas>
+	<table class="table table-striped"
+		style='position: relative;left: 180px; width: 800px; font-size: 22px; background-color: rgb(158, 176, 216); margin-top: 3px;'>
+		<thead class="table-info">
+			<tr>
+				<th scope="col">Cámaras</th>
+				<th scope="col">Animaciones</th>
+				<th scope="col"></th>
+				<th scope="col">Sentido</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>
+					<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"
+						onkeypress="onKeyDown(event);">Cámara esférica</button>
+				</th>
+				<th>
+					<button class="btn btn-success" type="button" id="rotarTrofeo1" onclick="rotarTrofeo1()"
+						onkeypress="onKeyDown(event);">rotación trofeo 1</button>
+				</th>
+				<th>
+					<label>Horario</label>
+				</th>
+				<th>
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="horario1()">
+						<label class="custom-control-label"
+							for="customSwitch1">&nbsp;&nbsp;&nbsp;&nbsp;Anti-horario</label>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"
+						onkeypress="onKeyDown(event);">Cámara libre</button>
+				</th>
+				<th>
+					<button class="btn btn-success" type="button" id="rotarTrofeo2" onclick="rotarTrofeo2()"
+						onkeypress="onKeyDown(event);">Rotación trofeo 2</button>
+				</th>
+				<th>
+					<label>Horario</label>
+				</th>
+				<th>
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="customSwitch2" onclick="horario2()">
+						<label class= "custom-control-label"
+							for="customSwitch2">&nbsp;&nbsp;&nbsp;&nbsp;Anti-horario</label>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button class="btn btn-success" type="button" id="camaraAutomatica"
+						onclick="camaraAutomatica();">Cámara automática </button>
+				</th>
+				<th>
+					<button class="btn btn-success" type="button" id="oribita" onclick="orbita()"
+						onkeypress="onKeyDown(event);">Orbita</button>
+				</th>
+				<th>
+					<label>Champions</label>
+				</th>
+				<th>
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="customSwitch3" onclick="orbitaLaChampions()">
+						<!-- <input type="checkbox" class="custom-control-input" id="customSwitch3" onclick="orbitaLaChampions()"> -->
+						<label class="custom-control-label"
+							for="customSwitch3">&nbsp;&nbsp;&nbsp;&nbsp;Descargada</label>
+					</div>
+				</th>
+			</tr>
+		</tbody>
 	</table>
-
 </body>
 
 </html>
