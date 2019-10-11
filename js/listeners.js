@@ -22,6 +22,66 @@ function toggleSolid() {
 	refresh();
 }
 
+function rotarTrofeo1() {
+	rotar1 = !rotar1;
+	/*
+	if (rotar1) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+	*/
+}
+
+function rotarTrofeo2() {
+	rotar2 = !rotar2;
+	/*
+	if (rotar2) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+	*/
+}
+
+function horario1() {
+	rotacionT1 = !rotacionT1;
+	/*
+	if (rotar1) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+	*/
+}
+
+function horario2() {
+	rotacionT2 = !rotacionT2;
+	/*
+	if (rotar1) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+	*/
+}
+
+function orbita() {
+	orbitando = !orbitando;
+	/*
+	if (rotar1) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+	*/
+}
+
 function toggleAnimated() {
 	is_animated = !is_animated;
 	if (is_animated) {
