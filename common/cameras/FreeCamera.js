@@ -16,7 +16,7 @@ class FreeCamera extends Camera {
 	get view_mat() {
 		let eye = this._eye;
 		let up = this.up;
-		let target = vec3.fromValues(0, 0, 0);
+		let target = vec3.create();
 		vec3.add(target, eye, this._forward);
 
 		mat4.lookAt(this._view_mat, eye, target, up);
@@ -115,6 +115,7 @@ class FreeCamera extends Camera {
 
 		quat.setAxisAngle(quat_rot, axis, angle);
 		vec3.transformQuat(right, this._right, quat_rot);
+		vec3.normalize(right, right);
 		if (Math.abs(right[1]) <= 0.95) {
 			vec3.copy(this._right, right);
 		}
@@ -128,6 +129,7 @@ class FreeCamera extends Camera {
 
 		quat.setAxisAngle(quat_rot, axis, angle);
 		vec3.transformQuat(forward, this._forward, quat_rot);
+		vec3.normalize(forward, forward);
 		if (Math.abs(forward[1]) <= 0.95) {
 			vec3.copy(this._forward, forward);
 		}

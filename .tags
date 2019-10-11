@@ -163,14 +163,14 @@ c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-camaraAutomatica	index.html	/^				<button class="btn btn-success" type="button" id="camaraAutomatica" onclick="camaraAutomatic/;"	I
+camaraAutomatica	index.html	/^					<button class="btn btn-success" type="button" id="camaraAutomatica"$/;"	I
 camaraAutomatica	js/listeners.js	/^async function camaraAutomatica() {$/;"	f
-camaraEsferica	index.html	/^				<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"/;"	I
+camaraEsferica	index.html	/^					<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()/;"	I
 camaraEsferica	js/listeners.js	/^function camaraEsferica() {$/;"	f
-camaraLibre	index.html	/^				<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()" onkey/;"	I
+camaraLibre	index.html	/^					<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"$/;"	I
 camaraLibre	js/listeners.js	/^function camaraLibre() {$/;"	f
 camera	js/app.js	/^var camera = null;$/;"	v
-canvas	index.html	/^	<canvas id='canvas' width = "1024" height = "768" style="border: 1px solid gray" onclick="onCli/;"	I
+canvas	index.html	/^	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30px"$/;"	I
 canvas	js/app.js	/^var canvas = null;$/;"	v
 colors	js/app.js	/^var colors = [];$/;"	v
 constructor	common/VertexAttributeInfo.js	/^	constructor(data, loc, size) {$/;"	m	class:VertexAttributeInfo
@@ -183,6 +183,9 @@ create	common/VAOHelper.js	/^	static create(indices, vertex_attributes_info) {$/
 createEBO	common/VAOHelper.js	/^	static createEBO(indices) {$/;"	m	class:VAOHelper
 createShader	common/ShaderProgramHelper.js	/^	static createShader(type, shader_source) {$/;"	m	class:ShaderProgramHelper
 createVBO	common/VAOHelper.js	/^	static createVBO(data) {$/;"	m	class:VAOHelper
+customSwitch1	index.html	/^						<input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="horario1()/;"	I
+customSwitch2	index.html	/^						<input type="checkbox" class="custom-control-input" id="customSwitch2" onclick="horario2()/;"	I
+customSwitch3	index.html	/^						<input type="checkbox" class="custom-control-input" id="customSwitch3" onclick="orbitaLaCh/;"	I
 d	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 d	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 d	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -236,6 +239,8 @@ h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 hex2RgbFloat	common/Utils.js	/^	static hex2RgbFloat(hex) {$/;"	m	class:Utils
 hex2RgbInt	common/Utils.js	/^	static hex2RgbInt(hex) {$/;"	m	class:Utils
+horario1	js/listeners.js	/^function horario1() {$/;"	f
+horario2	js/listeners.js	/^function horario2() {$/;"	f
 i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -247,7 +252,7 @@ i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 increasePhi	js/listeners.js	/^function increasePhi() {$/;"	f
 increaseRadius	js/listeners.js	/^function increaseRadius() {$/;"	f
 increaseTheta	js/listeners.js	/^function increaseTheta() {$/;"	f
-is_animated	js/app.js	/^var is_animated = false;$/;"	v
+isAnimated	js/app.js	/^function isAnimated() {$/;"	f
 is_free	js/listeners.js	/^let is_free = true;$/;"	v
 is_solid	js/app.js	/^var is_solid = false;$/;"	v
 is_spherical	js/listeners.js	/^let is_spherical = false;$/;"	v
@@ -263,10 +268,10 @@ l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-lbl_drone1_body_color	index.html	/^			<td id='lbl_drone1_body_color'><\/td>$/;"	I
-lbl_drone1_rotors_color	index.html	/^			<td id='lbl_drone1_rotors_color'><\/td>$/;"	I
-lbl_fovy	index.html	/^			<td id="lbl_fovy">55<\/td>$/;"	I
-lbl_rotation_y	index.html	/^			<td id='lbl_rotation_y'>0<\/td>$/;"	I
+lbl_drone1_body_color	index.html	/^				<td id='lbl_drone1_body_color'><\/td>$/;"	I
+lbl_drone1_rotors_color	index.html	/^				<td id='lbl_drone1_rotors_color'><\/td>$/;"	I
+lbl_fovy	index.html	/^				<td id="lbl_fovy">55<\/td>$/;"	I
+lbl_rotation_y	index.html	/^				<td id='lbl_rotation_y'>0<\/td>$/;"	I
 load	common/primitives/Axis.js	/^	load() {$/;"	m	class:Axis
 loadModels	js/app.js	/^function loadModels(loc_pos) {$/;"	f
 loc_color	js/app.js	/^var loc_color;$/;"	v
@@ -291,6 +296,7 @@ moveForward	common/cameras/FreeCamera.js	/^	moveForward() {$/;"	m	class:FreeCame
 moveLeft	common/cameras/FreeCamera.js	/^	moveLeft() {$/;"	m	class:FreeCamera
 moveRight	common/cameras/FreeCamera.js	/^	moveRight() {$/;"	m	class:FreeCamera
 moveUp	common/cameras/FreeCamera.js	/^	moveUp() {$/;"	m	class:FreeCamera
+mustOrb	js/app.js	/^function mustOrb(i) {$/;"	f
 n	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850100.AnonymousFunctionf1105c850200
 n	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:n
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
@@ -311,6 +317,11 @@ onLoad	js/app.js	/^function onLoad() {$/;"	f
 onRender	js/app.js	/^function onRender(now) {$/;"	f
 onSliderFovy	js/listeners.js	/^function onSliderFovy(slider, labelId) {$/;"	f
 onSliderRotation	js/listeners.js	/^function onSliderRotation(slider, labelId) {$/;"	f
+orbita	index.html	/^					<button class="btn btn-success" type="button" id="orbita" onclick="orbita()"$/;"	I
+orbita	js/listeners.js	/^function orbita() {$/;"	f
+orbitaChampions	js/app.js	/^var orbitaChampions = false;$/;"	v
+orbitaLaChampions	js/listeners.js	/^function orbitaLaChampions() {$/;"	f
+orbitando	js/app.js	/^var orbitando = false;$/;"	v
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -337,10 +348,18 @@ radius_step	js/listeners.js	/^let radius_step = 0.5;$/;"	v
 rearrange2Lines	common/Utils.js	/^	static rearrange2Lines(indices) {$/;"	m	class:Utils
 refresh	js/listeners.js	/^function refresh() {$/;"	f
 render	common/primitives/Axis.js	/^	render(proj_mat, view_mat) {$/;"	m	class:Axis
-request	js/app.js	/^var request;$/;"	v
+request	js/app.js	/^var request = null;$/;"	v
 roll	common/cameras/FreeCamera.js	/^	roll(angle) {$/;"	m	class:FreeCamera
 rollLeft	common/cameras/FreeCamera.js	/^	rollLeft() {$/;"	m	class:FreeCamera
 rollRight	common/cameras/FreeCamera.js	/^	rollRight() {$/;"	m	class:FreeCamera
+rotacionT1	js/app.js	/^var rotacionT1 =true;$/;"	v
+rotacionT2	js/app.js	/^var rotacionT2 =false;$/;"	v
+rotar1	js/app.js	/^var rotar1 = false;$/;"	v
+rotar2	js/app.js	/^var rotar2 = false;$/;"	v
+rotarTrofeo1	index.html	/^					<button class="btn btn-success" type="button" id="rotarTrofeo1" onclick="rotarTrofeo1()"$/;"	I
+rotarTrofeo1	js/listeners.js	/^function rotarTrofeo1() {$/;"	f
+rotarTrofeo2	index.html	/^					<button class="btn btn-success" type="button" id="rotarTrofeo2" onclick="rotarTrofeo2()"$/;"	I
+rotarTrofeo2	js/listeners.js	/^function rotarTrofeo2() {$/;"	f
 rotation_speed	js/app.js	/^var rotation_speed = 22;$/;"	v
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 s	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
@@ -358,7 +377,6 @@ sherical_cam	js/app.js	/^var sherical_cam = null;$/;"	v
 sleep	js/listeners.js	/^function sleep(ms) {$/;"	f
 then	js/app.js	/^var then = 0;$/;"	v
 theta_step	js/listeners.js	/^let theta_step = 1.0;$/;"	v
-toggleAnimated	js/listeners.js	/^function toggleAnimated() {$/;"	f
 toggleFullscreen	js/listeners.js	/^function toggleFullscreen() {$/;"	f
 toggleSolid	js/listeners.js	/^function toggleSolid() {$/;"	f
 transformations	js/app.js	/^var transformations = [];$/;"	v

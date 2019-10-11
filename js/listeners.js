@@ -24,26 +24,22 @@ function toggleSolid() {
 
 function rotarTrofeo1() {
 	rotar1 = !rotar1;
-	/*
-	if (rotar1) {
+	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
 	} else {
 		onRender();
 	}
-	*/
 }
 
 function rotarTrofeo2() {
 	rotar2 = !rotar2;
-	/*
-	if (rotar2) {
+	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
 	} else {
 		onRender();
 	}
-	*/
 }
 
 function horario1() {
@@ -72,41 +68,37 @@ function horario2() {
 
 function orbita() {
 	orbitando = !orbitando;
-	/*
-	if (rotar1) {
+	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
 	} else {
 		onRender();
 	}
-	*/
 }
-/*
+
+
 function orbitaLaChampions() {
 	orbitaChampions = !orbitaChampions;
-*/
-	/*
-	if (rotar1) {
-		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
-		window.requestAnimationFrame(onRender);
-	} else {
-		onRender();
-	}
-	*/
-//}
-
-
-
-function toggleAnimated() {
-	is_animated = !is_animated;
-	if (is_animated) {
-		// Cross-platform.
+	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
 	} else {
 		onRender();
 	}
 }
+
+
+
+// function toggleAnimated() {
+// 	is_animated = !is_animated;
+// 	if (is_animated) {
+// 		// Cross-platform.
+// 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+// 		window.requestAnimationFrame(onRender);
+// 	} else {
+// 		onRender();
+// 	}
+// }
 
 function onSliderRotation(slider, labelId) {
 	angle = parseFloat(slider.value);
@@ -149,25 +141,21 @@ function decreaseRadius() {
 let theta_step = 1.0;
 function increaseTheta() {
 	let theta = camera.getTheta();
-	theta += theta_step;
-	//if (theta <= 360.0) {
+	theta = (theta + theta_step) % 360;
 	camera.setTheta(theta);
-	//}
 }
 
 function decreaseTheta() {
 	let theta = camera.getTheta();
-	theta -= theta_step;
-	//	if (theta >= 0.0) {
+	theta = (theta - theta_step) % 360;
 	camera.setTheta(theta);
-	//}
 }
 
 let phi_step = 1.0;
 function increasePhi() {
 	let phi = camera.getPhi();
 	phi += phi_step;
-	if (phi < 180) {
+	if (phi <= 180) {
 		camera.setPhi(phi);
 	}
 }
@@ -251,10 +239,10 @@ function onKeyDown(evt) {
 			// onCheckboxSolid();
 			toggleSolid();
 			break;
-		case "KeyP":
-			// onCheckboxAnimated();
-			toggleAnimated();
-			break;
+		// case "KeyP":
+		// 	// onCheckboxAnimated();
+		// 	toggleAnimated();
+		// 	break;
 		case "KeyY":
 			if (is_spherical) {
 				increasePhi();
@@ -416,7 +404,7 @@ function camaraLibre() {
 }
 
 function refresh() {
-	if (!is_animated) {
+	if (!isAnimated()) {
 		onRender();
 	}
 }
