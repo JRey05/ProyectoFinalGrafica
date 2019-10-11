@@ -29,6 +29,12 @@ var vao_wire = null;
 // Datos globales auxiliares.
 var is_solid = false;
 var is_animated = false;
+var rotar1 = false;
+var rotar2 = false;
+var rotacionT1 =true;
+var rotacionT2 =false;
+var orbitando = false;
+var orbitaChampions = false;
 var request;
 
 // Parsed OBJ file
