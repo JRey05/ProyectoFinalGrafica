@@ -81,6 +81,21 @@ function orbita() {
 	}
 	*/
 }
+/*
+function orbitaLaChampions() {
+	orbitaChampions = !orbitaChampions;
+*/
+	/*
+	if (rotar1) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+	*/
+//}
+
+
 
 function toggleAnimated() {
 	is_animated = !is_animated;

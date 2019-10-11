@@ -77,12 +77,20 @@ function loadModels(loc_pos) {
 	models.push(champions);
 	let champions_translation = vec3.fromValues(0, 0, 1);
 	vec3.add(champions._center, champions._center, champions_translation);
+  /*
+  let champions_orbitation = [];
+	champions_orbitation.push(copaV2._center);
+	champions_orbitation.push(vec3.fromValues(0, 1, 0));
+	champions_orbitation.push(0);
+  */
+//	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_translation, champions_orbitation]);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_translation]);
 
 	let champions_base = new Model(champions_base_source);
 	champions_base.generateModel(loc_pos);
 	models.push(champions_base);
 	let champions_base_translation = vec3.fromValues(0, 0, 1);
+//	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation, champions_orbitation]);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation]);
 
 	let champions_stand = new Model(champions_stand_source);
@@ -104,9 +112,9 @@ function loadModels(loc_pos) {
 	copaDescargada_orbitation.push(0);
 	transformations.push([copaDescargada_scaling, copaDescargada_rotating, copaDescargada_translation, copaDescargada_orbitation]);
 
-	let rotors = new Model(champions_stand_source);
-	rotors.generateModel(loc_pos);
-	models.push(rotors);
+	let standDescargada = new Model(champions_stand_source);
+	standDescargada.generateModel(loc_pos);
+	models.push(standDescargada);
 	let rotors1_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), rotors1_translation, copaDescargada_orbitation]);
 }
@@ -264,7 +272,13 @@ function onRender(now) {
       }
     }
     if (orbitando) {
-	    transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
+/*      if (orbitaChampions) {
+        transformations[CHAMPIONS][ORBITAR][2] -= rotation_speed * delta_time;
+      }
+*/
+//      else {
+        transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
+//      }
     }
 	} else {
 		then = -1;
