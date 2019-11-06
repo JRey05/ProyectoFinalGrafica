@@ -10,7 +10,9 @@ const BASE_PELOTA = 6;
 const PELOTA = 7;
 const SOPORTE_PELOTA = 8;
 const MARCO_CUADRO = 9;
-
+const SUELO = 10;
+const PAREDES = 11;
+const TECHO = 12;
 
 // Seran los indices que indican las transformaciones.
 const ESCALADO=0;
@@ -152,6 +154,32 @@ function loadModels(loc_pos) {
 	let soportePelota_translation = vec3.fromValues(1000, 1000, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), soportePelota_translation]);
 
+	let marco = new Model(marcoCuadro_source);
+	marco.generateModel(loc_pos);
+	models.push(marco);
+	let marco_translation = vec3.fromValues(0, 1000, -2500);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), marco_translation]);
+
+
+
+	let suelo = new Model(suelo_source);
+	suelo.generateModel(loc_pos);
+	models.push(suelo);
+	let suelo_translation = vec3.fromValues(0, 0, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), suelo_translation]);
+
+	let paredes = new Model(paredes_source);
+	paredes.generateModel(loc_pos);
+	models.push(paredes);
+	let paredes_translation = vec3.fromValues(0, 0, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), paredes_translation]);
+
+	let techo = new Model(techo_source);
+	techo.generateModel(loc_pos);
+	models.push(techo);
+	let techo_translation = vec3.fromValues(0, 0, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), techo_translation]);
+
 }
 
 /**
@@ -214,21 +242,48 @@ function onLoad() {
 		applyTransformations(i);
 	}
 
+/*
+	const CHAMPIONS = 0;
+	const BASE_CHAMPIONS = 1;
+	const STAND_CHAMPIONS = 2;
+	const COPA_DESCARGADA = 3;
+	const STAND_COPA_DESCARGADA = 4;
+	const STAND_PELOTA = 5;
+	const BASE_PELOTA = 6;
+	const PELOTA = 7;
+	const SOPORTE_PELOTA = 8;
+	const MARCO_CUADRO = 9;
+	const SUELO = 10;
+	const PAREDES = 11;
+	const TECHO = 12;
+	*/
 	let champions_color = Utils.hex2RgbFloat("#A9A9A9");
 	let champions_base_color = Utils.hex2RgbFloat("#DCDCDC");
 	let champions_stand_color = Utils.hex2RgbFloat("#8B4513");
-	let drone1_color = Utils.hex2RgbFloat("#000000");
-	let rotors1_color = Utils.hex2RgbFloat("#9400D3");
+	let copaDescargada_color = Utils.hex2RgbFloat("#000000");
+	let copaDescargada_base_color = Utils.hex2RgbFloat("#DCDCDC");
+	let copaDescargada_stand_color = Utils.hex2RgbFloat("#8B4513");
+	let pelota_stand_color = Utils.hex2RgbFloat("#9400D3");
+	let base_pelota_color = Utils.hex2RgbFloat("#9400D3");
+	let soporte_pelota_color = Utils.hex2RgbFloat("#9400D3");
+	let marco_color = Utils.hex2RgbFloat("#9400D3");
+	let suelo_color = Utils.hex2RgbFloat("#9400D3");
+	let paredes_color = Utils.hex2RgbFloat("#E75252");
+	let techo_color = Utils.hex2RgbFloat("#DDDDDD");
 
 	colors.push(vec3.fromValues(champions_color.r, champions_color.g, champions_color.b));
 	colors.push(vec3.fromValues(champions_base_color.r, champions_base_color.g, champions_base_color.b));
 	colors.push(vec3.fromValues(champions_stand_color.r, champions_stand_color.g, champions_stand_color.b));
-	colors.push(vec3.fromValues(drone1_color.r, drone1_color.g, drone1_color.b));
-	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
-	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
-	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
-	colors.push(vec3.fromValues(drone1_color.r, drone1_color.g, drone1_color.b));
-	colors.push(vec3.fromValues(champions_stand_color.r, champions_stand_color.g, champions_stand_color.b));
+	colors.push(vec3.fromValues(copaDescargada_color.r, copaDescargada_color.g, copaDescargada_color.b));
+	colors.push(vec3.fromValues(copaDescargada_base_color.r, copaDescargada_base_color.g, copaDescargada_base_color.b));
+	colors.push(vec3.fromValues(copaDescargada_stand_color.r, copaDescargada_stand_color.g, copaDescargada_stand_color.b));
+	colors.push(vec3.fromValues(pelota_stand_color.r, pelota_stand_color.g, pelota_stand_color.b));
+	colors.push(vec3.fromValues(base_pelota_color.r, base_pelota_color.g, base_pelota_color.b));
+	colors.push(vec3.fromValues(soporte_pelota_color.r, soporte_pelota_color.g, soporte_pelota_color.b));
+	colors.push(vec3.fromValues(marco_color.r, marco_color.g, marco_color.b));
+	colors.push(vec3.fromValues(suelo_color.r, suelo_color.g, suelo_color.b));
+	colors.push(vec3.fromValues(paredes_color.r, paredes_color.g, paredes_color.b));
+	colors.push(vec3.fromValues(techo_color.r, techo_color.g, techo_color.b));
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.3, 1.0);
