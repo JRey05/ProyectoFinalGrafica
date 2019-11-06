@@ -58,6 +58,44 @@ var sherical_cam = null;
 var loc_world_mat;
 var loc_proj_mat;
 var loc_color;
+var u_normalMatrix
+
+var u_color_ka;
+var u_color_kd;
+var u_color_ks;
+var u_CoefEsp;
+var u_lightInt;
+var u_lightEye;
+var u_lightColorA;
+var u_lightColorD;
+var u_lightColorE;
+var u_enableA;
+var u_enableD;
+var u_enableE;
+var aAtt=0.2;
+var bAtt=0.2;
+var cAtt=0.2;
+var u_aAtt;
+var u_bAtt;
+var u_cAtt;
+var u_sampler;
+var lightX=1.0;
+var lightY=0.0;
+var lightZ=600.0;
+
+var color_ka = [0.0,1.0,1.0];
+var color_kd = [0.0,1.0,0.0];
+var color_ks = [1.0,1.0,1.0];
+var CoefEsp = 40;
+var lightInt = 1.0;
+var lightColorA= [1.0,0.0,0.0];
+var lightColorD= [1.0,1.0,1.0];
+var lightColorE= [0.2,0.0,0.2];
+var enableA = 1.0;
+var enableD = 1.0;
+var enableE = 1.0;
+var miTextura;
+
 
 // Arreglo de modelos.
 var models = [];
@@ -235,6 +273,25 @@ function onLoad() {
 	loc_color = gl.getUniformLocation(shader_program, 'color');
 	loc_world_mat = gl.getUniformLocation(shader_program, 'world_mat');
 	loc_proj_mat = gl.getUniformLocation(shader_program, 'proj_mat');
+	let textLocation = gl.getAttribLocation(shader_program, 'vertexTex');
+	let normLocation = gl.getAttribLocation(shader_program, 'normal');
+	u_normalMatrix= gl.getUniformLocation(shader_program, 'normalMatrix');
+	u_color_ka = gl.getUniformLocation(shader_program,'color_ka');
+	u_color_kd = gl.getUniformLocation(shader_program,'color_kd');
+	u_color_ks = gl.getUniformLocation(shader_program,'color_ks');
+	u_CoefEsp = gl.getUniformLocation(shader_program,'CoefEsp');
+	u_lightInt = gl.getUniformLocation(shader_program,'lightInt');
+	u_lightEye = gl.getUniformLocation(shader_program,'lightEye');
+	u_lightColorA = gl.getUniformLocation(shader_program,'lightColorA');
+	u_lightColorD = gl.getUniformLocation(shader_program,'lightColorD');
+	u_lightColorE = gl.getUniformLocation(shader_program,'lightColorE');
+	u_enableA = gl.getUniformLocation(shader_program,'enableA');
+	u_enableD = gl.getUniformLocation(shader_program,'enableD');
+	u_enableE = gl.getUniformLocation(shader_program,'enableE');
+	u_aAtt=gl.getUniformLocation(shader_program,'aAtt');
+	u_bAtt=gl.getUniformLocation(shader_program,'bAtt');
+	u_cAtt=gl.getUniformLocation(shader_program,'cAtt');
+	u_sampler= gl.getUniformLocation(shader_program,'sampler');
 
 	loadModels(loc_pos);
 
@@ -310,11 +367,18 @@ function onRender(now) {
 	let view_mat = camera.view_mat,
 		proj_mat = camera.proj_mat;
 
+	var lightEye= [lightX,lightY,lightZ];	
+	
+	vec3.transformMat4(lightEye,lightEye,view_mat);
+
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	axis.render(proj_mat, view_mat);
 
 	gl.useProgram(shader_program);
 	gl.uniformMatrix4fv(loc_proj_mat, false, proj_mat);
+
+	
+	
 
 	if (isAnimated()) {
 		// Milisegundos a segundos.
@@ -357,7 +421,22 @@ function onRender(now) {
 	for (let i = 0; i < models.length; i++) {
 		applyTransformations(i);
 		models[i].model_mat = model_mats[i];
-		gl.uniform3fv(loc_color, colors[i]);
+		gl.uniform3fv(u_color_ka,color_ka);
+		gl.uniform3fv(u_color_kd,color_kd);
+		gl.uniform3fv(u_color_ks,color_ks);
+		gl.uniform3fv(u_lightColorA,lightColorA);
+		gl.uniform3fv(u_lightColorD,lightColorD);
+		gl.uniform3fv(u_lightColorE,lightColorE);
+		gl.uniform1f(u_CoefEsp,CoefEsp);
+		gl.uniform1f(u_lightInt,lightInt);
+		gl.uniform1f(u_enableA,enableA);
+		gl.uniform1f(u_enableD,enableD);
+		gl.uniform1f(u_enableE,enableE);
+		gl.uniform3fv(u_lightEye,lightEye);
+		gl.uniform1f(u_aAtt,aAtt);
+		gl.uniform1f(u_bAtt,bAtt);
+		gl.uniform1f(u_cAtt,cAtt);
+		//gl.uniform3fv(loc_color, colors[i]);
 		models[i].draw(is_solid);
 	}
 

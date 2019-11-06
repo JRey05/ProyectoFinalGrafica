@@ -2,7 +2,7 @@ class FreeCamera extends Camera {
 	constructor(fovy, aspect) {
 		super(fovy, aspect);
 		// Posición de la cámara.
-		this._eye = vec3.fromValues(0, 1000, 3000);
+		this._eye = vec3.fromValues(0, 1000, 2400);
 		// Vector unitario que indica la dirección delantera
 		this._forward = vec3.fromValues(0, 0, -1);
 		// Ídem dirección derecha.

@@ -9,7 +9,7 @@ class SphericalCamera extends Camera {
 
 	constructor(fovy, aspect) {
 		super(fovy, aspect);
-		this.r = 1000;//mm
+		this.r = 4000;//mm
 		this.theta = 90; //degrees
 		this.phi = 75; //degrees
 	}
