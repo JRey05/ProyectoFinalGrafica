@@ -1,14 +1,23 @@
+// Definir constantes.
+// Seran los indices en el arreglo de objetos
 const CHAMPIONS = 0;
 const BASE_CHAMPIONS = 1;
 const STAND_CHAMPIONS = 2;
 const COPA_DESCARGADA = 3;
 const STAND_COPA_DESCARGADA = 4;
+const STAND_PELOTA = 5;
+const BASE_PELOTA = 6;
+const PELOTA = 7;
+const SOPORTE_PELOTA = 8;
+const MARCO_CUADRO = 9;
 
+
+// Seran los indices que indican las transformaciones.
 const ESCALADO=0;
 const ROTACION=1;
 const TRASLACION=2;
-const ORBITAR=3;
 
+// Seran los indices que indican los ejes.
 const EJE_X=0;
 const EJE_Y=1;
 const EJE_Z=2;
@@ -33,8 +42,6 @@ var rotar1 = false;
 var rotar2 = false;
 var rotacionT1 =true;
 var rotacionT2 =false;
-var orbitando = false;
-var orbitaChampions = false;
 var request = null;
 
 // Parsed OBJ file
@@ -77,7 +84,7 @@ var rotation_speed = 22;
 	* Verifica si se requiere una animación.
 	*/
 function isAnimated() {
-	return (rotar1 || rotar2 || orbitando);
+	return (rotar1 || rotar2);
 }
 
 /**
@@ -88,17 +95,18 @@ function loadModels(loc_pos) {
 	let champions = new Model(champions_source);
 	champions.generateModel(loc_pos);
 	models.push(champions);
-	let champions_translation = vec3.fromValues(0, 0, 1);
+	let champions_translation = vec3.fromValues(0, 1010, 0);
 	vec3.add(champions._center, champions._center, champions_translation);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_translation]);
+	let champions_rotating = mat3.fromValues(-90,0,0);
+	transformations.push([vec3.fromValues(1, 1, 1), champions_rotating, champions_translation]);
 
-	let champions_base = new Model(champions_base_source);
+	let champions_base = new Model(base_giratoria_source);
 	champions_base.generateModel(loc_pos);
 	models.push(champions_base);
 	let champions_base_translation = vec3.fromValues(0, 0, 1);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation]);
 
-	let champions_stand = new Model(champions_stand_source);
+	let champions_stand = new Model(stand_giratorio_source);
 	champions_stand.generateModel(loc_pos);
 	models.push(champions_stand);
 	let champions_stand_translation = vec3.fromValues(0, 0, 1);
@@ -108,42 +116,42 @@ function loadModels(loc_pos) {
 	let copaDescargada = new Model(copaDescargada_source);
 	copaDescargada.generateModel(loc_pos);
 	models.push(copaDescargada);
-  let copaDescargada_scaling = mat3.fromValues(0.05,0.05,0.05);
-	vec3.scale(copaDescargada._center, copaDescargada._center, 0.05);
-  let copaDescargada_rotating = mat3.fromValues(-90,0,0);
-	let copaDescargada_translation = vec3.fromValues(0, 2*champions_stand._center[1], 0);
+  let copaDescargada_scaling = mat3.fromValues(5,5,5);
+  let copaDescargada_rotating = mat3.fromValues(0,0,0);
+	let copaDescargada_translation = vec3.fromValues(-1000, 1000, 0);
 	vec3.add(copaDescargada._center, copaDescargada._center, copaDescargada_translation);
-	let copaDescargada_orbitation = [];
-	let copaDescargada_orb_center = vec3.clone(champions_stand._center);
-	copaDescargada_orbitation.push(copaDescargada_orb_center);
-	copaDescargada_orbitation.push(vec3.fromValues(0, 1, 0));
-	copaDescargada_orbitation.push(0);
-	transformations.push([copaDescargada_scaling, copaDescargada_rotating, copaDescargada_translation, copaDescargada_orbitation]);
+	transformations.push([copaDescargada_scaling, copaDescargada_rotating, copaDescargada_translation]);
 
-	let standDescargada = new Model(champions_stand_source);
+	let standDescargada = new Model(standV2_source);
 	standDescargada.generateModel(loc_pos);
 	models.push(standDescargada);
-	let standDescargada_translation = vec3.fromValues(0, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standDescargada_translation, copaDescargada_orbitation]);
+	let standDescargada_translation = vec3.fromValues(-1000, 0, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standDescargada_translation]);
 
-	let champions_orbitation = [];
-	let champions_orb_center = vec3.clone(standDescargada._center);
-	champions_orbitation.push(champions_orb_center);
-	champions_orbitation.push(vec3.fromValues(0, 1, 0));
-	champions_orbitation.push(0);
-	transformations[CHAMPIONS][ORBITAR] = champions_orbitation;
-	transformations[BASE_CHAMPIONS][ORBITAR] = champions_orbitation;
-	transformations[STAND_CHAMPIONS][ORBITAR] = champions_orbitation;
-}
+	let standPelota = new Model(standV2_source);
+	standPelota.generateModel(loc_pos);
+	models.push(standPelota);
+	let standPelota_translation = vec3.fromValues(1000, 0, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standPelota_translation]);
 
-function mustOrb(i) {
-	let output = false;
-	if ((i == CHAMPIONS || i == BASE_CHAMPIONS || i == STAND_CHAMPIONS) && orbitaChampions) {
-		output = true;
-	} else if ((i == COPA_DESCARGADA || i == STAND_COPA_DESCARGADA) && !orbitaChampions) {
-		output = true;
-	}
-	return (output);
+	let basePelota = new Model(base_giratoria_source);
+	basePelota.generateModel(loc_pos);
+	models.push(basePelota);
+	let basePelota_translation = vec3.fromValues(1000, 0, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), basePelota_translation]);
+
+	let pelota = new Model(pelotaRugby_source);
+	pelota.generateModel(loc_pos);
+	models.push(pelota);
+	let pelota_translation = vec3.fromValues(1000, 1000, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), pelota_translation]);
+
+	let soportePelota = new Model(soportePelotaRugby_source);
+	soportePelota.generateModel(loc_pos);
+	models.push(soportePelota);
+	let soportePelota_translation = vec3.fromValues(1000, 1000, 0);
+	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), soportePelota_translation]);
+
 }
 
 /**
@@ -152,8 +160,7 @@ function mustOrb(i) {
 function applyTransformations(i) {
 	let scaling = transformations[i][ESCALADO],
 		rotation = transformations[i][ROTACION],
-		translation = transformations[i][TRASLACION],
-		orbitation = transformations[i][ORBITAR];
+		translation = transformations[i][TRASLACION];
 
 	let scaling_mat = null,
 		x_rotation_mat = null,
@@ -187,34 +194,6 @@ function applyTransformations(i) {
 		mat4.fromTranslation(translation_mat, translation);
 		mat4.mul(model_mat, translation_mat, model_mat);
 	}
-
-	if (orbitation != null) {
-		if (orbitando && mustOrb(i)) {
-			if (i == CHAMPIONS || i == BASE_CHAMPIONS || i == STAND_CHAMPIONS) {
-				orbitation[0] = vec3.clone(models[STAND_COPA_DESCARGADA]._center);
-			} else {
-				orbitation[0] = vec3.clone(models[STAND_CHAMPIONS]._center);
-			}
-		}
-		let target = orbitation[0];
-		let target_axis = orbitation[1];
-		let quat_rot = quat.create();
-		let inverse = mat4.create();
-		let inv_target = vec3.create();
-		inv_target = vec3.negate(inv_target, target);
-		let rotation = mat4.create();
-		let angle = orbitation[2];
-		quat.setAxisAngle(quat_rot, target_axis, glMatrix.toRadian(angle));
-		mat4.fromRotationTranslation(rotation, quat_rot, target);
-		mat4.fromTranslation(inverse, inv_target);
-		mat4.mul(rotation, rotation, inverse);
-		// vec3.transformMat4(models[i]._center, models[i]._center, rotation);
-		mat4.mul(model_mat, rotation, model_mat);
-		if (orbitando && mustOrb(i)) {
-			vec3.transformMat4(models[i]._center, models[i]._center, rotation);
-		}
-	}
-
 	model_mats[i] = model_mat;
 }
 
@@ -246,6 +225,10 @@ function onLoad() {
 	colors.push(vec3.fromValues(champions_stand_color.r, champions_stand_color.g, champions_stand_color.b));
 	colors.push(vec3.fromValues(drone1_color.r, drone1_color.g, drone1_color.b));
 	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
+	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
+	colors.push(vec3.fromValues(rotors1_color.r, rotors1_color.g, rotors1_color.b));
+	colors.push(vec3.fromValues(drone1_color.r, drone1_color.g, drone1_color.b));
+	colors.push(vec3.fromValues(champions_stand_color.r, champions_stand_color.g, champions_stand_color.b));
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.3, 1.0);
@@ -302,18 +285,15 @@ function onRender(now) {
     }
     if (rotar2) {
       if (rotacionT2) {
-        transformations[COPA_DESCARGADA][ROTACION][EJE_Y] += rotation_speed * delta_time;
+        transformations[BASE_PELOTA][ROTACION][EJE_Y] += rotation_speed * delta_time;
+        transformations[PELOTA][ROTACION][EJE_Y] += rotation_speed * delta_time;
+        transformations[SOPORTE_PELOTA][ROTACION][EJE_Y] += rotation_speed * delta_time;
       }
       else {
-        transformations[COPA_DESCARGADA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
+        transformations[BASE_PELOTA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
+        transformations[PELOTA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
+        transformations[SOPORTE_PELOTA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
       }
-    }
-    if (orbitando) {
-			if (orbitaChampions) {
-        transformations[CHAMPIONS][ORBITAR][2] -= rotation_speed * delta_time;
-      } else {
-        transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
-			}
     }
 	} else {
 		then = -1;

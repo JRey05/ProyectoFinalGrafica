@@ -2,13 +2,13 @@ class FreeCamera extends Camera {
 	constructor(fovy, aspect) {
 		super(fovy, aspect);
 		// Posición de la cámara.
-		this._eye = vec3.fromValues(0, 0.85, 3.24);
+		this._eye = vec3.fromValues(0, 1000, 3000);
 		// Vector unitario que indica la dirección delantera
 		this._forward = vec3.fromValues(0, 0, -1);
 		// Ídem dirección derecha.
 		this._right = vec3.fromValues(1, 0, 0);
-		// Razón de cambio de poisición.
-		this._delta_pos = 0.05;
+		// Razón de cambio de posición.
+		this._delta_pos = 20; //mm
 		// Razón de cambio de rotación.
 		this._delta_rot = glMatrix.toRadian(5);
 	}
