@@ -8,7 +8,7 @@ class Model {
 		this._model_mat = mat4.create();
 	}
 
-	generateModel(loc_pos) {
+	generateModel(loc_pos, norm_location) {
 		this._loc_pos = loc_pos;
 		let parsed = OBJParser.parseFile(this._source);
 		let indices_solid = parsed.indices;
@@ -16,9 +16,12 @@ class Model {
 		this._index_count_solid = indices_solid.length;
 		this._index_count_wire = indices_wire.length;
 		let positions = parsed.positions;
+		let normals = parsed.normals; //MODIFICADO
+		
 
 		let vertex_attributes_info = [
-			new VertexAttributeInfo(positions, this._loc_pos, 3)
+			new VertexAttributeInfo(positions, this._loc_pos, 3),
+			new VertexAttributeInfo(normals, norm_location, 3)
 		];
 
 		this._vao_solid = VAOHelper.create(indices_solid, vertex_attributes_info);
@@ -40,9 +43,10 @@ class Model {
 		mat3.normalFromMat4(this.normalMatrix,this._world_mat);
 	}
 
-	draw(solid) {
+	draw(solid, gl) {
 		gl.uniformMatrix4fv(loc_world_mat, false, this._world_mat);
 		gl.uniformMatrix3fv(u_normalMatrix,false,this.normalMatrix);
+		
 		if (solid) {
 			gl.bindVertexArray(this._vao_solid);
 			gl.drawElements(gl.TRIANGLES, this._index_count_solid, gl.UNSIGNED_INT, 0);

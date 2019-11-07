@@ -81,13 +81,13 @@ var u_cAtt;
 var u_sampler;
 var lightX=0.0;
 var lightY=1000.0;
-var lightZ=100.0;
+var lightZ=200.0;
 
 var color_ka = [0.0,1.0,1.0];
 var color_kd = [0.0,1.0,0.0];
 var color_ks = [1.0,1.0,1.0];
 var CoefEsp = 40;
-var lightInt = 1000.0;
+var lightInt = 100.0;
 var lightColorA= [1.0,0.0,0.0];
 var lightColorD= [1.0,1.0,1.0];
 var lightColorE= [0.2,0.0,0.2];
@@ -131,9 +131,9 @@ function isAnimated() {
  *	Define y carga los modelos, especificando la locación de la posición de sus vértices.
  *	A su vez, establece las transformaciones a aplicar posteriormente.
  */
-function loadModels(loc_pos) {
+function loadModels(loc_pos,normLocation) {
 	let champions = new Model(champions_source);
-	champions.generateModel(loc_pos);
+	champions.generateModel(loc_pos,normLocation);
 	models.push(champions);
 	let champions_translation = vec3.fromValues(0, 1010, 0);
 	vec3.add(champions._center, champions._center, champions_translation);
@@ -141,20 +141,20 @@ function loadModels(loc_pos) {
 	transformations.push([vec3.fromValues(1, 1, 1), champions_rotating, champions_translation]);
 
 	let champions_base = new Model(base_giratoria_source);
-	champions_base.generateModel(loc_pos);
+	champions_base.generateModel(loc_pos,normLocation);
 	models.push(champions_base);
 	let champions_base_translation = vec3.fromValues(0, 0, 1);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation]);
 
 	let champions_stand = new Model(stand_giratorio_source);
-	champions_stand.generateModel(loc_pos);
+	champions_stand.generateModel(loc_pos,normLocation);
 	models.push(champions_stand);
 	let champions_stand_translation = vec3.fromValues(0, 0, 1);
 	vec3.add(champions_stand._center, champions_stand._center, champions_stand_translation);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_stand_translation]);
 
 	let copaDescargada = new Model(copaDescargada_source);
-	copaDescargada.generateModel(loc_pos);
+	copaDescargada.generateModel(loc_pos,normLocation);
 	models.push(copaDescargada);
   let copaDescargada_scaling = mat3.fromValues(5,5,5);
   let copaDescargada_rotating = mat3.fromValues(0,0,0);
@@ -163,37 +163,37 @@ function loadModels(loc_pos) {
 	transformations.push([copaDescargada_scaling, copaDescargada_rotating, copaDescargada_translation]);
 
 	let standDescargada = new Model(standV2_source);
-	standDescargada.generateModel(loc_pos);
+	standDescargada.generateModel(loc_pos,normLocation);
 	models.push(standDescargada);
 	let standDescargada_translation = vec3.fromValues(-1000, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standDescargada_translation]);
 
 	let standPelota = new Model(standV2_source);
-	standPelota.generateModel(loc_pos);
+	standPelota.generateModel(loc_pos,normLocation);
 	models.push(standPelota);
 	let standPelota_translation = vec3.fromValues(1000, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standPelota_translation]);
 
 	let basePelota = new Model(base_giratoria_source);
-	basePelota.generateModel(loc_pos);
+	basePelota.generateModel(loc_pos,normLocation);
 	models.push(basePelota);
 	let basePelota_translation = vec3.fromValues(1000, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), basePelota_translation]);
 
 	let pelota = new Model(pelotaRugby_source);
-	pelota.generateModel(loc_pos);
+	pelota.generateModel(loc_pos,normLocation);
 	models.push(pelota);
 	let pelota_translation = vec3.fromValues(1000, 1000, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), pelota_translation]);
 
 	let soportePelota = new Model(soportePelotaRugby_source);
-	soportePelota.generateModel(loc_pos);
+	soportePelota.generateModel(loc_pos,normLocation);
 	models.push(soportePelota);
 	let soportePelota_translation = vec3.fromValues(1000, 1000, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), soportePelota_translation]);
 
 	let marco = new Model(marcoCuadro_source);
-	marco.generateModel(loc_pos);
+	marco.generateModel(loc_pos,normLocation);
 	models.push(marco);
 	let marco_translation = vec3.fromValues(0, 1000, -2500);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), marco_translation]);
@@ -201,19 +201,19 @@ function loadModels(loc_pos) {
 
 
 	let suelo = new Model(suelo_source);
-	suelo.generateModel(loc_pos);
+	suelo.generateModel(loc_pos,normLocation);
 	models.push(suelo);
 	let suelo_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), suelo_translation]);
 
 	let paredes = new Model(paredes_source);
-	paredes.generateModel(loc_pos);
+	paredes.generateModel(loc_pos,normLocation);
 	models.push(paredes);
 	let paredes_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), paredes_translation]);
 
 	let techo = new Model(techo_source);
-	techo.generateModel(loc_pos);
+	techo.generateModel(loc_pos,normLocation);
 	models.push(techo);
 	let techo_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), techo_translation]);
@@ -293,7 +293,7 @@ function onLoad() {
 	u_cAtt=gl.getUniformLocation(shader_program,'cAtt');
 	u_sampler= gl.getUniformLocation(shader_program,'sampler');
 
-	loadModels(loc_pos);
+	loadModels(loc_pos,normLocation);
 
 	for (let i = 0; i < models.length; i++) {
 		applyTransformations(i);
@@ -436,7 +436,7 @@ function onRender(now) {
 		gl.uniform1f(u_bAtt,bAtt);
 		gl.uniform1f(u_cAtt,cAtt);
 		//gl.uniform3fv(loc_color, colors[i]);
-		models[i].draw(is_solid);
+		models[i].draw(is_solid, gl);
 	}
 
 	if (isAnimated()) {

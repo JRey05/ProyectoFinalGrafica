@@ -1,4 +1,4 @@
-var champions_source = `
+var achampions_source = `
 # FreeCAD v0.18.3 build Arch module
 # http://www.freecadweb.org
 mtllib champions.mtl
