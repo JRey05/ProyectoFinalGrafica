@@ -1,6 +1,12 @@
-# FreeCAD v0.18.3 build Arch module
-# http://www.freecadweb.org
-newmtl color_cccccc
-Kd 0.800000011920929 0.800000011920929 0.800000011920929
-d 0
+# Blender MTL File: 'None'
 # Material Count: 1
+
+newmtl color_cccccc
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
