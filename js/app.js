@@ -72,22 +72,22 @@ var u_lightColorE;
 var u_enableA;
 var u_enableD;
 var u_enableE;
-var aAtt=0.2;
-var bAtt=0.2;
-var cAtt=0.2;
+var aAtt=0.0002;
+var bAtt=0.0002;
+var cAtt=0.0002;
 var u_aAtt;
 var u_bAtt;
 var u_cAtt;
 var u_sampler;
-var lightX=1.0;
-var lightY=0.0;
-var lightZ=600.0;
+var lightX=0.0;
+var lightY=1000.0;
+var lightZ=100.0;
 
 var color_ka = [0.0,1.0,1.0];
 var color_kd = [0.0,1.0,0.0];
 var color_ks = [1.0,1.0,1.0];
 var CoefEsp = 40;
-var lightInt = 1.0;
+var lightInt = 1000.0;
 var lightColorA= [1.0,0.0,0.0];
 var lightColorD= [1.0,1.0,1.0];
 var lightColorE= [0.2,0.0,0.2];
@@ -379,7 +379,6 @@ function onRender(now) {
 
 	
 	
-
 	if (isAnimated()) {
 		// Milisegundos a segundos.
 		now *= 0.001;
