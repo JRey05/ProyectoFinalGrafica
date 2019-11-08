@@ -56,10 +56,10 @@ var fragment_shader_source = `
 		float D2=pow(2.71,(NH*NH-1.0)/(m*m*NH*NH))/(m*m*pow(NH,4.0));
 		float spectCT=(fAtt*D2*G)/(3.14*NV*NL);
 
-		vec3 colorAmbiente=lightColorA*color_ka*enableA;
-		vec3 colorDifuso=lightColorD*fAtt*color_kd*NL*vec3(texture2D(sampler, fTexCoor))*enableD;
-		vec3 colorEspecular= lightColorE*color_ks*spectCT*enableE;
-		vec3 color1=colorAmbiente+colorDifuso+colorEspecular;
+		vec3 colorAmbiente=lightColor*color_ka*enabled;
+		vec3 colorDifuso=lightColor*fAtt*color_kd*NL*vec3(texture2D(sampler, fTexCoor))*enabled;
+		vec3 colorEspecular= lightColor*color_ks*spectCT*enabled;
+		vec3 color1=colorDifuso+colorEspecular;
 
 		vec3 color3;
 
@@ -69,7 +69,8 @@ var fragment_shader_source = `
 			color3 = vec3(.0, .0, .0);
 		}
 
-		gl_FragColor = vec4(lightInt*color1,1.0);
+		vec3 color2 = colorAmbiente + lightInt*color1 + color3;
+		gl_FragColor = vec4(color2,1.0); 
 
 		//gl_FragColor = vec4(color, 1.0);
 }

@@ -359,10 +359,10 @@ function onLoad() {
 		kd: [0.128, 0.728, 0.728],
 		ks: [0.277, 0.877, 0.9797]
 	}
-	let copaDescargada_base_material = {
-		ka: [0.0323, 0.0283, 0.0823],
-		kd: [0.328, 0.328, 0.728],
-		ks: [0.677, 0.377, 0.5477]
+	let pelota_material = {
+		ka: [0.2, 0.2, 0.2],
+		kd: [0.328, 0.328, 0.0728],
+		ks: [0.0677, 0.0377, 0.05477]
 	}
 	let copaDescargada_stand_material = {
 		ka: [0.0123, 0.0253, 0.0323],
@@ -409,10 +409,10 @@ function onLoad() {
 	materials.push(champions_base_material);
 	materials.push(cyan_plastic);
 	materials.push(bronce);
-	materials.push(copaDescargada_base_material);
 	materials.push(copaDescargada_stand_material);
 	materials.push(cyan_plastic);
 	materials.push(base_pelota_material);
+	materials.push(pelota_material);
 	materials.push(soporte_pelota_material);
 	materials.push(marco_material);
 	materials.push(suelo_material);
