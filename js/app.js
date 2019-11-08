@@ -66,9 +66,11 @@ var u_color_ka;
 var u_color_kd;
 var u_color_ks;
 var u_CoefEsp;
+var u_Tita;
 var u_lightInt;
 var u_lightEye;
 var u_lightColor;
+var u_spotLightColor;
 var u_enabled;
 var u_aAtt;
 var u_bAtt;
@@ -77,7 +79,6 @@ var u_sampler;
 var color_ka = [0.2,0.0,0.0];
 var color_kd = [0.0,1.0,0.0];
 var color_ks = [1.0,0.0,1.0];
-var CoefEsp = 20;
 var miTextura;
 
 var u_spot_pos_E;
@@ -121,8 +122,10 @@ var luz1 = {
 var luz2 = {
 	tipo:"spot",
 	posicion:[0.0, 100.0, 500.0],
+	color:[0.5,0.5,0.5],
 	target:[0,0,0],
-	tita:30
+	tita:20/180,
+	CoefEsp:0.0001
 }
 
 luces.push(luz1);
@@ -288,9 +291,11 @@ function onLoad() {
 	u_color_kd = gl.getUniformLocation(shader_program,'color_kd');
 	u_color_ks = gl.getUniformLocation(shader_program,'color_ks');
 	u_CoefEsp = gl.getUniformLocation(shader_program,'CoefEsp');
+	u_Tita = gl.getUniformLocation(shader_program,'Tita');
 	u_lightInt = gl.getUniformLocation(shader_program,'lightInt');
 	u_lightEye = gl.getUniformLocation(shader_program,'lightEye');
 	u_lightColor = gl.getUniformLocation(shader_program,'lightColor');
+	u_spotLightColor = gl.getUniformLocation(shader_program,'spotLightColor');
 	u_enabled = gl.getUniformLocation(shader_program,'enabled');
 	u_aAtt=gl.getUniformLocation(shader_program,'aAtt');
 	u_bAtt=gl.getUniformLocation(shader_program,'bAtt');
@@ -487,7 +492,8 @@ function onRender(now) {
 		gl.uniform3fv(u_color_kd,materials[i].kd);
 		gl.uniform3fv(u_color_ks,materials[i].ks);
 		gl.uniform3fv(u_lightColor,luz1.color);
-		gl.uniform1f(u_CoefEsp,CoefEsp);
+		gl.uniform3fv(u_spotLightColor,luz2.color);
+		gl.uniform1f(u_Tita,luz2.tita);
 		gl.uniform1f(u_lightInt,luz1.intencidad);
 		gl.uniform1f(u_enabled,luz1.enabled);
 		gl.uniform3fv(u_lightEye,lightEye);
