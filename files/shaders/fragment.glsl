@@ -21,6 +21,7 @@ var fragment_shader_source = `
 	uniform float bAtt;
 	uniform float cAtt;
 	uniform float enabled;
+	uniform float enabledSpot;
 	uniform vec3 lightColor;
 	uniform vec3 spotLightColor;
 	uniform vec3 lightEye;
@@ -64,13 +65,13 @@ var fragment_shader_source = `
 		vec3 color3;
 
 		if (dot(normalize(spot_pos_E), -L) > cos(Tita)) {
-			color3 = spotLightColor*pow(dot(normalize(spot_pos_E), -L), CoefEsp)*(color_kd + color_ks);
+			color3 = spotLightColor*pow(dot(normalize(spot_pos_E), -L), CoefEsp)*(color_kd + color_ks)*enabledSpot;
 		} else {
 			color3 = vec3(.0, .0, .0);
 		}
 
 		vec3 color2 = colorAmbiente + lightInt*color1 + color3;
-		gl_FragColor = vec4(color2,1.0); 
+		gl_FragColor = vec4(color2,1.0);
 
 		//gl_FragColor = vec4(color, 1.0);
 }

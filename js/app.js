@@ -73,6 +73,7 @@ var u_lightEye;
 var u_lightColor;
 var u_spotLightColor;
 var u_enabled;
+var u_enabledSpot;
 var u_aAtt;
 var u_bAtt;
 var u_cAtt;
@@ -135,7 +136,8 @@ var luz2 = {
 	color:[0.5,0.5,0.5],
 	target:[0,0,0],
 	tita:20/180,
-	CoefEsp:0.0001
+	CoefEsp:0.0001,
+	enabled:1.0
 }
 
 luces.push(luz1);
@@ -308,6 +310,7 @@ function onLoad() {
 	u_lightColor = gl.getUniformLocation(shader_program,'lightColor');
 	u_spotLightColor = gl.getUniformLocation(shader_program,'spotLightColor');
 	u_enabled = gl.getUniformLocation(shader_program,'enabled');
+	u_enabledSpot = gl.getUniformLocation(shader_program,'enabledSpot');
 	u_aAtt=gl.getUniformLocation(shader_program,'aAtt');
 	u_bAtt=gl.getUniformLocation(shader_program,'bAtt');
 	u_cAtt=gl.getUniformLocation(shader_program,'cAtt');
@@ -508,6 +511,7 @@ function onRender(now) {
 		gl.uniform1f(u_Tita,luz2.tita);
 		gl.uniform1f(u_lightInt,luz1.intencidad);
 		gl.uniform1f(u_enabled,luz1.enabled);
+		gl.uniform1f(u_enabledSpot,luz2.enabled);
 		gl.uniform3fv(u_lightEye,lightEye);
 		gl.uniform1f(u_aAtt,luz1.fAtt[0]);
 		gl.uniform1f(u_bAtt,luz1.fAtt[1]);

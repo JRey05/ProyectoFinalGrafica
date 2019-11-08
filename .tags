@@ -40,7 +40,7 @@ AnonymousFunctionf1105c851800	common/glmatrix/gl-matrix-min.js	/^!function(t,n){
 Axis	common/primitives/Axis.js	/^class Axis {$/;"	c
 C	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 Camera	common/cameras/Camera.js	/^class Camera {$/;"	c
-CoefEsp	js/app.js	/^	CoefEsp:0.0001$/;"	p	class:luz2
+CoefEsp	js/app.js	/^	CoefEsp:0.0001,$/;"	p	class:luz2
 CoefEsp	js/app.js	/^var CoefEsp = 20;$/;"	v
 D	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 D	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
@@ -227,6 +227,7 @@ e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 enableA	js/app.js	/^var enableA = 1.0;$/;"	v
 enableD	js/app.js	/^var enableD = 1.0;$/;"	v
 enableE	js/app.js	/^var enableE = 1.0;$/;"	v
+enabled	js/app.js	/^	enabled:1.0$/;"	p	class:luz2
 enabled	js/app.js	/^	enabled:1.0,$/;"	p	class:luz1
 f	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 f	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
@@ -495,6 +496,7 @@ u_color_ka	js/app.js	/^var u_color_ka;$/;"	v
 u_color_kd	js/app.js	/^var u_color_kd;$/;"	v
 u_color_ks	js/app.js	/^var u_color_ks;$/;"	v
 u_enabled	js/app.js	/^var u_enabled;$/;"	v
+u_enabledSpot	js/app.js	/^var u_enabledSpot;$/;"	v
 u_lightColor	js/app.js	/^var u_lightColor;$/;"	v
 u_lightEye	js/app.js	/^var u_lightEye;$/;"	v
 u_lightInt	js/app.js	/^var u_lightInt;$/;"	v
