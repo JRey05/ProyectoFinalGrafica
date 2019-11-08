@@ -55,6 +55,8 @@ var free_cam = null;
 var sherical_cam = null;
 
 // Locaciones de datos de los shaders.
+var loc_model_mat;
+var loc_view_mat;
 var loc_world_mat;
 var loc_proj_mat;
 var loc_color;
@@ -66,33 +68,16 @@ var u_color_ks;
 var u_CoefEsp;
 var u_lightInt;
 var u_lightEye;
-var u_lightColorA;
-var u_lightColorD;
-var u_lightColorE;
-var u_enableA;
-var u_enableD;
-var u_enableE;
-var aAtt=0.000002;
-var bAtt=0.000002;
-var cAtt=0.000002;
+var u_lightColor;
+var u_enabled;
 var u_aAtt;
 var u_bAtt;
 var u_cAtt;
 var u_sampler;
-var lightX=1000.0;
-var lightY=3000.0;
-var lightZ=300.0;
 var color_ka = [0.2,0.0,0.0];
 var color_kd = [0.0,1.0,0.0];
 var color_ks = [1.0,0.0,1.0];
 var CoefEsp = 20;
-var lightInt = 4.5;
-var lightColorA= [0.5,0.2,0.2];
-var lightColorD= [1.0,0.5,1.0];
-var lightColorE= [0.2,0.2,0.2];
-var enableA = 1.0;
-var enableD = 1.0;
-var enableE = 1.0;
 var miTextura;
 
 var u_spot_pos_E;
@@ -120,6 +105,28 @@ var delta_time = 0;
 
 // Velocidad de rotación.
 var rotation_speed = 22;
+
+// Arreglo con las luces.
+var luces = [];
+
+// Crear e inicializar luces.
+var luz1 = {
+	tipo:"puntual",
+	posicion:[1000.0,3000.0,300.0],
+	intencidad:4,
+	color:[0.3,0.3,0.4],
+	enabled:1.0,
+	fAtt:[0.000002,0.0000002,0.0000005]	// [a,b,c]
+}
+var luz2 = {
+	tipo:"spot",
+	posicion:[0.0, 100.0, 500.0],
+	target:[0,0,0],
+	tita:30
+}
+
+luces.push(luz1);
+luces.push(luz2);
 
 /**
 	* Verifica si se requiere una animación.
@@ -199,8 +206,6 @@ function loadModels(loc_pos,normLocation) {
 	let marco_translation = vec3.fromValues(0, 1000, -2500);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), marco_translation]);
 
-
-
 	let suelo = new Model(suelo_source);
 	suelo.generateModel(loc_pos,normLocation);
 	models.push(suelo);
@@ -272,6 +277,8 @@ function onLoad() {
 
 	let loc_pos = gl.getAttribLocation(shader_program, 'pos');
 	loc_color = gl.getUniformLocation(shader_program, 'color');
+	loc_model_mat = gl.getUniformLocation(shader_program, 'model_mat');
+	loc_view_mat = gl.getUniformLocation(shader_program, 'view_mat');
 	loc_world_mat = gl.getUniformLocation(shader_program, 'world_mat');
 	loc_proj_mat = gl.getUniformLocation(shader_program, 'proj_mat');
 	let textLocation = gl.getAttribLocation(shader_program, 'vertexTex');
@@ -283,22 +290,37 @@ function onLoad() {
 	u_CoefEsp = gl.getUniformLocation(shader_program,'CoefEsp');
 	u_lightInt = gl.getUniformLocation(shader_program,'lightInt');
 	u_lightEye = gl.getUniformLocation(shader_program,'lightEye');
-	u_lightColorA = gl.getUniformLocation(shader_program,'lightColorA');
-	u_lightColorD = gl.getUniformLocation(shader_program,'lightColorD');
-	u_lightColorE = gl.getUniformLocation(shader_program,'lightColorE');
-	u_enableA = gl.getUniformLocation(shader_program,'enableA');
-	u_enableD = gl.getUniformLocation(shader_program,'enableD');
-	u_enableE = gl.getUniformLocation(shader_program,'enableE');
+	u_lightColor = gl.getUniformLocation(shader_program,'lightColor');
+	u_enabled = gl.getUniformLocation(shader_program,'enabled');
 	u_aAtt=gl.getUniformLocation(shader_program,'aAtt');
 	u_bAtt=gl.getUniformLocation(shader_program,'bAtt');
 	u_cAtt=gl.getUniformLocation(shader_program,'cAtt');
 	u_spot_pos_E = gl.getUniformLocation(shader_program,'spot_pos_E');
+	u_spot_tita = gl.getUniformLocation(shader_program,'spot_tita');
 	u_sampler= gl.getUniformLocation(shader_program,'sampler');
 
 	loadModels(loc_pos,normLocation);
 
 	for (let i = 0; i < models.length; i++) {
 		applyTransformations(i);
+	}
+
+	let bronce = {
+		ka: [0.2125, 0.1275, 0.054],
+		kd: [0.714, 0.4284, 0.18144],
+		ks: [0.393548, 0.271906, 0.166721]
+	}
+
+	let polished_silver = {
+		ka: [0.23125, 0.23125, 0.23125],
+		kd: [0.2775, 0.2775, 0.2775],
+		ks: [0.773911, 0.773911, 0.773911]
+	}
+
+	let cyan_plastic = {
+		ka: [0.0, 0.1, 0.06],
+		kd: [0.01, 0.01, 0.01],
+		ks: [0.50, 0.50, 0.50]
 	}
 
 	let champions_material = {
@@ -357,9 +379,9 @@ function onLoad() {
 		ks: [0.77, 0.77, 0.77]
 	}
 	let paredes_material = {
-		ka: [0.23, 0.23, 0.23],
+		ka: [0.6, 0.23, 0.23],
 		kd: [0.28, 0.28, 0.28],
-		ks: [0.77, 0.77, 0.77]
+		ks: [0.007, 0.0077, 0.077]
 	}
 	let techo_material = {
 		ka: [0.0, 0.0, 0.23],
@@ -367,13 +389,13 @@ function onLoad() {
 		ks: [0.0, 0.0, 0.77]
 	}
 
-	materials.push(champions_material);
+	materials.push(polished_silver);
 	materials.push(champions_base_material);
-	materials.push(champions_stand_material);
-	materials.push(copaDescargada_material);
+	materials.push(cyan_plastic);
+	materials.push(bronce);
 	materials.push(copaDescargada_base_material);
 	materials.push(copaDescargada_stand_material);
-	materials.push(pelota_stand_material);
+	materials.push(cyan_plastic);
 	materials.push(base_pelota_material);
 	materials.push(soporte_pelota_material);
 	materials.push(marco_material);
@@ -406,13 +428,12 @@ function onRender(now) {
 	let M_mat = mat4.create();
 	let view_mat = camera.view_mat,
 		proj_mat = camera.proj_mat;
-	
+
 	let spot_pos_E = vec3.create();
 	vec3.transformMat4(spot_pos_E, spot_pos, M_mat);
 	vec3.transformMat4(spot_pos_E, spot_pos_E, view_mat);
 
-	var lightEye= [lightX,lightY,lightZ];
-
+	var lightEye= [luz1.posicion[0],luz1.posicion[1],luz1.posicion[2]];
 	vec3.transformMat4(lightEye,lightEye,view_mat);
 
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -465,18 +486,14 @@ function onRender(now) {
 		gl.uniform3fv(u_color_ka,materials[i].ka);
 		gl.uniform3fv(u_color_kd,materials[i].kd);
 		gl.uniform3fv(u_color_ks,materials[i].ks);
-		gl.uniform3fv(u_lightColorA,lightColorA);
-		gl.uniform3fv(u_lightColorD,lightColorD);
-		gl.uniform3fv(u_lightColorE,lightColorE);
+		gl.uniform3fv(u_lightColor,luz1.color);
 		gl.uniform1f(u_CoefEsp,CoefEsp);
-		gl.uniform1f(u_lightInt,lightInt);
-		gl.uniform1f(u_enableA,enableA);
-		gl.uniform1f(u_enableD,enableD);
-		gl.uniform1f(u_enableE,enableE);
+		gl.uniform1f(u_lightInt,luz1.intencidad);
+		gl.uniform1f(u_enabled,luz1.enabled);
 		gl.uniform3fv(u_lightEye,lightEye);
-		gl.uniform1f(u_aAtt,aAtt);
-		gl.uniform1f(u_bAtt,bAtt);
-		gl.uniform1f(u_cAtt,cAtt);
+		gl.uniform1f(u_aAtt,luz1.fAtt[0]);
+		gl.uniform1f(u_bAtt,luz1.fAtt[1]);
+		gl.uniform1f(u_cAtt,luz1.fAtt[2]);
 		gl.uniform3fv(u_spot_pos_E, spot_pos_E);
 		//gl.uniform3fv(loc_color, colors[i]);
 		models[i].draw(is_solid, gl);
