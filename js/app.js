@@ -421,12 +421,6 @@ function onRender(now) {
 	gl.useProgram(shader_program);
 	gl.uniformMatrix4fv(loc_proj_mat, false, proj_mat);
 
-<<<<<<< HEAD
-	
-=======
-
-
->>>>>>> 7ab8b37d190980551d48ca803acea412d39d3b04
 	if (isAnimated()) {
 		// Milisegundos a segundos.
 		now *= 0.001;
