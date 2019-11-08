@@ -72,25 +72,24 @@ var u_lightColorE;
 var u_enableA;
 var u_enableD;
 var u_enableE;
-var aAtt=0.0002;
-var bAtt=0.0002;
-var cAtt=0.0002;
+var aAtt=0.000002;
+var bAtt=0.000002;
+var cAtt=0.000002;
 var u_aAtt;
 var u_bAtt;
 var u_cAtt;
 var u_sampler;
-var lightX=0.0;
-var lightY=1000.0;
-var lightZ=200.0;
-
-var color_ka = [0.0,1.0,1.0];
+var lightX=1000.0;
+var lightY=3000.0;
+var lightZ=300.0;
+var color_ka = [0.2,0.0,0.0];
 var color_kd = [0.0,1.0,0.0];
-var color_ks = [1.0,1.0,1.0];
-var CoefEsp = 40;
-var lightInt = 100.0;
-var lightColorA= [1.0,0.0,0.0];
-var lightColorD= [1.0,1.0,1.0];
-var lightColorE= [0.2,0.0,0.2];
+var color_ks = [1.0,0.0,1.0];
+var CoefEsp = 20;
+var lightInt = 4.5;
+var lightColorA= [0.5,0.2,0.2];
+var lightColorD= [1.0,0.5,1.0];
+var lightColorE= [0.2,0.2,0.2];
 var enableA = 1.0;
 var enableD = 1.0;
 var enableE = 1.0;
@@ -110,8 +109,8 @@ var transformations = [];
 // Arreglo de matrices de modelado. Cada elemento se corresponde con modelo y almacena la matriz que lo modela.
 var model_mats = [];
 
-// Arreglo de colores. Cada elemento se corresponde con un modelo y almacena su color.
-var colors = [];
+// Arreglo de materiales. Cada elemento se corresponde con un modelo y almacena su material.
+var materials = [];
 
 // Tiempo del frame anterior.
 var then = 0;
@@ -302,48 +301,85 @@ function onLoad() {
 		applyTransformations(i);
 	}
 
-/*
-	const CHAMPIONS = 0;
-	const BASE_CHAMPIONS = 1;
-	const STAND_CHAMPIONS = 2;
-	const COPA_DESCARGADA = 3;
-	const STAND_COPA_DESCARGADA = 4;
-	const STAND_PELOTA = 5;
-	const BASE_PELOTA = 6;
-	const PELOTA = 7;
-	const SOPORTE_PELOTA = 8;
-	const MARCO_CUADRO = 9;
-	const SUELO = 10;
-	const PAREDES = 11;
-	const TECHO = 12;
-	*/
-	let champions_color = Utils.hex2RgbFloat("#A9A9A9");
-	let champions_base_color = Utils.hex2RgbFloat("#DCDCDC");
-	let champions_stand_color = Utils.hex2RgbFloat("#8B4513");
-	let copaDescargada_color = Utils.hex2RgbFloat("#000000");
-	let copaDescargada_base_color = Utils.hex2RgbFloat("#DCDCDC");
-	let copaDescargada_stand_color = Utils.hex2RgbFloat("#8B4513");
-	let pelota_stand_color = Utils.hex2RgbFloat("#9400D3");
-	let base_pelota_color = Utils.hex2RgbFloat("#9400D3");
-	let soporte_pelota_color = Utils.hex2RgbFloat("#9400D3");
-	let marco_color = Utils.hex2RgbFloat("#9400D3");
-	let suelo_color = Utils.hex2RgbFloat("#9400D3");
-	let paredes_color = Utils.hex2RgbFloat("#E75252");
-	let techo_color = Utils.hex2RgbFloat("#DDDDDD");
+	let champions_material = {
+		ka: [0.023, 0.0, 0.00923],
+		kd: [0.58, 0.0, 0.28],
+		ks: [0.57, 0.5, 0.77]
+	}
+	let champions_base_material = {
+		ka: [0.003,0.2,0.02053],
+		kd: [0.728, 0.428, 0.228],
+		ks: [0.767, 0.757, 0.377]
+	}
+	let champions_stand_material = {
+		ka: [0.10223, 0.023, 0.023],
+		kd: [0.248, 0.28, 0.258],
+		ks: [0.177, 0.77, 0.677]
+	}
+	let copaDescargada_material = {
+		ka: [0.0623, 0.0723, 0.0273],
+		kd: [0.128, 0.728, 0.728],
+		ks: [0.277, 0.877, 0.9797]
+	}
+	let copaDescargada_base_material = {
+		ka: [0.0323, 0.0283, 0.0823],
+		kd: [0.328, 0.328, 0.728],
+		ks: [0.677, 0.377, 0.5477]
+	}
+	let copaDescargada_stand_material = {
+		ka: [0.0123, 0.0253, 0.0323],
+		kd: [0.128, 0.281, 0.228],
+		ks: [0.277, 0.477, 0.577]
+	}
+	let pelota_stand_material = {
+		ka: [0.023, 0.023, 0.023],
+		kd: [0.28, 0.28, 0.28],
+		ks: [0.77, 0.77, 0.77]
+	}
+	let base_pelota_material = {
+		ka: [0.053, 0.03, 0.1003],
+		kd: [0.28, 0.28, 0.28],
+		ks: [0.77, 0.77, 0.77]
+	}
+	let soporte_pelota_material = {
+		ka: [0.053, 0.013, 0.0723],
+		kd: [0.28, 0.28, 0.28],
+		ks: [0.77, 0.77, 0.77]
+	}
+	let marco_material = {
+		ka: [0.23, 0.23, 0.23],
+		kd: [0.28, 0.28, 0.28],
+		ks: [0.77, 0.77, 0.77]
+	}
+	let suelo_material = {
+		ka: [0.23, 0.23, 0.23],
+		kd: [0.28, 0.28, 0.28],
+		ks: [0.77, 0.77, 0.77]
+	}
+	let paredes_material = {
+		ka: [0.23, 0.23, 0.23],
+		kd: [0.28, 0.28, 0.28],
+		ks: [0.77, 0.77, 0.77]
+	}
+	let techo_material = {
+		ka: [0.0, 0.0, 0.23],
+		kd: [0.0, 0.0, 0.28],
+		ks: [0.0, 0.0, 0.77]
+	}
 
-	colors.push(vec3.fromValues(champions_color.r, champions_color.g, champions_color.b));
-	colors.push(vec3.fromValues(champions_base_color.r, champions_base_color.g, champions_base_color.b));
-	colors.push(vec3.fromValues(champions_stand_color.r, champions_stand_color.g, champions_stand_color.b));
-	colors.push(vec3.fromValues(copaDescargada_color.r, copaDescargada_color.g, copaDescargada_color.b));
-	colors.push(vec3.fromValues(copaDescargada_base_color.r, copaDescargada_base_color.g, copaDescargada_base_color.b));
-	colors.push(vec3.fromValues(copaDescargada_stand_color.r, copaDescargada_stand_color.g, copaDescargada_stand_color.b));
-	colors.push(vec3.fromValues(pelota_stand_color.r, pelota_stand_color.g, pelota_stand_color.b));
-	colors.push(vec3.fromValues(base_pelota_color.r, base_pelota_color.g, base_pelota_color.b));
-	colors.push(vec3.fromValues(soporte_pelota_color.r, soporte_pelota_color.g, soporte_pelota_color.b));
-	colors.push(vec3.fromValues(marco_color.r, marco_color.g, marco_color.b));
-	colors.push(vec3.fromValues(suelo_color.r, suelo_color.g, suelo_color.b));
-	colors.push(vec3.fromValues(paredes_color.r, paredes_color.g, paredes_color.b));
-	colors.push(vec3.fromValues(techo_color.r, techo_color.g, techo_color.b));
+	materials.push(champions_material);
+	materials.push(champions_base_material);
+	materials.push(champions_stand_material);
+	materials.push(copaDescargada_material);
+	materials.push(copaDescargada_base_material);
+	materials.push(copaDescargada_stand_material);
+	materials.push(pelota_stand_material);
+	materials.push(base_pelota_material);
+	materials.push(soporte_pelota_material);
+	materials.push(marco_material);
+	materials.push(suelo_material);
+	materials.push(paredes_material);
+	materials.push(techo_material);
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.3, 1.0);
@@ -375,8 +411,8 @@ function onRender(now) {
 	vec3.transformMat4(spot_pos_E, spot_pos, M_mat);
 	vec3.transformMat4(spot_pos_E, spot_pos_E, view_mat);
 
-	var lightEye= [lightX,lightY,lightZ];	
-	
+	var lightEye= [lightX,lightY,lightZ];
+
 	vec3.transformMat4(lightEye,lightEye,view_mat);
 
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -385,7 +421,12 @@ function onRender(now) {
 	gl.useProgram(shader_program);
 	gl.uniformMatrix4fv(loc_proj_mat, false, proj_mat);
 
+<<<<<<< HEAD
 	
+=======
+
+
+>>>>>>> 7ab8b37d190980551d48ca803acea412d39d3b04
 	if (isAnimated()) {
 		// Milisegundos a segundos.
 		now *= 0.001;
@@ -427,9 +468,9 @@ function onRender(now) {
 	for (let i = 0; i < models.length; i++) {
 		applyTransformations(i);
 		models[i].model_mat = model_mats[i];
-		gl.uniform3fv(u_color_ka,color_ka);
-		gl.uniform3fv(u_color_kd,color_kd);
-		gl.uniform3fv(u_color_ks,color_ks);
+		gl.uniform3fv(u_color_ka,materials[i].ka);
+		gl.uniform3fv(u_color_kd,materials[i].kd);
+		gl.uniform3fv(u_color_ks,materials[i].ks);
 		gl.uniform3fv(u_lightColorA,lightColorA);
 		gl.uniform3fv(u_lightColorD,lightColorD);
 		gl.uniform3fv(u_lightColorE,lightColorE);
