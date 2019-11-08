@@ -2,14 +2,14 @@ class Model {
 	constructor(model_source) {
 		this._source = model_source;
 		this._vao_solid = null;
-    	this._vao_wire = null;
+  	this._vao_wire = null;
 		this._index_count_solid = 0;
 		this._index_count_wire = 0;
 		this._model_mat = mat4.create();
 	}
 
-	generateModel(loc_pos, norm_location) {
-		this._loc_pos = loc_pos;
+	generateModel(loc_pos, loc_norm, loc_text) {
+		// this._loc_pos = loc_pos;
 		let parsed = OBJParser.parseFile(this._source);
 		let indices_solid = parsed.indices;
 		let indices_wire = Utils.rearrange2Lines(parsed.indices);
@@ -17,11 +17,13 @@ class Model {
 		this._index_count_wire = indices_wire.length;
 		let positions = parsed.positions;
 		let normals = parsed.normals; //MODIFICADO
-		
+		let textures = parsed.textures;
+
 
 		let vertex_attributes_info = [
-			new VertexAttributeInfo(positions, this._loc_pos, 3),
-			new VertexAttributeInfo(normals, norm_location, 3)
+			new VertexAttributeInfo(positions, loc_pos, 3),
+			new VertexAttributeInfo(normals, loc_norm, 3),
+			new VertexAttributeInfo(textures, loc_text, 2)
 		];
 
 		this._vao_solid = VAOHelper.create(indices_solid, vertex_attributes_info);
@@ -46,7 +48,7 @@ class Model {
 	draw(solid, gl) {
 		gl.uniformMatrix4fv(loc_world_mat, false, this._world_mat);
 		gl.uniformMatrix3fv(u_normalMatrix,false,this.normalMatrix);
-		
+
 		if (solid) {
 			gl.bindVertexArray(this._vao_solid);
 			gl.drawElements(gl.TRIANGLES, this._index_count_solid, gl.UNSIGNED_INT, 0);

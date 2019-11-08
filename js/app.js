@@ -32,6 +32,7 @@ var gl = null;
 
 // Programa de shaders.
 var shader_program = null;
+var shader_program2 = null;
 
 // Almacenamiento.
 var vao_solid = null;
@@ -93,7 +94,8 @@ var lightColorE= [0.2,0.2,0.2];
 var enableA = 1.0;
 var enableD = 1.0;
 var enableE = 1.0;
-var miTextura;
+var tex;
+var tex2;
 
 var u_spot_pos_E;
 var spot_pos = [0.0, 100.0, 500.0];
@@ -132,9 +134,9 @@ function isAnimated() {
  *	Define y carga los modelos, especificando la locación de la posición de sus vértices.
  *	A su vez, establece las transformaciones a aplicar posteriormente.
  */
-function loadModels(loc_pos,normLocation) {
+function loadModels(loc_pos, loc_norm, loc_text) {
 	let champions = new Model(champions_source);
-	champions.generateModel(loc_pos,normLocation);
+	champions.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(champions);
 	let champions_translation = vec3.fromValues(0, 1010, 0);
 	vec3.add(champions._center, champions._center, champions_translation);
@@ -142,20 +144,20 @@ function loadModels(loc_pos,normLocation) {
 	transformations.push([vec3.fromValues(1, 1, 1), champions_rotating, champions_translation]);
 
 	let champions_base = new Model(base_giratoria_source);
-	champions_base.generateModel(loc_pos,normLocation);
+	champions_base.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(champions_base);
 	let champions_base_translation = vec3.fromValues(0, 0, 1);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation]);
 
 	let champions_stand = new Model(stand_giratorio_source);
-	champions_stand.generateModel(loc_pos,normLocation);
+	champions_stand.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(champions_stand);
 	let champions_stand_translation = vec3.fromValues(0, 0, 1);
 	vec3.add(champions_stand._center, champions_stand._center, champions_stand_translation);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_stand_translation]);
 
 	let copaDescargada = new Model(copaDescargada_source);
-	copaDescargada.generateModel(loc_pos,normLocation);
+	copaDescargada.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(copaDescargada);
   let copaDescargada_scaling = mat3.fromValues(5,5,5);
   let copaDescargada_rotating = mat3.fromValues(0,0,0);
@@ -164,57 +166,55 @@ function loadModels(loc_pos,normLocation) {
 	transformations.push([copaDescargada_scaling, copaDescargada_rotating, copaDescargada_translation]);
 
 	let standDescargada = new Model(standV2_source);
-	standDescargada.generateModel(loc_pos,normLocation);
+	standDescargada.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(standDescargada);
 	let standDescargada_translation = vec3.fromValues(-1000, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standDescargada_translation]);
 
 	let standPelota = new Model(standV2_source);
-	standPelota.generateModel(loc_pos,normLocation);
+	standPelota.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(standPelota);
 	let standPelota_translation = vec3.fromValues(1000, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standPelota_translation]);
 
 	let basePelota = new Model(base_giratoria_source);
-	basePelota.generateModel(loc_pos,normLocation);
+	basePelota.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(basePelota);
 	let basePelota_translation = vec3.fromValues(1000, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), basePelota_translation]);
 
 	let pelota = new Model(pelotaRugby_source);
-	pelota.generateModel(loc_pos,normLocation);
+	pelota.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(pelota);
 	let pelota_translation = vec3.fromValues(1000, 1000, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), pelota_translation]);
 
 	let soportePelota = new Model(soportePelotaRugby_source);
-	soportePelota.generateModel(loc_pos,normLocation);
+	soportePelota.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(soportePelota);
 	let soportePelota_translation = vec3.fromValues(1000, 1000, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), soportePelota_translation]);
 
 	let marco = new Model(marcoCuadro_source);
-	marco.generateModel(loc_pos,normLocation);
+	marco.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(marco);
 	let marco_translation = vec3.fromValues(0, 1000, -2500);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), marco_translation]);
 
-
-
 	let suelo = new Model(suelo_source);
-	suelo.generateModel(loc_pos,normLocation);
+	suelo.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(suelo);
 	let suelo_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), suelo_translation]);
 
 	let paredes = new Model(paredes_source);
-	paredes.generateModel(loc_pos,normLocation);
+	paredes.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(paredes);
 	let paredes_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), paredes_translation]);
 
 	let techo = new Model(techo_source);
-	techo.generateModel(loc_pos,normLocation);
+	techo.generateModel(loc_pos, loc_norm, loc_text);
 	models.push(techo);
 	let techo_translation = vec3.fromValues(0, 0, 0);
 	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), techo_translation]);
@@ -269,13 +269,14 @@ function onLoad() {
 	gl = canvas.getContext('webgl2');
 
 	shader_program = ShaderProgramHelper.create(vertex_shader_source, fragment_shader_source);
+	shader_program2 = ShaderProgramHelper.create(vertex_shader_source, fragment_shader_source2);
 
 	let loc_pos = gl.getAttribLocation(shader_program, 'pos');
 	loc_color = gl.getUniformLocation(shader_program, 'color');
 	loc_world_mat = gl.getUniformLocation(shader_program, 'world_mat');
 	loc_proj_mat = gl.getUniformLocation(shader_program, 'proj_mat');
-	let textLocation = gl.getAttribLocation(shader_program, 'vertexTex');
-	let normLocation = gl.getAttribLocation(shader_program, 'normal');
+	let loc_text = gl.getAttribLocation(shader_program, 'vertexTex');
+	let loc_norm = gl.getAttribLocation(shader_program, 'normal');
 	u_normalMatrix= gl.getUniformLocation(shader_program, 'normalMatrix');
 	u_color_ka = gl.getUniformLocation(shader_program,'color_ka');
 	u_color_kd = gl.getUniformLocation(shader_program,'color_kd');
@@ -295,7 +296,7 @@ function onLoad() {
 	u_spot_pos_E = gl.getUniformLocation(shader_program,'spot_pos_E');
 	u_sampler= gl.getUniformLocation(shader_program,'sampler');
 
-	loadModels(loc_pos,normLocation);
+	loadModels(loc_pos, loc_norm, loc_text);
 
 	for (let i = 0; i < models.length; i++) {
 		applyTransformations(i);
@@ -393,6 +394,7 @@ function onLoad() {
 	spherical_cam = new SphericalCamera(55, canvas.clientWidth / canvas.clientHeight);
 	camera = free_cam;
 
+	initTex();
 	if (isAnimated()) {
 		request = requestAnimationFrame(onRender);
 	} else {
@@ -406,7 +408,7 @@ function onRender(now) {
 	let M_mat = mat4.create();
 	let view_mat = camera.view_mat,
 		proj_mat = camera.proj_mat;
-	
+
 	let spot_pos_E = vec3.create();
 	vec3.transformMat4(spot_pos_E, spot_pos, M_mat);
 	vec3.transformMat4(spot_pos_E, spot_pos_E, view_mat);
@@ -479,7 +481,20 @@ function onRender(now) {
 		gl.uniform1f(u_cAtt,cAtt);
 		gl.uniform3fv(u_spot_pos_E, spot_pos_E);
 		//gl.uniform3fv(loc_color, colors[i]);
-		models[i].draw(is_solid, gl);
+		gl.activeTexture(gl.TEXTURE0);
+		gl.uniform1i(shader_program.samplerUniform,0);
+		if (i == PELOTA) {
+			gl.bindTexture(gl.TEXTURE_2D, tex);
+			tex.image.src = "assets/pelota.jpg";
+			// tex.image.src = "assets/chess.jpg";
+			models[i].draw(is_solid, gl);
+		} else {
+			gl.bindTexture(gl.TEXTURE_2D, tex2);
+			// tex2.image.src = "assets/steel.jpg";
+			// tex2.image.src = "assets/chess.jpg";
+			tex2.image.src = "";
+			models[i].draw(is_solid, gl);
+		}
 	}
 
 	if (isAnimated()) {
@@ -487,4 +502,28 @@ function onRender(now) {
 	} else {
 		request = null;
 	}
+}
+
+function initTex(){
+	tex = gl.createTexture();
+	tex2 = gl.createTexture();
+	tex.image = new Image();
+	tex.image.crossOrigin = "anonymous";
+	tex.image.onload = function(){
+		handleLoadedTex(tex);
+	}
+	tex2.image = new Image();
+	tex2.image.crossOrigin = "anonymous";
+	tex2.image.onload = function(){
+		handleLoadedTex(tex2);
+	}
+}
+
+function handleLoadedTex(tex){
+	gl.bindTexture(gl.TEXTURE_2D, tex);
+	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+	gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE, tex.image);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.bindTexture(gl.TEXTURE_2D, null);
 }

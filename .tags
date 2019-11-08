@@ -40,6 +40,7 @@ AnonymousFunctionf1105c851800	common/glmatrix/gl-matrix-min.js	/^!function(t,n){
 Axis	common/primitives/Axis.js	/^class Axis {$/;"	c
 C	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 Camera	common/cameras/Camera.js	/^class Camera {$/;"	c
+CoefEsp	js/app.js	/^var CoefEsp = 20;$/;"	v
 D	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 D	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 E	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
@@ -142,6 +143,7 @@ a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+aAtt	js/app.js	/^var aAtt=0.000002;$/;"	v
 angle	js/app.js	/^let angle = 0;$/;"	v
 applyTransformations	js/app.js	/^function applyTransformations(i) {$/;"	f
 automatica	js/listeners.js	/^let automatica = false;$/;"	v
@@ -154,6 +156,8 @@ b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 b	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+bAtt	js/app.js	/^var bAtt=0.000002;$/;"	v
+base_pelota_material	js/app.js	/^	let base_pelota_material = {$/;"	c	class:onLoad
 bindAttributes	common/ShaderProgramHelper.js	/^	static bindAttributes(shader_program, attribute_bindings) {$/;"	m	class:ShaderProgramHelper
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
@@ -163,6 +167,7 @@ c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+cAtt	js/app.js	/^var cAtt=0.000002;$/;"	v
 camaraAutomatica	index.html	/^					<button class="btn btn-success" type="button" id="camaraAutomatica"$/;"	I
 camaraAutomatica	js/listeners.js	/^async function camaraAutomatica() {$/;"	f
 camaraEsferica	index.html	/^					<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()/;"	I
@@ -172,12 +177,20 @@ camaraLibre	js/listeners.js	/^function camaraLibre() {$/;"	f
 camera	js/app.js	/^var camera = null;$/;"	v
 canvas	index.html	/^	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30px"$/;"	I
 canvas	js/app.js	/^var canvas = null;$/;"	v
-colors	js/app.js	/^var colors = [];$/;"	v
+champions_base_material	js/app.js	/^	let champions_base_material = {$/;"	c	class:onLoad
+champions_material	js/app.js	/^	let champions_material = {$/;"	c	class:onLoad
+champions_stand_material	js/app.js	/^	let champions_stand_material = {$/;"	c	class:onLoad
+color_ka	js/app.js	/^var color_ka = [0.2,0.0,0.0];$/;"	v
+color_kd	js/app.js	/^var color_kd = [0.0,1.0,0.0];$/;"	v
+color_ks	js/app.js	/^var color_ks = [1.0,0.0,1.0];$/;"	v
 constructor	common/VertexAttributeInfo.js	/^	constructor(data, loc, size) {$/;"	m	class:VertexAttributeInfo
 constructor	common/cameras/Camera.js	/^	constructor(fovy, aspect) {$/;"	m	class:Camera
 constructor	common/cameras/FreeCamera.js	/^	constructor(fovy, aspect) {$/;"	m	class:FreeCamera
 constructor	common/cameras/SphericalCamera.js	/^	constructor(fovy, aspect) {$/;"	m	class:SphericalCamera
 constructor	js/Model.js	/^	constructor(model_source) {$/;"	m	class:Model
+copaDescargada_base_material	js/app.js	/^	let copaDescargada_base_material = {$/;"	c	class:onLoad
+copaDescargada_material	js/app.js	/^	let copaDescargada_material = {$/;"	c	class:onLoad
+copaDescargada_stand_material	js/app.js	/^	let copaDescargada_stand_material = {$/;"	c	class:onLoad
 create	common/ShaderProgramHelper.js	/^	static create(vertex_shader_source, fragment_shader_source, attribute_bindings) {$/;"	m	class:ShaderProgramHelper
 create	common/VAOHelper.js	/^	static create(indices, vertex_attributes_info) {$/;"	m	class:VAOHelper
 createEBO	common/VAOHelper.js	/^	static createEBO(indices) {$/;"	m	class:VAOHelper
@@ -200,7 +213,7 @@ decreaseRadius	js/listeners.js	/^function decreaseRadius() {$/;"	f
 decreaseTheta	js/listeners.js	/^function decreaseTheta() {$/;"	f
 deltaPos2Vec	common/cameras/FreeCamera.js	/^	deltaPos2Vec(unit_dir) {$/;"	m	class:FreeCamera
 delta_time	js/app.js	/^var delta_time = 0;$/;"	v
-draw	js/Model.js	/^	draw(solid) {$/;"	m	class:Model
+draw	js/Model.js	/^	draw(solid, gl) {$/;"	m	class:Model
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850300
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
@@ -210,6 +223,9 @@ e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+enableA	js/app.js	/^var enableA = 1.0;$/;"	v
+enableD	js/app.js	/^var enableD = 1.0;$/;"	v
+enableE	js/app.js	/^var enableE = 1.0;$/;"	v
 f	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 f	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 f	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -224,7 +240,7 @@ g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 g	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-generateModel	js/Model.js	/^	generateModel(loc_pos) {$/;"	m	class:Model
+generateModel	js/Model.js	/^	generateModel(loc_pos, loc_norm, loc_text) {$/;"	m	class:Model
 getPhi	common/cameras/SphericalCamera.js	/^	getPhi() {$/;"	m	class:SphericalCamera
 getRadius	common/cameras/SphericalCamera.js	/^	getRadius() {$/;"	m	class:SphericalCamera
 getTheta	common/cameras/SphericalCamera.js	/^	getTheta() {$/;"	m	class:SphericalCamera
@@ -237,6 +253,7 @@ h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+handleLoadedTex	js/app.js	/^function handleLoadedTex(tex){$/;"	f
 hex2RgbFloat	common/Utils.js	/^	static hex2RgbFloat(hex) {$/;"	m	class:Utils
 hex2RgbInt	common/Utils.js	/^	static hex2RgbInt(hex) {$/;"	m	class:Utils
 horario1	js/listeners.js	/^function horario1() {$/;"	f
@@ -252,6 +269,7 @@ i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 increasePhi	js/listeners.js	/^function increasePhi() {$/;"	f
 increaseRadius	js/listeners.js	/^function increaseRadius() {$/;"	f
 increaseTheta	js/listeners.js	/^function increaseTheta() {$/;"	f
+initTex	js/app.js	/^function initTex(){$/;"	f
 isAnimated	js/app.js	/^function isAnimated() {$/;"	f
 is_free	js/listeners.js	/^let is_free = true;$/;"	v
 is_solid	js/app.js	/^var is_solid = false;$/;"	v
@@ -260,6 +278,45 @@ j	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 j	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 j	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 k	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
+ka	js/app.js	/^		ka: [0.0, 0.0, 0.23],$/;"	p	class:onLoad.techo_material
+ka	js/app.js	/^		ka: [0.003,0.2,0.02053],$/;"	p	class:onLoad.champions_base_material
+ka	js/app.js	/^		ka: [0.0123, 0.0253, 0.0323],$/;"	p	class:onLoad.copaDescargada_stand_material
+ka	js/app.js	/^		ka: [0.023, 0.0, 0.00923],$/;"	p	class:onLoad.champions_material
+ka	js/app.js	/^		ka: [0.023, 0.023, 0.023],$/;"	p	class:onLoad.pelota_stand_material
+ka	js/app.js	/^		ka: [0.0323, 0.0283, 0.0823],$/;"	p	class:onLoad.copaDescargada_base_material
+ka	js/app.js	/^		ka: [0.053, 0.013, 0.0723],$/;"	p	class:onLoad.soporte_pelota_material
+ka	js/app.js	/^		ka: [0.053, 0.03, 0.1003],$/;"	p	class:onLoad.base_pelota_material
+ka	js/app.js	/^		ka: [0.0623, 0.0723, 0.0273],$/;"	p	class:onLoad.copaDescargada_material
+ka	js/app.js	/^		ka: [0.10223, 0.023, 0.023],$/;"	p	class:onLoad.champions_stand_material
+ka	js/app.js	/^		ka: [0.23, 0.23, 0.23],$/;"	p	class:onLoad.marco_material
+ka	js/app.js	/^		ka: [0.23, 0.23, 0.23],$/;"	p	class:onLoad.paredes_material
+ka	js/app.js	/^		ka: [0.23, 0.23, 0.23],$/;"	p	class:onLoad.suelo_material
+kd	js/app.js	/^		kd: [0.0, 0.0, 0.28],$/;"	p	class:onLoad.techo_material
+kd	js/app.js	/^		kd: [0.128, 0.281, 0.228],$/;"	p	class:onLoad.copaDescargada_stand_material
+kd	js/app.js	/^		kd: [0.128, 0.728, 0.728],$/;"	p	class:onLoad.copaDescargada_material
+kd	js/app.js	/^		kd: [0.248, 0.28, 0.258],$/;"	p	class:onLoad.champions_stand_material
+kd	js/app.js	/^		kd: [0.28, 0.28, 0.28],$/;"	p	class:onLoad.base_pelota_material
+kd	js/app.js	/^		kd: [0.28, 0.28, 0.28],$/;"	p	class:onLoad.marco_material
+kd	js/app.js	/^		kd: [0.28, 0.28, 0.28],$/;"	p	class:onLoad.paredes_material
+kd	js/app.js	/^		kd: [0.28, 0.28, 0.28],$/;"	p	class:onLoad.pelota_stand_material
+kd	js/app.js	/^		kd: [0.28, 0.28, 0.28],$/;"	p	class:onLoad.soporte_pelota_material
+kd	js/app.js	/^		kd: [0.28, 0.28, 0.28],$/;"	p	class:onLoad.suelo_material
+kd	js/app.js	/^		kd: [0.328, 0.328, 0.728],$/;"	p	class:onLoad.copaDescargada_base_material
+kd	js/app.js	/^		kd: [0.58, 0.0, 0.28],$/;"	p	class:onLoad.champions_material
+kd	js/app.js	/^		kd: [0.728, 0.428, 0.228],$/;"	p	class:onLoad.champions_base_material
+ks	js/app.js	/^		ks: [0.0, 0.0, 0.77]$/;"	p	class:onLoad.techo_material
+ks	js/app.js	/^		ks: [0.177, 0.77, 0.677]$/;"	p	class:onLoad.champions_stand_material
+ks	js/app.js	/^		ks: [0.277, 0.477, 0.577]$/;"	p	class:onLoad.copaDescargada_stand_material
+ks	js/app.js	/^		ks: [0.277, 0.877, 0.9797]$/;"	p	class:onLoad.copaDescargada_material
+ks	js/app.js	/^		ks: [0.57, 0.5, 0.77]$/;"	p	class:onLoad.champions_material
+ks	js/app.js	/^		ks: [0.677, 0.377, 0.5477]$/;"	p	class:onLoad.copaDescargada_base_material
+ks	js/app.js	/^		ks: [0.767, 0.757, 0.377]$/;"	p	class:onLoad.champions_base_material
+ks	js/app.js	/^		ks: [0.77, 0.77, 0.77]$/;"	p	class:onLoad.base_pelota_material
+ks	js/app.js	/^		ks: [0.77, 0.77, 0.77]$/;"	p	class:onLoad.marco_material
+ks	js/app.js	/^		ks: [0.77, 0.77, 0.77]$/;"	p	class:onLoad.paredes_material
+ks	js/app.js	/^		ks: [0.77, 0.77, 0.77]$/;"	p	class:onLoad.pelota_stand_material
+ks	js/app.js	/^		ks: [0.77, 0.77, 0.77]$/;"	p	class:onLoad.soporte_pelota_material
+ks	js/app.js	/^		ks: [0.77, 0.77, 0.77]$/;"	p	class:onLoad.suelo_material
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -272,8 +329,15 @@ lbl_drone1_body_color	index.html	/^				<td id='lbl_drone1_body_color'><\/td>$/;"
 lbl_drone1_rotors_color	index.html	/^				<td id='lbl_drone1_rotors_color'><\/td>$/;"	I
 lbl_fovy	index.html	/^				<td id="lbl_fovy">55<\/td>$/;"	I
 lbl_rotation_y	index.html	/^				<td id='lbl_rotation_y'>0<\/td>$/;"	I
+lightColorA	js/app.js	/^var lightColorA= [0.5,0.2,0.2];$/;"	v
+lightColorD	js/app.js	/^var lightColorD= [1.0,0.5,1.0];$/;"	v
+lightColorE	js/app.js	/^var lightColorE= [0.2,0.2,0.2];$/;"	v
+lightInt	js/app.js	/^var lightInt = 4.5;$/;"	v
+lightX	js/app.js	/^var lightX=1000.0;$/;"	v
+lightY	js/app.js	/^var lightY=3000.0;$/;"	v
+lightZ	js/app.js	/^var lightZ=300.0;$/;"	v
 load	common/primitives/Axis.js	/^	load() {$/;"	m	class:Axis
-loadModels	js/app.js	/^function loadModels(loc_pos) {$/;"	f
+loadModels	js/app.js	/^function loadModels(loc_pos, loc_norm, loc_text) {$/;"	f
 loc_color	js/app.js	/^var loc_color;$/;"	v
 loc_proj_mat	js/app.js	/^var loc_proj_mat;$/;"	v
 loc_world_mat	js/app.js	/^var loc_world_mat;$/;"	v
@@ -287,6 +351,8 @@ m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 m	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+marco_material	js/app.js	/^	let marco_material = {$/;"	c	class:onLoad
+materials	js/app.js	/^var materials = [];$/;"	v
 model_mats	js/app.js	/^var model_mats = [];$/;"	v
 models	js/app.js	/^var models = [];$/;"	v
 moveBackward	common/cameras/FreeCamera.js	/^	moveBackward() {$/;"	m	class:FreeCamera
@@ -296,7 +362,6 @@ moveForward	common/cameras/FreeCamera.js	/^	moveForward() {$/;"	m	class:FreeCame
 moveLeft	common/cameras/FreeCamera.js	/^	moveLeft() {$/;"	m	class:FreeCamera
 moveRight	common/cameras/FreeCamera.js	/^	moveRight() {$/;"	m	class:FreeCamera
 moveUp	common/cameras/FreeCamera.js	/^	moveUp() {$/;"	m	class:FreeCamera
-mustOrb	js/app.js	/^function mustOrb(i) {$/;"	f
 n	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850100.AnonymousFunctionf1105c850200
 n	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:n
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
@@ -317,11 +382,11 @@ onLoad	js/app.js	/^function onLoad() {$/;"	f
 onRender	js/app.js	/^function onRender(now) {$/;"	f
 onSliderFovy	js/listeners.js	/^function onSliderFovy(slider, labelId) {$/;"	f
 onSliderRotation	js/listeners.js	/^function onSliderRotation(slider, labelId) {$/;"	f
+onload	js/app.js	/^	tex.image.onload = function(){$/;"	f	function:tex.image
+onload	js/app.js	/^	tex2.image.onload = function(){$/;"	f	function:tex2.image
 orbita	index.html	/^					<button class="btn btn-success" type="button" id="orbita" onclick="orbita()"$/;"	I
 orbita	js/listeners.js	/^function orbita() {$/;"	f
-orbitaChampions	js/app.js	/^var orbitaChampions = false;$/;"	v
 orbitaLaChampions	js/listeners.js	/^function orbitaLaChampions() {$/;"	f
-orbitando	js/app.js	/^var orbitando = false;$/;"	v
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
@@ -330,8 +395,10 @@ p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+paredes_material	js/app.js	/^	let paredes_material = {$/;"	c	class:onLoad
 parseFile	common/OBJParser.js	/^	static parseFile(fileContent) {$/;"	m	class:OBJParser
 parsed_model	js/app.js	/^var parsed_model = null;$/;"	v
+pelota_stand_material	js/app.js	/^	let pelota_stand_material = {$/;"	c	class:onLoad
 phi_step	js/listeners.js	/^let phi_step = 1.0;$/;"	v
 pitch	common/cameras/FreeCamera.js	/^	pitch(angle) {$/;"	m	class:FreeCamera
 pitchDown	common/cameras/FreeCamera.js	/^	pitchDown() {$/;"	m	class:FreeCamera
@@ -373,8 +440,15 @@ setPhi	common/cameras/SphericalCamera.js	/^	setPhi(phi) {$/;"	m	class:SphericalC
 setRadius	common/cameras/SphericalCamera.js	/^	setRadius(radius) {$/;"	m	class:SphericalCamera
 setTheta	common/cameras/SphericalCamera.js	/^	setTheta(theta) {$/;"	m	class:SphericalCamera
 shader_program	js/app.js	/^var shader_program = null;$/;"	v
+shader_program2	js/app.js	/^var shader_program2 = null;$/;"	v
 sherical_cam	js/app.js	/^var sherical_cam = null;$/;"	v
 sleep	js/listeners.js	/^function sleep(ms) {$/;"	f
+soporte_pelota_material	js/app.js	/^	let soporte_pelota_material = {$/;"	c	class:onLoad
+spot_pos	js/app.js	/^var spot_pos = [0.0, 100.0, 500.0];$/;"	v
+suelo_material	js/app.js	/^	let suelo_material = {$/;"	c	class:onLoad
+techo_material	js/app.js	/^	let techo_material = {$/;"	c	class:onLoad
+tex	js/app.js	/^var tex;$/;"	v
+tex2	js/app.js	/^var tex2;$/;"	v
 then	js/app.js	/^var then = 0;$/;"	v
 theta_step	js/listeners.js	/^let theta_step = 1.0;$/;"	v
 toggleFullscreen	js/listeners.js	/^function toggleFullscreen() {$/;"	f
@@ -389,6 +463,24 @@ u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+u_CoefEsp	js/app.js	/^var u_CoefEsp;$/;"	v
+u_aAtt	js/app.js	/^var u_aAtt;$/;"	v
+u_bAtt	js/app.js	/^var u_bAtt;$/;"	v
+u_cAtt	js/app.js	/^var u_cAtt;$/;"	v
+u_color_ka	js/app.js	/^var u_color_ka;$/;"	v
+u_color_kd	js/app.js	/^var u_color_kd;$/;"	v
+u_color_ks	js/app.js	/^var u_color_ks;$/;"	v
+u_enableA	js/app.js	/^var u_enableA;$/;"	v
+u_enableD	js/app.js	/^var u_enableD;$/;"	v
+u_enableE	js/app.js	/^var u_enableE;$/;"	v
+u_lightColorA	js/app.js	/^var u_lightColorA;$/;"	v
+u_lightColorD	js/app.js	/^var u_lightColorD;$/;"	v
+u_lightColorE	js/app.js	/^var u_lightColorE;$/;"	v
+u_lightEye	js/app.js	/^var u_lightEye;$/;"	v
+u_lightInt	js/app.js	/^var u_lightInt;$/;"	v
+u_normalMatrix	js/app.js	/^var u_normalMatrix$/;"	v
+u_sampler	js/app.js	/^var u_sampler;$/;"	v
+u_spot_pos_E	js/app.js	/^var u_spot_pos_E;$/;"	v
 v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 v	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850800
