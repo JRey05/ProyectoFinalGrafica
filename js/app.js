@@ -289,7 +289,6 @@ function onLoad() {
 	gl = canvas.getContext('webgl2');
 
 	shader_program = ShaderProgramHelper.create(vertex_shader_source, fragment_shader_source);
-	shader_program2 = ShaderProgramHelper.create(vertex_shader_source, fragment_shader_source2);
 
 	let loc_pos = gl.getAttribLocation(shader_program, 'pos');
 	loc_color = gl.getUniformLocation(shader_program, 'color');
