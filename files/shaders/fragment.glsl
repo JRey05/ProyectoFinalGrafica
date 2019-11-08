@@ -34,6 +34,8 @@ var fragment_shader_source = `
 
 	uniform vec3 color;
 
+	uniform vec3 spot_pos_E;
+
 	void main(void) {
 		vec3 N= normalize(vNE);
 		vec3 L= normalize(vLE);
@@ -60,6 +62,14 @@ var fragment_shader_source = `
 		vec3 colorDifuso=lightColorD*fAtt*color_kd*NL*enableD;
 		vec3 colorEspecular= lightColorE*color_ks*spectCT*enableE;
 		vec3 color1=colorAmbiente+colorDifuso+colorEspecular;
+
+		vec3 color3;
+
+		if (pow(dot(normalize(spot_pos_E), -L), 4.0) > pow(cos(0.4), 4.0)) {
+			color3 = color1;
+		} else {
+			color3 = vec3(.0, .0, .0);
+		}
 		
 		gl_FragColor = vec4(lightInt*color1,1.0);		
 

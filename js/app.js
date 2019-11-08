@@ -96,6 +96,8 @@ var enableD = 1.0;
 var enableE = 1.0;
 var miTextura;
 
+var u_spot_pos_E;
+var spot_pos = [0.0, 100.0, 500.0];
 
 // Arreglo de modelos.
 var models = [];
@@ -291,6 +293,7 @@ function onLoad() {
 	u_aAtt=gl.getUniformLocation(shader_program,'aAtt');
 	u_bAtt=gl.getUniformLocation(shader_program,'bAtt');
 	u_cAtt=gl.getUniformLocation(shader_program,'cAtt');
+	u_spot_pos_E = gl.getUniformLocation(shader_program,'spot_pos_E');
 	u_sampler= gl.getUniformLocation(shader_program,'sampler');
 
 	loadModels(loc_pos,normLocation);
@@ -364,8 +367,13 @@ function onLoad() {
 let angle = 0;
 
 function onRender(now) {
+	let M_mat = mat4.create();
 	let view_mat = camera.view_mat,
 		proj_mat = camera.proj_mat;
+	
+	let spot_pos_E = vec3.create();
+	vec3.transformMat4(spot_pos_E, spot_pos, M_mat);
+	vec3.transformMat4(spot_pos_E, spot_pos_E, view_mat);
 
 	var lightEye= [lightX,lightY,lightZ];	
 	
@@ -377,7 +385,6 @@ function onRender(now) {
 	gl.useProgram(shader_program);
 	gl.uniformMatrix4fv(loc_proj_mat, false, proj_mat);
 
-	
 	
 	if (isAnimated()) {
 		// Milisegundos a segundos.
@@ -435,6 +442,7 @@ function onRender(now) {
 		gl.uniform1f(u_aAtt,aAtt);
 		gl.uniform1f(u_bAtt,bAtt);
 		gl.uniform1f(u_cAtt,cAtt);
+		gl.uniform3fv(u_spot_pos_E, spot_pos_E);
 		//gl.uniform3fv(loc_color, colors[i]);
 		models[i].draw(is_solid, gl);
 	}
