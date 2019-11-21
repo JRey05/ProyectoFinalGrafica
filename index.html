@@ -14,11 +14,18 @@
 	<script src="common/cameras/Camera.js"></script>
 	<script src="common/cameras/FreeCamera.js"></script>
 	<script src="common/cameras/SphericalCamera.js"></script>
-	<script src="files/shaders/vertex.glsl"></script>
-	<script src="files/shaders/fragment.glsl"></script>
+	<!-- <script src="files/shaders/vertex.glsl"></script>
+	<script src="files/shaders/fragment.glsl"></script> -->
+	<script src="js/Model.js"></script>
+	<script src="common/Modelo.js"></script>
+	<script src="common/Light.js"></script>
+	<script src="files/shaders/Nuevos/phong3.js"></script>
+	<script src="files/shaders/Nuevos/phong3_procedurales.js"></script>
+	<script src="files/shaders/Nuevos/normalMap3.js"></script>
+	<script src="files/shaders/Nuevos/shader_luz.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/listeners.js"></script>
-	<script src="js/Model.js"></script>
+	
 
 	<script src="assets/Modelos3D/suelo.obj"></script>
 	<script src="assets/Modelos3D/paredes.obj"></script>
@@ -34,6 +41,9 @@
 	<script src="assets/drone/drone-rotors.obj"></script>
 	<script src="assets/champions/champions.obj"></script>
 	<script src="assets/Modelos3D/championsBlender.obj"></script>
+	<script src="assets/Modelos3D/spot.obj"></script>
+	<script src="assets/Modelos3D/puntual.obj"></script>
+	<script src="assets/Modelos3D/direccional.obj"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -294,21 +304,6 @@
 				<th>
 					<button class="btn btn-success" type="button" id="camaraAutomatica"
 						onclick="camaraAutomatica();">Cámara automática </button>
-				</th>
-				<th>
-					<button class="btn btn-success" type="button" id="orbita" onclick="orbita()"
-						onkeypress="onKeyDown(event);">Orbita</button>
-				</th>
-				<th>
-					<label>Champions</label>
-				</th>
-				<th>
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="customSwitch3" onclick="orbitaLaChampions()">
-						<!-- <input type="checkbox" class="custom-control-input" id="customSwitch3" onclick="orbitaLaChampions()"> -->
-						<label class="custom-control-label"
-							for="customSwitch3">&nbsp;&nbsp;&nbsp;&nbsp;Descargada</label>
-					</div>
 				</th>
 			</tr>
 		</tbody>

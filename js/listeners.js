@@ -435,15 +435,15 @@ function atenuacionc(id) {
 	onRender();
 }
 
-var mate = materials[0];
-function schedule(material){
-	for(let i=0; i<materials.length; i++){
-		if(materials[i] == material ){
-			this.mate = materials[i];
-			break;
-		}
-	}
-}
+// var mate = materials[0];
+// function schedule(material){
+// 	for(let i=0; i<materials.length; i++){
+// 		if(materials[i] == material ){
+// 			this.mate = materials[i];
+// 			break;
+// 		}
+// 	}
+// }
 
 //champiooooooooooons
 function coeficienteMateriala1(id){
@@ -612,4 +612,41 @@ function refresh() {
 	if (!isAnimated()) {
 		onRender();
 	}
+}
+
+function inicializar_luces() {
+	luz_spot = new Light([0,4000,0],[0,-1,0],[5,1,1],10,[0,0,0]);
+	luz_puntual = new Light([0,4000,0],null,[1,1,1],null,[0,0,0]);
+	luz_direccional = new Light(null,[0,0,-1],[3,3,3],null,null);
+	luz_ambiente = new Light(null,null,[0.2,0.2,0.2],null,null);
+
+	atributos_spot = {
+		eangulo: false,
+		edir: false,
+		epos: false,
+		eatt: false
+	};
+
+	atributos_puntual = {
+		eangulo: true,
+		edir: true,
+		epos: false,
+		eatt: false
+	};
+
+	atributos_direccional = {
+		eangulo: true,
+		edir: false,
+		epos: true,
+		eatt: true
+	};
+
+	
+	atributos_ambiente = {
+		eangulo: true,
+		edir: true,
+		epos: true,
+		eatt: true
+	};
+
 }

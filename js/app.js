@@ -32,7 +32,177 @@ var gl = null;
 
 // Programa de shaders.
 var shader_program = null;
-var shader_program2 = null;
+
+// Variables Auxiliares para los shaders
+var shader_phong, shader_luz, shader_phong_procedural, normalmap;
+
+var textura_luna, textura_suelo;
+// Tecturas para las esferas
+var textura_metal, textura_height;
+var textura_metalica, textura_oxido, textura_normales;
+var textura_luna, textura_oxido;
+var texturas_seleccionadas = [1.0,1.0,1.0,1.0];
+
+//Aux variables
+var coordenadas = new Array(16);
+var len = coordenadas.length;
+var camara;
+var suelo;
+var piso;
+var champions;
+var techo;
+var champions_base;
+var champions_stand;
+var copaDescargada;
+var standDescargada;
+var standPelota;
+var basePelota;
+var pelota;
+var soportePelota;
+var marco;
+
+// Esferas multitexturada , textura normal y procedural
+var esfera_luna, esfera_metal;
+
+//Esfera Mármol
+var esfera_marmol;
+var lacunaridad =2.0;
+var ganancia = 0.45;
+var octavas = 8;
+
+// Variables Auxiliares para los objetos de luz
+var luz_spot, luz_puntual, luz_direccional, luz_ambiente;
+var luz_seleccionada = 0;
+var esfera_puntual;
+var cono_spot;
+var flecha_direccional;
+var pared;
+
+var material_spot = {
+	ka: [0,0,0],
+	kd: [1,1,1],
+	ks: [1,1,1],
+	n: 10
+};
+
+var material_puntual = {
+	ka: [0,0,0],
+	kd: [1,1,1],
+	ks: [1,1,1],
+	n: 10
+};
+
+var material_direccional = {
+	ka: [0,0,0],
+	kd: [1,1,1],
+	ks: [1,1,1],
+	n: 10
+};
+
+var suelo_material = {
+	ka: [0.23, 0.23, 0.23],
+	kd: [0.28, 0.28, 0.28],
+	ks: [0.77, 0.77, 0.77],
+	n: 10
+}
+
+var champions_material = {
+	ka: [0.023, 0.0, 0.00923],
+	kd: [0.58, 0.0, 0.28],
+	ks: [0.57, 0.5, 0.77],
+	n: 10
+}
+
+var techo_material = {
+	ka: [0.0, 0.0, 0.23],
+	kd: [0.0, 0.0, 0.28],
+	ks: [0.0, 0.0, 0.77],
+	n: 10
+}
+
+var bronce = {
+	ka: [0.2125, 0.1275, 0.054],
+	kd: [0.714, 0.4284, 0.18144],
+	ks: [0.393548, 0.271906, 0.166721],
+	n: 10
+}
+
+var polished_silver = {
+	ka: [0.23125, 0.23125, 0.23125],
+	kd: [0.2775, 0.2775, 0.2775],
+	ks: [0.773911, 0.773911, 0.773911],
+	n: 10
+}
+
+var cyan_plastic = {
+	ka: [0.0, 0.1, 0.06],
+	kd: [0.01, 0.01, 0.01],
+	ks: [0.50, 0.50, 0.50],
+	n: 10
+}
+
+var champions_base_material = {
+	ka: [0.003,0.2,0.02053],
+	kd: [0.728, 0.428, 0.228],
+	ks: [0.767, 0.757, 0.377],
+	n: 10
+}
+var champions_stand_material = {
+	ka: [0.10223, 0.023, 0.023],
+	kd: [0.248, 0.28, 0.258],
+	ks: [0.177, 0.77, 0.677],
+	n: 10
+}
+var copaDescargada_material = {
+	ka: [0.0623, 0.0723, 0.0273],
+	kd: [0.128, 0.728, 0.728],
+	ks: [0.277, 0.877, 0.9797],
+	n: 10
+}
+var pelota_material = {
+	ka: [0.2, 0.2, 0.2],
+	kd: [0.328, 0.328, 0.0728],
+	ks: [0.0677, 0.0377, 0.05477],
+	n: 10
+}
+var copaDescargada_stand_material = {
+	ka: [0.0123, 0.0253, 0.0323],
+	kd: [0.128, 0.281, 0.228],
+	ks: [0.277, 0.477, 0.577],
+	n:10
+}
+var pelota_stand_material = {
+	ka: [0.023, 0.023, 0.023],
+	kd: [0.28, 0.28, 0.28],
+	ks: [0.77, 0.77, 0.77],
+	n: 10
+}
+var base_pelota_material = {
+	ka: [0.053, 0.03, 0.1003],
+	kd: [0.28, 0.28, 0.28],
+	ks: [0.77, 0.77, 0.77],
+	n: 10
+}
+var soporte_pelota_material = {
+	ka: [1, 0.13, 0],
+	kd: [0.28, 0.28, 0.28],
+	ks: [0.77, 0.77, 0.77],
+	n: 10
+}
+var marco_material = {
+	ka: [0, 0, 0],
+	kd: [0, 0, 0],
+	ks: [0, 0, 0],
+	n: 10
+}
+
+var paredes_material = {
+	ka: [0.9, 0.23, 0.23],
+	kd: [0.28, 0.28, 0.28],
+	ks: [0.007, 0.0077, 0.077],
+	n: 10 
+}
+
 
 // Almacenamiento.
 var vao_solid = null;
@@ -55,59 +225,9 @@ var camera = null;
 var free_cam = null;
 var sherical_cam = null;
 
-// Locaciones de datos de los shaders.
-var loc_model_mat;
-var loc_view_mat;
-var loc_world_mat;
-var loc_proj_mat;
-var loc_color;
-var u_normalMatrix
-
-var u_color_ka;
-var u_color_kd;
-var u_color_ks;
-var u_CoefEsp;
-var u_Tita;
-var u_lightInt;
-var u_lightEye;
-var u_lightColor;
-var u_spotLightColor;
-var u_enabled;
-var u_enabledSpot;
-var u_aAtt;
-var u_bAtt;
-var u_cAtt;
-var u_sampler;
-var color_ka = [0.2,0.0,0.0];
-var color_kd = [0.0,1.0,0.0];
-var color_ks = [1.0,0.0,1.0];
-var CoefEsp = 20;
-var lightInt = 4.5;
-var lightColorA= [0.5,0.2,0.2];
-var lightColorD= [1.0,0.5,1.0];
-var lightColorE= [0.2,0.2,0.2];
-var enableA = 1.0;
-var enableD = 1.0;
-var enableE = 1.0;
 var tex;
 var tex2;
 
-var u_spot_pos_E;
-var spot_pos = [0.0, 100.0, 500.0];
-
-// Arreglo de modelos.
-var models = [];
-
-// Arreglo de transformaciones. Cada elemento se corresponde con un modelo y almacena su escalado, rotación alrededor de sus ejes, traslación, y rotación con respecto a un punto; respectivamente.
-// Las primeras tres transformaciones están representadas mediante vectores (vec3) mientras que la última está representada mediante una terna constituida por el punto
-// alrededor del cual se rotará, el eje que define la rotación, y el ángulo de rotación; respectivamente.
-var transformations = [];
-
-// Arreglo de matrices de modelado. Cada elemento se corresponde con modelo y almacena la matriz que lo modela.
-var model_mats = [];
-
-// Arreglo de materiales. Cada elemento se corresponde con un modelo y almacena su material.
-var materials = [];
 
 // Tiempo del frame anterior.
 var then = 0;
@@ -118,308 +238,44 @@ var delta_time = 0;
 // Velocidad de rotación.
 var rotation_speed = 22;
 
-// Arreglo con las luces.
-var luces = [];
-
-// Crear e inicializar luces.
-var luz1 = {
-	tipo:"puntual",
-	posicion:[1000.0,3000.0,300.0],
-	intencidad:4,
-	color:[0.3,0.3,0.4],
-	enabled:1.0,
-	fAtt:[0.000002,0.0000002,0.0000005]	// [a,b,c]
-}
-var luz2 = {
-	tipo:"spot",
-	posicion:[0.0, 100.0, 500.0],
-	color:[0.5,0.5,0.5],
-	target:[0,0,0],
-	tita:20/180,
-	CoefEsp:0.0001,
-	enabled:1.0
-}
-
-luces.push(luz1);
-luces.push(luz2);
-
 /**
 	* Verifica si se requiere una animación.
 	*/
 function isAnimated() {
+	if(rotar1 || rotar2) console.log("DEBEMOS HACER ALGO PARA HACERLO ROTAR");
 	return (rotar1 || rotar2);
 }
 
-/**
- *	Define y carga los modelos, especificando la locación de la posición de sus vértices.
- *	A su vez, establece las transformaciones a aplicar posteriormente.
- */
-function loadModels(loc_pos, loc_norm, loc_text) {
-	let champions = new Model(champions_source);
-	champions.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(champions);
-	let champions_translation = vec3.fromValues(0, 1010, 0);
-	vec3.add(champions._center, champions._center, champions_translation);
-	let champions_rotating = mat3.fromValues(-90,0,0);
-	transformations.push([vec3.fromValues(1, 1, 1), champions_rotating, champions_translation]);
-
-	let champions_base = new Model(base_giratoria_source);
-	champions_base.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(champions_base);
-	let champions_base_translation = vec3.fromValues(0, 0, 1);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_base_translation]);
-
-	let champions_stand = new Model(stand_giratorio_source);
-	champions_stand.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(champions_stand);
-	let champions_stand_translation = vec3.fromValues(0, 0, 1);
-	vec3.add(champions_stand._center, champions_stand._center, champions_stand_translation);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), champions_stand_translation]);
-
-	let copaDescargada = new Model(copaDescargada_source);
-	copaDescargada.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(copaDescargada);
-  let copaDescargada_scaling = mat3.fromValues(5,5,5);
-  let copaDescargada_rotating = mat3.fromValues(0,0,0);
-	let copaDescargada_translation = vec3.fromValues(-1000, 1000, 0);
-	vec3.add(copaDescargada._center, copaDescargada._center, copaDescargada_translation);
-	transformations.push([copaDescargada_scaling, copaDescargada_rotating, copaDescargada_translation]);
-
-	let standDescargada = new Model(standV2_source);
-	standDescargada.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(standDescargada);
-	let standDescargada_translation = vec3.fromValues(-1000, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standDescargada_translation]);
-
-	let standPelota = new Model(standV2_source);
-	standPelota.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(standPelota);
-	let standPelota_translation = vec3.fromValues(1000, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), standPelota_translation]);
-
-	let basePelota = new Model(base_giratoria_source);
-	basePelota.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(basePelota);
-	let basePelota_translation = vec3.fromValues(1000, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), basePelota_translation]);
-
-	let pelota = new Model(pelotaRugby_source);
-	pelota.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(pelota);
-	let pelota_translation = vec3.fromValues(1000, 1000, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), pelota_translation]);
-
-	let soportePelota = new Model(soportePelotaRugby_source);
-	soportePelota.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(soportePelota);
-	let soportePelota_translation = vec3.fromValues(1000, 1000, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), soportePelota_translation]);
-
-	let marco = new Model(marcoCuadro_source);
-	marco.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(marco);
-	let marco_translation = vec3.fromValues(0, 1000, -2500);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), marco_translation]);
-
-	let suelo = new Model(suelo_source);
-	suelo.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(suelo);
-	let suelo_translation = vec3.fromValues(0, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), suelo_translation]);
-
-	let paredes = new Model(paredes_source);
-	paredes.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(paredes);
-	let paredes_translation = vec3.fromValues(0, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), paredes_translation]);
-
-	let techo = new Model(techo_source);
-	techo.generateModel(loc_pos, loc_norm, loc_text);
-	models.push(techo);
-	let techo_translation = vec3.fromValues(0, 0, 0);
-	transformations.push([vec3.fromValues(1, 1, 1), vec3.fromValues(0, 0, 0), techo_translation]);
-
-}
-
-/**
- *	Aplica las transformaciones de modelado y posicionamiento en el mundo del modelo correspondiente al índice i.
- */
-function applyTransformations(i) {
-	let scaling = transformations[i][ESCALADO],
-		rotation = transformations[i][ROTACION],
-		translation = transformations[i][TRASLACION];
-
-	let scaling_mat = null,
-		x_rotation_mat = null,
-		y_rotation_mat = null,
-		z_rotation_mat = null,
-		rotation_mat = null,
-		translation_mat = null,
-		model_mat = mat4.create();
-
-	if (scaling != null && !vec3.exactEquals(scaling, vec3.create(1, 1, 1))) {
-		scaling_mat = mat4.create();
-		mat4.fromScaling(scaling_mat, scaling);
-		mat4.mul(model_mat, scaling_mat, model_mat);
-	}
-	if (rotation != null && !vec3.exactEquals(rotation, vec3.create())) {
-		x_rotation_mat = mat4.create();
-		y_rotation_mat = mat4.create();
-		z_rotation_mat = mat4.create();
-		rotation_mat = mat4.create();
-		mat4.fromXRotation(x_rotation_mat, glMatrix.toRadian(rotation[0]));
-		mat4.fromYRotation(y_rotation_mat, glMatrix.toRadian(rotation[1]));
-		mat4.fromZRotation(z_rotation_mat, glMatrix.toRadian(rotation[2]));
-		mat4.mul(rotation_mat, x_rotation_mat, rotation_mat);
-		mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
-		mat4.mul(rotation_mat, z_rotation_mat, rotation_mat);
-		mat4.mul(model_mat, rotation_mat, model_mat);
-	}
-
-	if (translation != null) {
-		translation_mat = mat4.create();
-		mat4.fromTranslation(translation_mat, translation);
-		mat4.mul(model_mat, translation_mat, model_mat);
-	}
-	model_mats[i] = model_mat;
-}
 
 function onLoad() {
 	canvas = document.getElementById('canvas');
 	gl = canvas.getContext('webgl2');
 
-	shader_program = ShaderProgramHelper.create(vertex_shader_source, fragment_shader_source);
+	// Shaders utilizados
+	shader_phong = new Phong3(gl);
+	shader_luz = new Shader_luz(gl);
+	normalmap = new normalmap3(gl);
+	shader_phong_procedural = new Phong3_Procedurales(gl);
 
-	let loc_pos = gl.getAttribLocation(shader_program, 'pos');
-	loc_color = gl.getUniformLocation(shader_program, 'color');
-	loc_model_mat = gl.getUniformLocation(shader_program, 'model_mat');
-	loc_view_mat = gl.getUniformLocation(shader_program, 'view_mat');
-	loc_world_mat = gl.getUniformLocation(shader_program, 'world_mat');
-	loc_proj_mat = gl.getUniformLocation(shader_program, 'proj_mat');
-	let loc_text = gl.getAttribLocation(shader_program, 'vertexTex');
-	let loc_norm = gl.getAttribLocation(shader_program, 'normal');
-	u_normalMatrix= gl.getUniformLocation(shader_program, 'normalMatrix');
-	u_color_ka = gl.getUniformLocation(shader_program,'color_ka');
-	u_color_kd = gl.getUniformLocation(shader_program,'color_kd');
-	u_color_ks = gl.getUniformLocation(shader_program,'color_ks');
-	u_CoefEsp = gl.getUniformLocation(shader_program,'CoefEsp');
-	u_Tita = gl.getUniformLocation(shader_program,'Tita');
-	u_lightInt = gl.getUniformLocation(shader_program,'lightInt');
-	u_lightEye = gl.getUniformLocation(shader_program,'lightEye');
-	u_lightColor = gl.getUniformLocation(shader_program,'lightColor');
-	u_spotLightColor = gl.getUniformLocation(shader_program,'spotLightColor');
-	u_enabled = gl.getUniformLocation(shader_program,'enabled');
-	u_enabledSpot = gl.getUniformLocation(shader_program,'enabledSpot');
-	u_aAtt=gl.getUniformLocation(shader_program,'aAtt');
-	u_bAtt=gl.getUniformLocation(shader_program,'bAtt');
-	u_cAtt=gl.getUniformLocation(shader_program,'cAtt');
-	u_spot_pos_E = gl.getUniformLocation(shader_program,'spot_pos_E');
-	u_spot_tita = gl.getUniformLocation(shader_program,'spot_tita');
-	u_sampler= gl.getUniformLocation(shader_program,'sampler');
-
-	loadModels(loc_pos, loc_norm, loc_text);
-
-	for (let i = 0; i < models.length; i++) {
-		applyTransformations(i);
-	}
-
-	let bronce = {
-		ka: [0.2125, 0.1275, 0.054],
-		kd: [0.714, 0.4284, 0.18144],
-		ks: [0.393548, 0.271906, 0.166721]
-	}
-
-	let polished_silver = {
-		ka: [0.23125, 0.23125, 0.23125],
-		kd: [0.2775, 0.2775, 0.2775],
-		ks: [0.773911, 0.773911, 0.773911]
-	}
-
-	let cyan_plastic = {
-		ka: [0.0, 0.1, 0.06],
-		kd: [0.01, 0.01, 0.01],
-		ks: [0.50, 0.50, 0.50]
-	}
-
-	let champions_material = {
-		ka: [0.023, 0.0, 0.00923],
-		kd: [0.58, 0.0, 0.28],
-		ks: [0.57, 0.5, 0.77]
-	}
-	let champions_base_material = {
-		ka: [0.003,0.2,0.02053],
-		kd: [0.728, 0.428, 0.228],
-		ks: [0.767, 0.757, 0.377]
-	}
-	let champions_stand_material = {
-		ka: [0.10223, 0.023, 0.023],
-		kd: [0.248, 0.28, 0.258],
-		ks: [0.177, 0.77, 0.677]
-	}
-	let copaDescargada_material = {
-		ka: [0.0623, 0.0723, 0.0273],
-		kd: [0.128, 0.728, 0.728],
-		ks: [0.277, 0.877, 0.9797]
-	}
-	let pelota_material = {
-		ka: [0.2, 0.2, 0.2],
-		kd: [0.328, 0.328, 0.0728],
-		ks: [0.0677, 0.0377, 0.05477]
-	}
-	let copaDescargada_stand_material = {
-		ka: [0.0123, 0.0253, 0.0323],
-		kd: [0.128, 0.281, 0.228],
-		ks: [0.277, 0.477, 0.577]
-	}
-	let pelota_stand_material = {
-		ka: [0.023, 0.023, 0.023],
-		kd: [0.28, 0.28, 0.28],
-		ks: [0.77, 0.77, 0.77]
-	}
-	let base_pelota_material = {
-		ka: [0.053, 0.03, 0.1003],
-		kd: [0.28, 0.28, 0.28],
-		ks: [0.77, 0.77, 0.77]
-	}
-	let soporte_pelota_material = {
-		ka: [0.053, 0.013, 0.0723],
-		kd: [0.28, 0.28, 0.28],
-		ks: [0.77, 0.77, 0.77]
-	}
-	let marco_material = {
-		ka: [0.23, 0.23, 0.23],
-		kd: [0.28, 0.28, 0.28],
-		ks: [0.77, 0.77, 0.77]
-	}
-	let suelo_material = {
-		ka: [0.23, 0.23, 0.23],
-		kd: [0.28, 0.28, 0.28],
-		ks: [0.77, 0.77, 0.77]
-	}
-	let paredes_material = {
-		ka: [0.6, 0.23, 0.23],
-		kd: [0.28, 0.28, 0.28],
-		ks: [0.007, 0.0077, 0.077]
-	}
-	let techo_material = {
-		ka: [0.0, 0.0, 0.23],
-		kd: [0.0, 0.0, 0.28],
-		ks: [0.0, 0.0, 0.77]
-	}
-
-	materials.push(polished_silver);
-	materials.push(champions_base_material);
-	materials.push(cyan_plastic);
-	materials.push(bronce);
-	materials.push(copaDescargada_stand_material);
-	materials.push(cyan_plastic);
-	materials.push(base_pelota_material);
-	materials.push(pelota_material);
-	materials.push(soporte_pelota_material);
-	materials.push(marco_material);
-	materials.push(suelo_material);
-	materials.push(paredes_material);
-	materials.push(techo_material);
+	//Cargo los models para los distintos tipo de luces
+	cono_spot = new Modelo(spot_obj,material_spot,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	esfera_puntual = new Modelo(puntual_obj,material_puntual, shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	flecha_direccional = new Modelo(direccional_obj,material_direccional,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	pared = new Modelo(paredes_source,paredes_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	piso = new Modelo(suelo_source,10, shader_phong_procedural.loc_posicion,shader_phong_procedural.loc_normal,shader_phong_procedural.loc_textura);
+	champions = new Modelo(champions_source,polished_silver, shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	techo = new Modelo(techo_source,techo_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	champions_base = new Modelo(base_giratoria_source,champions_base_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	champions_stand = new Modelo(stand_giratorio_source,champions_stand_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	copaDescargada = new Modelo(copaDescargada_source,copaDescargada_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	standDescargada = new Modelo(standV2_source,copaDescargada_stand_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	standPelota = new Modelo(standV2_source,copaDescargada_stand_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	basePelota = new Modelo(base_giratoria_source,base_pelota_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	pelota = new Modelo(pelotaRugby_source,100,shader_phong.loc_posicion,shader_phong.loc_normal,shader_phong.loc_textura);
+	//pelota = new Modelo(pelotaRugby_source,10,shader_phong_procedural.loc_posicion,shader_phong_procedural.loc_normal, shader_phong_procedural.loc_textura);
+	soportePelota = new Modelo(soportePelotaRugby_source,soporte_pelota_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	marco = new Modelo(marcoCuadro_source,marco_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	//champions = new Modelo(champions_source,polished_silver,shader_phong.loc_posicion,shader_phong.loc_normal,null);
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.3, 1.0);
@@ -433,7 +289,15 @@ function onLoad() {
 	spherical_cam = new SphericalCamera(55, canvas.clientWidth / canvas.clientHeight);
 	camera = free_cam;
 
+	//TEXTURAAAAAAAAAAASSSSS
 	initTex();
+
+	//INICIALIZAR LUCEEEEEEEEESSS (esta en el listener)
+	inicializar_luces();
+
+	//textura_suelo = inicializar_textura("assets/pelota.jpg");
+
+	
 	if (isAnimated()) {
 		request = requestAnimationFrame(onRender);
 	} else {
@@ -441,97 +305,62 @@ function onLoad() {
 	}
 }
 
-let angle = 0;
+
 
 function onRender(now) {
-	let M_mat = mat4.create();
-	let view_mat = camera.view_mat,
-		proj_mat = camera.proj_mat;
-
-	let spot_pos_E = vec3.create();
-	vec3.transformMat4(spot_pos_E, spot_pos, M_mat);
-	vec3.transformMat4(spot_pos_E, spot_pos_E, view_mat);
-
-	var lightEye= [luz1.posicion[0],luz1.posicion[1],luz1.posicion[2]];
-	vec3.transformMat4(lightEye,lightEye,view_mat);
-
+	
+	// limpiar canvas
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-	axis.render(proj_mat, view_mat);
 
-	gl.useProgram(shader_program);
-	gl.uniformMatrix4fv(loc_proj_mat, false, proj_mat);
+	//...................LUCES....................................................
+	// 0 = spot, 1 = puntual, 2 = direccional
+	gl.useProgram(shader_luz.shader_program);
+	dibujar_luz(luz_spot,0,cono_spot);
+	dibujar_luz(luz_puntual,1, esfera_puntual);
+	dibujar_luz(luz_direccional,2,flecha_direccional);
+	//dibujar_piso(shader_luz,piso)
+	dibujar_pared(shader_luz);
+	dibujar_champions(shader_luz);
+	dibujar_techo(shader_luz);
+	dibujar_champions_base(shader_luz);
+	dibujar_champions_stand(shader_luz);
+	dibujar_copaDescargada(shader_luz);
+	dibujar_standDescargada(shader_luz);
+	dibujar_standPelota(shader_luz);
+	dibujar_basePelota(shader_luz);
+	//dibujar_pelota(shader_luz);
+	dibujar_soportePelota(shader_luz);
+	dibujar_marco(shader_luz);
+	gl.useProgram(null);
+//..................................................................................
 
-	if (isAnimated()) {
-		// Milisegundos a segundos.
-		now *= 0.001;
+	gl.useProgram(shader_phong.shader_program);
 
-		if (then == -1) {
-			delta_time = 0;
-		} else {
-			// Obtiene el tiempo transcurrido entre el último frame y el actual.
-			delta_time = now - then;
-		}
-		// Almacena el tiempo actual para el próximo frame.
-		then = now;
-    if (rotar1) {
-      if (rotacionT1) {
-    		transformations[CHAMPIONS][ROTACION][EJE_Y] += rotation_speed * delta_time;
-    		transformations[BASE_CHAMPIONS][ROTACION][EJE_Y] += rotation_speed * delta_time;
-      }
-      else {
-    		transformations[CHAMPIONS][ROTACION][EJE_Y] -= rotation_speed * delta_time;
-    		transformations[BASE_CHAMPIONS][ROTACION][EJE_Y] -= rotation_speed * delta_time;
-      }
-    }
-    if (rotar2) {
-      if (rotacionT2) {
-        transformations[BASE_PELOTA][ROTACION][EJE_Y] += rotation_speed * delta_time;
-        transformations[PELOTA][ROTACION][EJE_Y] += rotation_speed * delta_time;
-        transformations[SOPORTE_PELOTA][ROTACION][EJE_Y] += rotation_speed * delta_time;
-      }
-      else {
-        transformations[BASE_PELOTA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
-        transformations[PELOTA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
-        transformations[SOPORTE_PELOTA][ROTACION][EJE_Y] -= rotation_speed * delta_time;
-      }
-    }
-	} else {
-		then = -1;
-	}
+//.....................TEXTURA COMUN............................................
+	//dibujar pelota
+	//tex = inicializar_textura("assets/pelota.jpg");
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, tex);
+	gl.uniform1i(shader_phong.u_imagen , 0);
+	console.log(shader_phong.u_imagen);
+	
+	
+	dibujar_pelota(shader_phong);
+	
+	gl.useProgram(null);
 
-	for (let i = 0; i < models.length; i++) {
-		applyTransformations(i);
-		models[i].model_mat = model_mats[i];
-		gl.uniform3fv(u_color_ka,materials[i].ka);
-		gl.uniform3fv(u_color_kd,materials[i].kd);
-		gl.uniform3fv(u_color_ks,materials[i].ks);
-		gl.uniform3fv(u_lightColor,luz1.color);
-		gl.uniform3fv(u_spotLightColor,luz2.color);
-		gl.uniform1f(u_Tita,luz2.tita);
-		gl.uniform1f(u_lightInt,luz1.intencidad);
-		gl.uniform1f(u_enabled,luz1.enabled);
-		gl.uniform1f(u_enabledSpot,luz2.enabled);
-		gl.uniform3fv(u_lightEye,lightEye);
-		gl.uniform1f(u_aAtt,luz1.fAtt[0]);
-		gl.uniform1f(u_bAtt,luz1.fAtt[1]);
-		gl.uniform1f(u_cAtt,luz1.fAtt[2]);
-		gl.uniform3fv(u_spot_pos_E, spot_pos_E);
-		//gl.uniform3fv(loc_color, colors[i]);
-		gl.activeTexture(gl.TEXTURE0);
-		gl.uniform1i(shader_program.samplerUniform,0);
-		if (i == PELOTA) {
-			gl.bindTexture(gl.TEXTURE_2D, tex);
-			tex.image.src = "assets/pelota.jpg";
-			// tex.image.src = "assets/chess.jpg";
-			models[i].draw(is_solid, gl);
-		} else {
-			gl.bindTexture(gl.TEXTURE_2D, tex2);
-			// tex2.image.src = "assets/steel.jpg";
-			// tex2.image.src = "assets/chess.jpg";
-			tex2.image.src = "";
-			models[i].draw(is_solid, gl);
-		}
-	}
+	gl.useProgram(shader_phong_procedural.shader_program);
+
+	//.....................PROCEDURAL..........................................
+	//anda joya
+	gl.uniform1f(shader_phong_procedural.u_lacunaridad,lacunaridad);
+	gl.uniform1f(shader_phong_procedural.u_ganancia,ganancia);
+	gl.uniform1f(shader_phong_procedural.u_octavas,octavas);
+
+	dibujar_piso(shader_phong_procedural,piso)
+	
+	gl.useProgram(null);
+
 
 	if (isAnimated()) {
 		request = requestAnimationFrame(onRender);
@@ -540,26 +369,213 @@ function onRender(now) {
 	}
 }
 
+function dibujar_luz(luz, que_dibujar, objeto) {
+	// si la luz es spot o puntual, tengo que mover el objeto según su posición
+	let matriz = mat4.create();
+	shader_luz.set_luz(luz_ambiente, luz_spot, luz_puntual, luz_direccional);
+	if ( que_dibujar == 0 || que_dibujar == 1 ) {
+		mat4.translate(matriz,matriz,luz.posicion);
+
+		// escalar según el ángulo y rotar según la dirección
+		if ( que_dibujar == 0 ) {
+			rotar(luz_spot.direccion, matriz);
+			mat4.rotateX(matriz,matriz,3.14);
+			mat4.translate(matriz,matriz,[0,10,0]);
+			mat4.scale(matriz, matriz, [900,900,900]);
+		}
+	}
+	else if ( que_dibujar == 2 ) rotar(luz_direccional.direccion, matriz);
+	objeto.material.ka = luz.intensidad;
+	objeto.matriz = matriz;
+	dibujar(shader_luz,objeto);
+}
+
+function dibujar_pared(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[0,0,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	pared.matriz = matriz;
+	dibujar(shader, pared);
+}
+
+function dibujar_champions(shader){
+	let matriz;
+	let z_rotation_mat = null;
+    let rotation_mat = null;
+	matriz = mat4.create();
+	z_rotation_mat = mat4.create();
+	rotation_mat = mat4.create();
+	mat4.translate(matriz,matriz,[0,1010,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	mat4.rotateX(matriz,matriz,-3.14/2);
+	mat4.fromYRotation(z_rotation_mat, glMatrix.toRadian(90));
+	mat4.mul(rotation_mat, z_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	champions.matriz = matriz;
+	dibujar(shader, champions);
+
+}
+
+function dibujar_champions_base(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[0,0,1]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	champions_base.matriz = matriz;
+	dibujar(shader, champions_base);
+}
+
+function dibujar_champions_stand(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[0,0,1]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	champions_stand.matriz = matriz;
+	dibujar(shader, champions_stand);
+}
+
+function dibujar_copaDescargada(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[-1000,1000,0]);
+	mat4.scale(matriz,matriz,[5,5,5]);
+	copaDescargada.matriz = matriz;
+	dibujar(shader, copaDescargada);
+}
+
+function dibujar_standDescargada(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[-1000,0,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	standDescargada.matriz = matriz;
+	dibujar(shader, standDescargada);
+}
+
+function dibujar_standPelota(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[1000,0,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	standPelota.matriz = matriz;
+	dibujar(shader, standPelota);
+}
+
+function dibujar_basePelota(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[1000,0,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	basePelota.matriz = matriz;
+	dibujar(shader, basePelota);
+}
+
+function dibujar_pelota(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[1000,1000,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	pelota.matriz = matriz;
+	dibujar(shader, pelota);
+}
+
+function dibujar_soportePelota(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[1000,1000,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	soportePelota.matriz = matriz;
+	dibujar(shader, soportePelota);
+}
+
+function dibujar_marco(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[0,1000, -2500]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	marco.matriz = matriz;
+	dibujar(shader, marco);
+}
+
+function dibujar_techo(shader){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[0,0,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	techo.matriz = matriz;
+	dibujar(shader, techo);
+}
+
+function dibujar_piso(shader, piso){
+	let matriz;
+	matriz = mat4.create();
+	mat4.translate(matriz,matriz,[0,0,0]);
+	mat4.scale(matriz,matriz,[1,1,1]);
+	piso.matriz = matriz;
+	dibujar(shader, piso);
+}
+
+function rotar(direccion, matriz) {
+	let matriz_rotation = mat4.create();
+	let matriz_rotationy = mat4.create();
+
+	let esferico = Utils.cartesianas_a_esfericas(direccion);
+//	// crea un cuaternión con las rotaciones de f y t de esferico
+	let cuaternion_rotacion = quat.create();
+	quat.rotateY(cuaternion_rotacion, cuaternion_rotacion, esferico[1]);
+	quat.rotateX(cuaternion_rotacion, cuaternion_rotacion, esferico[2]);
+	let rotacion = mat4.create();
+	mat4.fromQuat(rotacion, cuaternion_rotacion);
+	mat4.multiply(matriz, matriz, rotacion);
+}
+
+function dibujar(shader, objeto) {
+	shader.set_luz(luz_ambiente,luz_spot,luz_puntual,luz_direccional);
+	shader.set_material(objeto.material); 
+
+	// setea uniforms de matrices de modelo y normales
+	let matriz_normal = mat4.create()
+	gl.uniformMatrix4fv(shader.u_matriz_vista, false, camera.view_mat);
+	gl.uniformMatrix4fv(shader.u_matriz_proyeccion, false, camera.proj_mat);
+	mat4.multiply(matriz_normal,camera.view_mat,objeto.matriz);
+	mat4.invert(matriz_normal,matriz_normal);
+	mat4.transpose(matriz_normal,matriz_normal);
+	gl.uniformMatrix4fv(shader.u_matriz_normal, false, matriz_normal);
+	gl.uniformMatrix4fv(shader.u_matriz_modelo, false, objeto.matriz);
+	
+	gl.bindVertexArray(objeto.vao);
+	gl.drawElements(gl.TRIANGLES, objeto.cant_indices, gl.UNSIGNED_INT, 0);
+	gl.bindVertexArray(null);
+}
+
 function initTex(){
 	tex = gl.createTexture();
-	tex2 = gl.createTexture();
 	tex.image = new Image();
 	tex.image.crossOrigin = "anonymous";
 	tex.image.onload = function(){
 		handleLoadedTex(tex);
 	}
-	tex2.image = new Image();
-	tex2.image.crossOrigin = "anonymous";
-	tex2.image.onload = function(){
-		handleLoadedTex(tex2);
-	}
+	tex.image.src = "assets/32.jpg";
 }
 
-function handleLoadedTex(tex){
+function handleLoadedTex(tex) {
+	console.log("no la llama");
 	gl.bindTexture(gl.TEXTURE_2D, tex);
-	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
-	gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE, tex.image);
+	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,	tex.image);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 	gl.bindTexture(gl.TEXTURE_2D, null);
+}
+
+
+function inicializar_textura(imagen) {
+	
+	let textura = gl.createTexture();
+	textura.image = new Image();
+	textura.image.crossOrigin = "anonymous";
+	textura.image.onload = function() { handleLoadedTex(textura); }
+	textura.image.src = imagen;
+	return textura;
 }
