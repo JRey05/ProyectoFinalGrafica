@@ -26,6 +26,13 @@ class Shader_luz {
         this.u_dspot = this.gl.getUniformLocation(this.shader_program,'dspot');
         this.u_angulo = this.gl.getUniformLocation(this.shader_program,'angulo');
 
+         //spot2
+         this.u_pspot2 = this.gl.getUniformLocation(this.shader_program,'pspot2');
+         this.u_ispot2 = this.gl.getUniformLocation(this.shader_program,'ispot2');
+         this.u_faspot2 = this.gl.getUniformLocation(this.shader_program,'faspot2');
+         this.u_dspot2 = this.gl.getUniformLocation(this.shader_program,'dspot2');
+         this.u_angulo2 = this.gl.getUniformLocation(this.shader_program,'angulo2');
+
         this.u_ppuntual = this.gl.getUniformLocation(this.shader_program,'ppuntual');
         this.u_ipuntual = this.gl.getUniformLocation(this.shader_program,'ipuntual');
         this.u_fapuntual = this.gl.getUniformLocation(this.shader_program,"fapuntual");
@@ -34,7 +41,7 @@ class Shader_luz {
         this.u_ddireccional = this.gl.getUniformLocation(this.shader_program,'ddireccional');
     }
 
-    set_luz(ambiente, spot, puntual, direccional) {
+    set_luz(ambiente, spot, spot2, puntual, direccional) {
         this.gl.uniform3f(this.u_intensidad_ambiente, ambiente.intensidad[0], ambiente.intensidad[1], ambiente.intensidad[2]);
 
         // luz spot
@@ -53,6 +60,23 @@ class Shader_luz {
         this.gl.uniform3f(this.u_faspot, atenuacion[0], atenuacion[1], atenuacion[2]);
         this.gl.uniform3f(this.u_dspot, direccion[0], direccion[1], direccion[2]);
         this.gl.uniform1f(this.u_angulo, angulo);
+
+        // luz spot2
+        let posicion2 = spot2.posicion;
+        let intensidad2 = spot2.intensidad;
+        let atenuacion2 = spot2.atenuacion;
+        let direccion2 = spot2.direccion;
+
+        let angulo2 = spot2.angulo;
+
+        if ( angulo2 < -180 || angulo2 > 180 ) angulo2 = 180;
+        angulo2 = Math.cos(Math.PI*angulo2/180);
+
+        this.gl.uniform3f(this.u_pspot2, posicion2[0], posicion2[1], posicion2[2]);
+        this.gl.uniform3f(this.u_ispot2, intensidad2[0], intensidad2[1], intensidad2[2]);
+        this.gl.uniform3f(this.u_faspot2, atenuacion2[0], atenuacion2[1], atenuacion2[2]);
+        this.gl.uniform3f(this.u_dspot2, direccion2[0], direccion2[1], direccion2[2]);
+        this.gl.uniform1f(this.u_angulo2, angulo2);
 
         // luz puntual
         posicion = puntual.posicion;
@@ -92,6 +116,7 @@ class Shader_luz {
 
         uniform vec3 ppuntual;
         uniform vec3 pspot;
+        uniform vec3 pspot2;
         uniform vec3 ddireccional;
 
         in vec3 vertexNormal;
@@ -101,6 +126,8 @@ class Shader_luz {
         out vec3 ojo;
         out vec3 Lspot;
         out vec3 LEspot;
+        out vec3 Lspot2;
+        out vec3 LEspot2;
         out vec3 ddir;
 
         void main() {
@@ -115,6 +142,9 @@ class Shader_luz {
             LEspot = vec3(viewMatrix * vec4(pspot,1));
             Lspot = normalize( pspot - vec3(modelMatrix * vec4(vertexPosition, 1)) );
             LEspot = normalize(vec3(LEspot-vPE));
+            LEspot2 = vec3(viewMatrix * vec4(pspot2,1));
+            Lspot2 = normalize( pspot2 - vec3(modelMatrix * vec4(vertexPosition, 1)) );
+            LEspot2 = normalize(vec3(LEspot2-vPE));
             gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
         }
         `;
@@ -138,11 +168,17 @@ class Shader_luz {
         uniform vec3 ispot;
         uniform float angulo;
         uniform vec3 faspot;
+        uniform vec3 dspot2;
+        uniform vec3 ispot2;
+        uniform float angulo2;
+        uniform vec3 faspot2;
 
         uniform vec3 idireccional;
 
         in vec3 Lspot;
         in vec3 LEspot;
+        in vec3 Lspot2;
+        in vec3 LEspot2;
         in vec3 normal;
         in vec3 Lpuntual;
         in vec3 ojo;
@@ -183,7 +219,21 @@ class Shader_luz {
                 luzspot += fa*ispot*(kd*NL+ks*NHn);
             }
 
-            vec3 color =  ia*ka + FP*(luzpuntual + luzspot + luzdireccional) ;
+
+            vec3 Dspot2 = normalize(-dspot2);
+            vec3 vL2 = normalize(Lspot2);
+            L = normalize(LEspot2);   
+            H = normalize(L+V);
+            NL = max(dot(N,L),0.0);
+            NHn  = pow(max(dot(N,H),0.0),n);
+            vec3 luzspot2 = vec3(0,0,0);
+            if ( angulo2 == 0.0 || dot(vL2,Dspot2) > angulo2 ) {
+                d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
+                fa = 1.0/(1.0+faspot2.x+faspot2.y*d+faspot2.z*d*d);
+                luzspot2 += fa*ispot2*(kd*NL+ks*NHn);
+            }
+
+            vec3 color =  ia*ka + FP*(luzpuntual + luzspot + luzspot2 + luzdireccional) ;
 
             fragmentColor = vec4( color ,1);
 

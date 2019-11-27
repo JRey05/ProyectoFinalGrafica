@@ -71,12 +71,15 @@ var ganancia = 0.45;
 var octavas = 8;
 
 // Variables Auxiliares para los objetos de luz
-var luz_spot, luz_puntual, luz_direccional, luz_ambiente;
+var luz_spot, luz_spot2, luz_spot3, luz_puntual, luz_direccional, luz_ambiente;
 var luz_seleccionada = 0;
 var esfera_puntual;
 var cono_spot;
 var flecha_direccional;
 var pared;
+
+//Musica
+var musica_champions_league
 
 var material_spot = {
 	ka: [0,0,0],
@@ -271,11 +274,14 @@ function onLoad() {
 	standDescargada = new Modelo(standV2_source,copaDescargada_stand_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	standPelota = new Modelo(standV2_source,copaDescargada_stand_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	basePelota = new Modelo(base_giratoria_source,base_pelota_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
-	pelota = new Modelo(pelotaRugby_source,100,shader_phong.loc_posicion,shader_phong.loc_normal,shader_phong.loc_textura);
+	pelota = new Modelo(pelotaRugby_source,10,shader_phong.loc_posicion,shader_phong.loc_normal,shader_phong.loc_textura);
 	//pelota = new Modelo(pelotaRugby_source,10,shader_phong_procedural.loc_posicion,shader_phong_procedural.loc_normal, shader_phong_procedural.loc_textura);
 	soportePelota = new Modelo(soportePelotaRugby_source,soporte_pelota_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	marco = new Modelo(marcoCuadro_source,marco_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	//champions = new Modelo(champions_source,polished_silver,shader_phong.loc_posicion,shader_phong.loc_normal,null);
+
+	musica_champions_league = document.getElementById("musica_champions");
+	
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.3, 1.0);
@@ -285,8 +291,8 @@ function onLoad() {
 	axis.load();
 
 	// Crea las cámaras en base a las dimensiones del canvas.
-	free_cam = new FreeCamera(55, canvas.clientWidth / canvas.clientHeight);
-	spherical_cam = new SphericalCamera(55, canvas.clientWidth / canvas.clientHeight);
+	free_cam = new FreeCamera(80, canvas.clientWidth / canvas.clientHeight);
+	spherical_cam = new SphericalCamera(80, canvas.clientWidth / canvas.clientHeight);
 	camera = free_cam;
 
 	//TEXTURAAAAAAAAAAASSSSS
@@ -311,11 +317,13 @@ function onRender(now) {
 	
 	// limpiar canvas
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
+	musica_champions_league.play();
 	//...................LUCES....................................................
 	// 0 = spot, 1 = puntual, 2 = direccional
 	gl.useProgram(shader_luz.shader_program);
 	dibujar_luz(luz_spot,0,cono_spot);
+	dibujar_luz(luz_spot2,3,cono_spot);
+	dibujar_luz(luz_spot3,0,cono_spot);
 	dibujar_luz(luz_puntual,1, esfera_puntual);
 	dibujar_luz(luz_direccional,2,flecha_direccional);
 	//dibujar_piso(shader_luz,piso)
@@ -342,7 +350,6 @@ function onRender(now) {
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, tex);
 	gl.uniform1i(shader_phong.u_imagen , 0);
-	console.log(shader_phong.u_imagen);
 	
 	
 	dibujar_pelota(shader_phong);
@@ -372,16 +379,24 @@ function onRender(now) {
 function dibujar_luz(luz, que_dibujar, objeto) {
 	// si la luz es spot o puntual, tengo que mover el objeto según su posición
 	let matriz = mat4.create();
-	shader_luz.set_luz(luz_ambiente, luz_spot, luz_puntual, luz_direccional);
-	if ( que_dibujar == 0 || que_dibujar == 1 ) {
+	shader_luz.set_luz(luz_ambiente, luz_spot, luz_spot2, luz_puntual, luz_direccional);
+	if ( que_dibujar == 0 || que_dibujar == 1 || que_dibujar == 3 ) {
 		mat4.translate(matriz,matriz,luz.posicion);
 
 		// escalar según el ángulo y rotar según la dirección
 		if ( que_dibujar == 0 ) {
-			rotar(luz_spot.direccion, matriz);
+			rotar(luz.direccion, matriz);
 			mat4.rotateX(matriz,matriz,3.14);
-			mat4.translate(matriz,matriz,[0,10,0]);
+			mat4.translate(matriz,matriz,[0,50,0]);
 			mat4.scale(matriz, matriz, [900,900,900]);
+		}
+
+		//PARA EL CASO ESPECIAL DEL SEGUNDO DRONE
+		if ( que_dibujar == 3 ) {
+			rotar(luz_spot2.direccion, matriz);
+			mat4.rotateX(matriz,matriz,3.14);
+			mat4.translate(matriz,matriz,[0,50,0]);
+			mat4.scale(matriz, matriz, [300,300,300]);
 		}
 	}
 	else if ( que_dibujar == 2 ) rotar(luz_direccional.direccion, matriz);
@@ -531,7 +546,7 @@ function rotar(direccion, matriz) {
 }
 
 function dibujar(shader, objeto) {
-	shader.set_luz(luz_ambiente,luz_spot,luz_puntual,luz_direccional);
+	shader.set_luz(luz_ambiente,luz_spot, luz_spot2, luz_puntual,luz_direccional);
 	shader.set_material(objeto.material); 
 
 	// setea uniforms de matrices de modelo y normales
@@ -552,6 +567,7 @@ function dibujar(shader, objeto) {
 function initTex(){
 	tex = gl.createTexture();
 	tex.image = new Image();
+	console.log(tex.image);
 	tex.image.crossOrigin = "anonymous";
 	tex.image.onload = function(){
 		handleLoadedTex(tex);
@@ -560,12 +576,13 @@ function initTex(){
 }
 
 function handleLoadedTex(tex) {
-	console.log("no la llama");
+	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, tex);
-	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,	tex.image);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, tex.image);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.bindTexture(gl.TEXTURE_2D, null);
 }
 
