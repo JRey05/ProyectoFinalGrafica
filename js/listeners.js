@@ -23,7 +23,7 @@ function toggleSolid() {
 }
 
 function rotarTrofeo1() {
-	rotar1 = !rotar1;
+	rotar_champions = !rotar_champions;
 	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
@@ -33,7 +33,7 @@ function rotarTrofeo1() {
 }
 
 function rotarTrofeo2() {
-	rotar2 = !rotar2;
+	rotar_pelota = !rotar_pelota;
 	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
@@ -43,9 +43,9 @@ function rotarTrofeo2() {
 }
 
 function horario1() {
-	rotacionT1 = !rotacionT1;
+	horaria_champions = !horaria_champions;
 	/*
-	if (rotar1) {
+	if (rotar_champions) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
 	} else {
@@ -55,9 +55,9 @@ function horario1() {
 }
 
 function horario2() {
-	rotacionT2 = !rotacionT2;
+	horaria_pelota = !horaria_pelota;
 	/*
-	if (rotar1) {
+	if (rotar_champions) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
 		window.requestAnimationFrame(onRender);
 	} else {
@@ -567,7 +567,7 @@ function resetTrofeo(){
 	materials[3].ks[0]=0.393548;
 	materials[3].ks[1]=0.271906;
 	materials[3].ks[2]=0.166721;
-	onRender();	
+	onRender();
 }
 
 function resetChampions(){
@@ -643,7 +643,7 @@ function inicializar_luces() {
 		eatt: true
 	};
 
-	
+
 	atributos_ambiente = {
 		eangulo: true,
 		edir: true,

@@ -1,19 +1,4 @@
-// Definir constantes.
-// Seran los indices en el arreglo de objetos
-const CHAMPIONS = 0;
-const BASE_CHAMPIONS = 1;
-const STAND_CHAMPIONS = 2;
-const COPA_DESCARGADA = 3;
-const STAND_COPA_DESCARGADA = 4;
-const STAND_PELOTA = 5;
-const BASE_PELOTA = 6;
-const PELOTA = 7;
-const SOPORTE_PELOTA = 8;
-const MARCO_CUADRO = 9;
-const SUELO = 10;
-const PAREDES = 11;
-const TECHO = 12;
-
+// Constantes.
 // Seran los indices que indican las transformaciones.
 const ESCALADO=0;
 const ROTACION=1;
@@ -203,7 +188,7 @@ var paredes_material = {
 	ka: [0.9, 0.23, 0.23],
 	kd: [0.28, 0.28, 0.28],
 	ks: [0.007, 0.0077, 0.077],
-	n: 10 
+	n: 10
 }
 
 
@@ -214,10 +199,10 @@ var vao_wire = null;
 // Datos globales auxiliares.
 var is_solid = false;
 // var is_animated = false;
-var rotar1 = false;
-var rotar2 = false;
-var rotacionT1 =true;
-var rotacionT2 =false;
+var rotar_champions = false;
+var rotar_pelota = false;
+var horaria_champions =true;
+var horaria_pelota =true;
 var request = null;
 
 // Parsed OBJ file
@@ -240,13 +225,13 @@ var delta_time = 0;
 
 // Velocidad de rotación.
 var rotation_speed = 22;
+var fps = 1/60;
 
 /**
 	* Verifica si se requiere una animación.
 	*/
 function isAnimated() {
-	if(rotar1 || rotar2) console.log("DEBEMOS HACER ALGO PARA HACERLO ROTAR");
-	return (rotar1 || rotar2);
+	return (rotar_champions || rotar_pelota);
 }
 
 
@@ -281,7 +266,7 @@ function onLoad() {
 	//champions = new Modelo(champions_source,polished_silver,shader_phong.loc_posicion,shader_phong.loc_normal,null);
 
 	musica_champions_league = document.getElementById("musica_champions");
-	
+
 
 	gl.enable(gl.DEPTH_TEST);
 	gl.clearColor(0.18, 0.18, 0.3, 1.0);
@@ -303,7 +288,7 @@ function onLoad() {
 
 	//textura_suelo = inicializar_textura("assets/pelota.jpg");
 
-	
+
 	if (isAnimated()) {
 		request = requestAnimationFrame(onRender);
 	} else {
@@ -311,16 +296,58 @@ function onLoad() {
 	}
 }
 
-
-
 function onRender(now) {
-	
-	// limpiar canvas
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
 	musica_champions_league.play();
 	//...................LUCES....................................................
 	// 0 = spot, 1 = puntual, 2 = direccional
 	gl.useProgram(shader_luz.shader_program);
+
+	if (isAnimated()) {
+		// Milisegundos a segundos.
+		now *= 0.001;
+
+		if (then == -1) {
+			delta_time = 0;
+			then = now;
+		} else {
+			// Obtiene el tiempo transcurrido entre el último frame y el actual.
+			delta_time = now - then;
+		}
+
+		if (delta_time >= fps) {
+			// limpiar canvas
+			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+			// Almacena el tiempo actual para el próximo frame.
+			then = now;
+			delta_rad = glMatrix.toRadian(rotation_speed * delta_time);
+	    if (rotar_champions) {
+				delta_rad1 = delta_rad * ((horaria_champions)?(-1):(1));
+
+				transformations[CHAMPIONS][ROTACION][EJE_Y] += delta_rad1;
+				transformations[BASE_CHAMPIONS][ROTACION][EJE_Y] += delta_rad1;
+	    }
+	    if (rotar_pelota) {
+				delta_rad2 = delta_rad * ((horaria_pelota)?(-1):(1));
+
+				transformations[PELOTA][ROTACION][EJE_Y] += delta_rad2;
+				transformations[SOPORTE_PELOTA][ROTACION][EJE_Y] += delta_rad2;
+				transformations[BASE_PELOTA][ROTACION][EJE_Y] += delta_rad2;
+	    }
+	    // if (orbitando) {
+			// 	if (orbitaChampions) {
+	    //     transformations[CHAMPIONS][ORBITAR][2] -= rotation_speed * delta_time;
+	    //   } else {
+	    //     transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
+			// 	}
+	    // }
+		}
+	} else {
+		// limpiar canvas
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		then = -1;
+	}
+
 	dibujar_luz(luz_spot,0,cono_spot);
 	dibujar_luz(luz_spot2,3,cono_spot);
 	dibujar_luz(luz_spot3,0,cono_spot);
@@ -350,10 +377,10 @@ function onRender(now) {
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, tex);
 	gl.uniform1i(shader_phong.u_imagen , 0);
-	
-	
+
+
 	dibujar_pelota(shader_phong);
-	
+
 	gl.useProgram(null);
 
 	gl.useProgram(shader_phong_procedural.shader_program);
@@ -365,7 +392,7 @@ function onRender(now) {
 	gl.uniform1f(shader_phong_procedural.u_octavas,octavas);
 
 	dibujar_piso(shader_phong_procedural,piso)
-	
+
 	gl.useProgram(null);
 
 
@@ -405,138 +432,212 @@ function dibujar_luz(luz, que_dibujar, objeto) {
 	dibujar(shader_luz,objeto);
 }
 
+var transformations = [];
+
+const PARED = 0;
+transformations[PARED]= [[1, 1, 1],[0,0,0],[0, 0, 0]];
 function dibujar_pared(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[0,0,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PARED][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[PARED][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	pared.matriz = matriz;
 	dibujar(shader, pared);
 }
 
+const CHAMPIONS = 1;
+transformations[CHAMPIONS]= [[1, 1, 1],[glMatrix.toRadian(-90), glMatrix.toRadian(90), 0],[0,1010,0]];
 function dibujar_champions(shader){
-	let matriz;
-	let z_rotation_mat = null;
-    let rotation_mat = null;
+	let matriz = null;
+	let x_rotation_mat = null;
+	let y_rotation_mat = null;
+  let rotation_mat = null;
 	matriz = mat4.create();
-	z_rotation_mat = mat4.create();
 	rotation_mat = mat4.create();
-	mat4.translate(matriz,matriz,[0,1010,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
-	mat4.rotateX(matriz,matriz,-3.14/2);
-	mat4.fromYRotation(z_rotation_mat, glMatrix.toRadian(90));
-	mat4.mul(rotation_mat, z_rotation_mat, rotation_mat);
+	x_rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[CHAMPIONS][ESCALADO]);
+	mat4.fromXRotation(x_rotation_mat, transformations[CHAMPIONS][ROTACION][0]);
+	mat4.fromYRotation(y_rotation_mat, transformations[CHAMPIONS][ROTACION][1]);
+	mat4.mul(rotation_mat, x_rotation_mat, rotation_mat);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
 	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[CHAMPIONS][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	champions.matriz = matriz;
 	dibujar(shader, champions);
 
 }
 
+const BASE_CHAMPIONS = 2;
+transformations[BASE_CHAMPIONS]= [[1, 1, 1],[0,0,0],[0, 0, 1]];
 function dibujar_champions_base(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[0,0,1]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	rotation_mat = mat4.create();
+	x_rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[BASE_CHAMPIONS][ESCALADO]);
+	mat4.fromXRotation(x_rotation_mat, transformations[BASE_CHAMPIONS][ROTACION][0]);
+	mat4.fromYRotation(y_rotation_mat, transformations[BASE_CHAMPIONS][ROTACION][1]);
+	mat4.mul(rotation_mat, x_rotation_mat, rotation_mat);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[BASE_CHAMPIONS][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	champions_base.matriz = matriz;
 	dibujar(shader, champions_base);
 }
 
+const CHAMPIONS_STAND = 3;
+transformations[CHAMPIONS_STAND]= [[1, 1, 1],[0,0,0],[0, 0, 1]];
 function dibujar_champions_stand(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[0,0,1]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[CHAMPIONS_STAND][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[CHAMPIONS_STAND][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	champions_stand.matriz = matriz;
 	dibujar(shader, champions_stand);
 }
 
+const COPA_DESCARGADA = 4;
+transformations[COPA_DESCARGADA]= [[5, 5, 5],[0,0,0],[-1000, 1000, 0]];
 function dibujar_copaDescargada(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[-1000,1000,0]);
-	mat4.scale(matriz,matriz,[5,5,5]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[COPA_DESCARGADA][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[COPA_DESCARGADA][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	copaDescargada.matriz = matriz;
 	dibujar(shader, copaDescargada);
 }
 
+const STAND_DESCARGADA = 5;
+transformations[STAND_DESCARGADA]= [[1, 1, 1],[0,0,0],[-1000, 0, 0]];
 function dibujar_standDescargada(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[-1000,0,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[STAND_DESCARGADA][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[STAND_DESCARGADA][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	standDescargada.matriz = matriz;
 	dibujar(shader, standDescargada);
 }
 
+const STAND_PELOTA = 6;
+transformations[STAND_PELOTA]= [[1, 1, 1],[0,0,0],[1000, 0, 0]];
 function dibujar_standPelota(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[1000,0,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[STAND_PELOTA][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[STAND_PELOTA][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	standPelota.matriz = matriz;
 	dibujar(shader, standPelota);
 }
 
+const BASE_PELOTA = 7;
+transformations[BASE_PELOTA]= [[1, 1, 1],[0,0,0],[1000, 0, 0]];
 function dibujar_basePelota(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[1000,0,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	rotation_mat = mat4.create();
+	x_rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[BASE_PELOTA][ESCALADO]);
+	mat4.fromXRotation(x_rotation_mat, transformations[BASE_PELOTA][ROTACION][0]);
+	mat4.fromYRotation(y_rotation_mat, transformations[BASE_PELOTA][ROTACION][1]);
+	mat4.mul(rotation_mat, x_rotation_mat, rotation_mat);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[BASE_PELOTA][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	basePelota.matriz = matriz;
 	dibujar(shader, basePelota);
 }
 
+const PELOTA = 8;
+transformations[PELOTA]= [[1, 1, 1],[0,0,0],[1000, 1000, 0]];
 function dibujar_pelota(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[1000,1000,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	rotation_mat = mat4.create();
+	x_rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PELOTA][ESCALADO]);
+	mat4.fromXRotation(x_rotation_mat, transformations[PELOTA][ROTACION][0]);
+	mat4.fromYRotation(y_rotation_mat, transformations[PELOTA][ROTACION][1]);
+	mat4.mul(rotation_mat, x_rotation_mat, rotation_mat);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[PELOTA][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	pelota.matriz = matriz;
 	dibujar(shader, pelota);
 }
 
+const SOPORTE_PELOTA = 8;
+transformations[SOPORTE_PELOTA]= [[1, 1, 1],[0,0,0],[1000, 1000, 0]];
 function dibujar_soportePelota(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[1000,1000,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	rotation_mat = mat4.create();
+	x_rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PELOTA][ESCALADO]);
+	mat4.fromXRotation(x_rotation_mat, transformations[PELOTA][ROTACION][0]);
+	mat4.fromYRotation(y_rotation_mat, transformations[PELOTA][ROTACION][1]);
+	mat4.mul(rotation_mat, x_rotation_mat, rotation_mat);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[PELOTA][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	soportePelota.matriz = matriz;
 	dibujar(shader, soportePelota);
 }
 
+const MARCO = 9;
+transformations[MARCO]= [[1, 1, 1],[0,0,0],[0, 1000, -2500]];
 function dibujar_marco(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[0,1000, -2500]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[MARCO][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[MARCO][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	marco.matriz = matriz;
 	dibujar(shader, marco);
 }
 
+const TECHO = 10;
+transformations[TECHO]= [[1, 1, 1],[0,0,0],[0, 0, 0]];
 function dibujar_techo(shader){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[0,0,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[TECHO][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[TECHO][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	techo.matriz = matriz;
 	dibujar(shader, techo);
 }
 
+const PISO = 11;
+transformations[PISO]= [[1, 1, 1],[0,0,0],[0, 0, 0]];
 function dibujar_piso(shader, piso){
-	let matriz;
 	matriz = mat4.create();
-	mat4.translate(matriz,matriz,[0,0,0]);
-	mat4.scale(matriz,matriz,[1,1,1]);
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[TECHO][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[TECHO][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
 	piso.matriz = matriz;
 	dibujar(shader, piso);
 }
 
 function rotar(direccion, matriz) {
-	let matriz_rotation = mat4.create();
-	let matriz_rotationy = mat4.create();
-
 	let esferico = Utils.cartesianas_a_esfericas(direccion);
-//	// crea un cuaternión con las rotaciones de f y t de esferico
+	// crea un cuaternión con las rotaciones de Phi y Theta de esferico
 	let cuaternion_rotacion = quat.create();
 	quat.rotateY(cuaternion_rotacion, cuaternion_rotacion, esferico[1]);
 	quat.rotateX(cuaternion_rotacion, cuaternion_rotacion, esferico[2]);
@@ -547,7 +648,7 @@ function rotar(direccion, matriz) {
 
 function dibujar(shader, objeto) {
 	shader.set_luz(luz_ambiente,luz_spot, luz_spot2, luz_puntual,luz_direccional);
-	shader.set_material(objeto.material); 
+	shader.set_material(objeto.material);
 
 	// setea uniforms de matrices de modelo y normales
 	let matriz_normal = mat4.create()
@@ -558,10 +659,12 @@ function dibujar(shader, objeto) {
 	mat4.transpose(matriz_normal,matriz_normal);
 	gl.uniformMatrix4fv(shader.u_matriz_normal, false, matriz_normal);
 	gl.uniformMatrix4fv(shader.u_matriz_modelo, false, objeto.matriz);
-	
-	gl.bindVertexArray(objeto.vao);
-	gl.drawElements(gl.TRIANGLES, objeto.cant_indices, gl.UNSIGNED_INT, 0);
-	gl.bindVertexArray(null);
+
+	if (!isAnimated() || delta_time >= fps) {
+		gl.bindVertexArray(objeto.vao);
+		gl.drawElements(gl.TRIANGLES, objeto.cant_indices, gl.UNSIGNED_INT, 0);
+		gl.bindVertexArray(null);
+	}
 }
 
 function initTex(){
@@ -588,7 +691,7 @@ function handleLoadedTex(tex) {
 
 
 function inicializar_textura(imagen) {
-	
+
 	let textura = gl.createTexture();
 	textura.image = new Image();
 	textura.image.crossOrigin = "anonymous";
