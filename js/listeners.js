@@ -616,8 +616,8 @@ function refresh() {
 
 function inicializar_luces() {
 	luz_spot = new Light([0,4000,0],[0,-1,0],[9,1,1],10,[0,0,0]);
-	luz_spot2 = new Light([0,50,1500],[0,1,-1],[1,9,1],10,[0,0,0]);
-	luz_spot3 = new Light([-1000,3500,0],[0,-1,0],[0,0,0],10,[0,0,0]);
+	luz_spot2 = new Light([1200,50,1200],[-1,1,-1],[1,9,1],10,[0,0,0]);
+	luz_spot3 = new Light([-1200,50,1200],[1,1,-1],[1,1,9],10,[0,0,0]);
 	luz_puntual = new Light([0,4000,0],null,[1,1,1],null,[0,0,0]);
 	luz_direccional = new Light(null,[0,0,-1],[3,3,3],null,null);
 	luz_ambiente = new Light(null,null,[0.2,0.2,0.2],null,null);

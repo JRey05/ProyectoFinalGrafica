@@ -21,7 +21,7 @@ var shader_program = null;
 // Variables Auxiliares para los shaders
 var shader_phong, shader_luz, shader_phong_procedural, normalmap;
 
-var textura_luna, textura_suelo;
+var textura_luna, textura_pelota;
 // Tecturas para las esferas
 var textura_metal, textura_height;
 var textura_metalica, textura_oxido, textura_normales;
@@ -280,13 +280,11 @@ function onLoad() {
 	spherical_cam = new SphericalCamera(80, canvas.clientWidth / canvas.clientHeight);
 	camera = free_cam;
 
-	//TEXTURAAAAAAAAAAASSSSS
-	initTex();
-
 	//INICIALIZAR LUCEEEEEEEEESSS (esta en el listener)
 	inicializar_luces();
 
-	//textura_suelo = inicializar_textura("assets/pelota.jpg");
+	//texturas
+	textura_pelota = inicializar_textura("assets/pelota.jpg");
 
 
 	if (isAnimated()) {
@@ -350,7 +348,7 @@ function onRender(now) {
 
 	dibujar_luz(luz_spot,0,cono_spot);
 	dibujar_luz(luz_spot2,3,cono_spot);
-	dibujar_luz(luz_spot3,0,cono_spot);
+	dibujar_luz(luz_spot3,4,cono_spot);
 	dibujar_luz(luz_puntual,1, esfera_puntual);
 	dibujar_luz(luz_direccional,2,flecha_direccional);
 	//dibujar_piso(shader_luz,piso)
@@ -373,9 +371,8 @@ function onRender(now) {
 
 //.....................TEXTURA COMUN............................................
 	//dibujar pelota
-	//tex = inicializar_textura("assets/pelota.jpg");
 	gl.activeTexture(gl.TEXTURE0);
-	gl.bindTexture(gl.TEXTURE_2D, tex);
+	gl.bindTexture(gl.TEXTURE_2D, textura_pelota);
 	gl.uniform1i(shader_phong.u_imagen , 0);
 
 
@@ -406,8 +403,8 @@ function onRender(now) {
 function dibujar_luz(luz, que_dibujar, objeto) {
 	// si la luz es spot o puntual, tengo que mover el objeto según su posición
 	let matriz = mat4.create();
-	shader_luz.set_luz(luz_ambiente, luz_spot, luz_spot2, luz_puntual, luz_direccional);
-	if ( que_dibujar == 0 || que_dibujar == 1 || que_dibujar == 3 ) {
+	shader_luz.set_luz(luz_ambiente, luz_spot, luz_spot2, luz_spot3, luz_puntual, luz_direccional);
+	if ( que_dibujar == 0 || que_dibujar == 1 || que_dibujar == 3 || que_dibujar == 4 ) {
 		mat4.translate(matriz,matriz,luz.posicion);
 
 		// escalar según el ángulo y rotar según la dirección
@@ -425,6 +422,14 @@ function dibujar_luz(luz, que_dibujar, objeto) {
 			mat4.translate(matriz,matriz,[0,50,0]);
 			mat4.scale(matriz, matriz, [300,300,300]);
 		}
+
+		//PARA EL CASO ESPECIAL DEL SEGUNDO DRONE
+		if ( que_dibujar == 4 ) {
+			rotar(luz_spot3.direccion, matriz);
+			mat4.rotateX(matriz,matriz,3.14);
+			mat4.translate(matriz,matriz,[0,50,0]);
+			mat4.scale(matriz, matriz, [300,300,300]);
+		}
 	}
 	else if ( que_dibujar == 2 ) rotar(luz_direccional.direccion, matriz);
 	objeto.material.ka = luz.intensidad;
@@ -435,7 +440,7 @@ function dibujar_luz(luz, que_dibujar, objeto) {
 var transformations = [];
 
 const PARED = 0;
-transformations[PARED]= [[1, 1, 1],[0,0,0],[0, 0, 0]];
+transformations[PARED]= [[1, 1, 1.5],[0,0,0],[0, 0, 0]];
 function dibujar_pared(shader){
 	matriz = mat4.create();
 	translation = mat4.create();
@@ -600,7 +605,7 @@ function dibujar_soportePelota(shader){
 }
 
 const MARCO = 9;
-transformations[MARCO]= [[1, 1, 1],[0,0,0],[0, 1000, -2500]];
+transformations[MARCO]= [[1, 1, 1],[0,0,0],[0, 1000, -3750]];
 function dibujar_marco(shader){
 	matriz = mat4.create();
 	translation = mat4.create();
@@ -612,7 +617,7 @@ function dibujar_marco(shader){
 }
 
 const TECHO = 10;
-transformations[TECHO]= [[1, 1, 1],[0,0,0],[0, 0, 0]];
+transformations[TECHO]= [[1, 1, 1.5],[0,0,0],[0, 0, 0]];
 function dibujar_techo(shader){
 	matriz = mat4.create();
 	translation = mat4.create();
@@ -624,7 +629,7 @@ function dibujar_techo(shader){
 }
 
 const PISO = 11;
-transformations[PISO]= [[1, 1, 1],[0,0,0],[0, 0, 0]];
+transformations[PISO]= [[1, 1, 1.5],[0,0,0],[0, 0, 0]];
 function dibujar_piso(shader, piso){
 	matriz = mat4.create();
 	translation = mat4.create();
@@ -647,7 +652,7 @@ function rotar(direccion, matriz) {
 }
 
 function dibujar(shader, objeto) {
-	shader.set_luz(luz_ambiente,luz_spot, luz_spot2, luz_puntual,luz_direccional);
+	shader.set_luz(luz_ambiente,luz_spot, luz_spot2, luz_spot3, luz_puntual,luz_direccional);
 	shader.set_material(objeto.material);
 
 	// setea uniforms de matrices de modelo y normales
@@ -665,17 +670,6 @@ function dibujar(shader, objeto) {
 		gl.drawElements(gl.TRIANGLES, objeto.cant_indices, gl.UNSIGNED_INT, 0);
 		gl.bindVertexArray(null);
 	}
-}
-
-function initTex(){
-	tex = gl.createTexture();
-	tex.image = new Image();
-	console.log(tex.image);
-	tex.image.crossOrigin = "anonymous";
-	tex.image.onload = function(){
-		handleLoadedTex(tex);
-	}
-	tex.image.src = "assets/32.jpg";
 }
 
 function handleLoadedTex(tex) {

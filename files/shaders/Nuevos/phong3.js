@@ -18,6 +18,7 @@ class Phong3 {
 
         this.u_brillo = this.gl.getUniformLocation(this.shader_program,"n");
 
+        //spot1
         this.u_pspot = this.gl.getUniformLocation(this.shader_program,'pspot');
         this.u_ispot = this.gl.getUniformLocation(this.shader_program,'ispot');
         this.u_faspot = this.gl.getUniformLocation(this.shader_program,'faspot');
@@ -31,6 +32,13 @@ class Phong3 {
         this.u_dspot2 = this.gl.getUniformLocation(this.shader_program,'dspot2');
         this.u_angulo2 = this.gl.getUniformLocation(this.shader_program,'angulo2');
 
+        //spot3
+        this.u_pspot3 = this.gl.getUniformLocation(this.shader_program,'pspot3');
+        this.u_ispot3 = this.gl.getUniformLocation(this.shader_program,'ispot3');
+        this.u_faspot3 = this.gl.getUniformLocation(this.shader_program,'faspot3');
+        this.u_dspot3 = this.gl.getUniformLocation(this.shader_program,'dspot3');
+        this.u_angulo3 = this.gl.getUniformLocation(this.shader_program,'angulo3');
+
         this.u_ppuntual = this.gl.getUniformLocation(this.shader_program,'ppuntual');
         this.u_ipuntual = this.gl.getUniformLocation(this.shader_program,'ipuntual');
         this.u_fapuntual = this.gl.getUniformLocation(this.shader_program,"fapuntual");
@@ -42,7 +50,7 @@ class Phong3 {
         this.u_imagen = this.gl.getUniformLocation(this.shader_program,"imagen");
     }
 
-    set_luz(ambiente, spot, spot2, puntual, direccional) {
+    set_luz(ambiente, spot, spot2, spot3, puntual, direccional) {
         this.gl.uniform3f(this.u_intensidad_ambiente , ambiente.intensidad[0], ambiente.intensidad[1], ambiente.intensidad[2]);
 
         // luz spot
@@ -79,6 +87,23 @@ class Phong3 {
         this.gl.uniform3f(this.u_dspot2, direccion2[0], direccion2[1], direccion2[2]);
         this.gl.uniform1f(this.u_angulo2, angulo2);
 
+        // luz spot3
+        let posicion3 = spot3.posicion;
+        let intensidad3 = spot3.intensidad;
+        let atenuacion3 = spot3.atenuacion;
+        let direccion3 = spot3.direccion;
+
+        let angulo3 = spot3.angulo;
+
+        if ( angulo3 < -180 || angulo3 > 180 ) angulo3 = 180;
+        angulo3 = Math.cos(Math.PI*angulo3/180);
+
+        this.gl.uniform3f(this.u_pspot3, posicion3[0], posicion3[1], posicion3[2]);
+        this.gl.uniform3f(this.u_ispot3, intensidad3[0], intensidad3[1], intensidad3[2]);
+        this.gl.uniform3f(this.u_faspot3, atenuacion3[0], atenuacion3[1], atenuacion3[2]);
+        this.gl.uniform3f(this.u_dspot3, direccion3[0], direccion3[1], direccion3[2]);
+        this.gl.uniform1f(this.u_angulo3, angulo3);
+
         // luz puntual
         posicion = puntual.posicion;
         intensidad = puntual.intensidad;
@@ -109,6 +134,7 @@ class Phong3 {
         uniform vec3 ppuntual;
         uniform vec3 pspot;
         uniform vec3 pspot2;
+        uniform vec3 pspot3;
         uniform vec3 ddireccional;
         
         in vec3 vertexNormal;
@@ -122,6 +148,8 @@ class Phong3 {
         out vec3 LEspot;
         out vec3 Lspot2;
         out vec3 LEspot2;
+        out vec3 Lspot3;
+        out vec3 LEspot3;
         out vec3 ddir;
         out vec2 ftextCoord;
         
@@ -141,6 +169,9 @@ class Phong3 {
             LEspot2 = vec3(viewMatrix * vec4(pspot2,1));
             Lspot2 = normalize( pspot2 - vec3(modelMatrix * vec4(vertexPosition, 1)) );
             LEspot2 = normalize(vec3(LEspot2-vPE));
+            LEspot3 = vec3(viewMatrix * vec4(pspot3,1));
+            Lspot3 = normalize( pspot3 - vec3(modelMatrix * vec4(vertexPosition, 1)) );
+            LEspot3 = normalize(vec3(LEspot3-vPE));
             gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
         }
         `;
@@ -165,6 +196,10 @@ class Phong3 {
         uniform vec3 ispot2;
         uniform float angulo2;
         uniform vec3 faspot2;
+        uniform vec3 dspot3;
+        uniform vec3 ispot3;
+        uniform float angulo3;
+        uniform vec3 faspot3;
         uniform vec3 idireccional;
         uniform sampler2D imagen;
         
@@ -173,6 +208,8 @@ class Phong3 {
         in vec3 LEspot;
         in vec3 Lspot2;
         in vec3 LEspot2;
+        in vec3 Lspot3;
+        in vec3 LEspot3;
         in vec3 normal;
         in vec3 Lpuntual;
         in vec3 ojo;
@@ -229,8 +266,21 @@ class Phong3 {
                 fa = 1.0/(1.0+faspot2.x+faspot2.y*d+faspot2.z*d*d);
                 luzspot2 += intensidad_ambiente*difuso + fa*ispot2*(difuso*NL*+NHn);
             }
+
+            vec3 Dspot3 = normalize(-dspot3);
+            vec3 vL3 = normalize(Lspot3);
+            L = normalize(LEspot3);   
+            H = normalize(L+V);
+            NL = max(dot(N,L),0.0);
+            NHn  = pow(max(dot(N,H),0.0),n);
+            vec3 luzspot3 = vec3(0,0,0);
+            if ( angulo3 == 0.0 || dot(vL2,Dspot3) > angulo3 ) {
+                d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
+                fa = 1.0/(1.0+faspot3.x+faspot3.y*d+faspot3.z*d*d);
+                luzspot3 += intensidad_ambiente*difuso + fa*ispot3*(difuso*NL*+NHn);
+            }
             
-            vec3 color =  FP*( luzspot + luzspot2 + luzpuntual + luzdireccional) ;
+            vec3 color =  FP*( luzspot + luzspot2 + luzspot3 + luzpuntual + luzdireccional) ;
             fragmentColor = vec4( color ,1);
         
         }`;
