@@ -302,6 +302,7 @@ function onLoad() {
 	textura_pelota = inicializar_textura("assets/pelota.jpg");
 	textura_pared = inicializar_textura("assets/paredes.jpg")
 	textura_foto = inicializar_textura("assets/32.jpg")
+	textura_puerta = inicializar_textura("assets/puerta.jpg")
 
 	if (isAnimated()) {
 		request = requestAnimationFrame(onRender);
@@ -440,6 +441,12 @@ function onRender(now) {
 	gl.bindTexture(gl.TEXTURE_2D, textura_foto);
 	gl.uniform1i(shader_phong.u_imagen , 0);
 	dibujar_pared5(shader_phong);
+
+	//aca poner la textura
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, textura_puerta);
+	gl.uniform1i(shader_phong.u_imagen , 0);
+	dibujar_pared6(shader_phong);
 
 	gl.useProgram(null);
 
@@ -769,6 +776,23 @@ function dibujar_pared5(shader){
 	mat4.mul(matriz, translation, matriz);
 	pared.matriz = matriz;
 	dibujar(shader, pared);
+}
+
+const PARED6 = 18;
+transformations[PARED6]= [[0.15, 0.6, 0.15],[0, glMatrix.toRadian(90), 0],[-4999,0,2500]];
+function dibujar_pared6(shader){
+	matriz = mat4.create();
+	translation = mat4.create();
+	rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PARED6][ESCALADO]);
+	mat4.fromYRotation(y_rotation_mat, transformations[PARED6][ROTACION][1]);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[PARED6][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
+	pared2.matriz = matriz;
+	dibujar(shader, pared2);
 }
 
 const TECHO2 = 15;
