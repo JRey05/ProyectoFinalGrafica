@@ -103,10 +103,10 @@ var champions_material = {
 }
 
 var techo_material = {
-	ka: [0.0, 0.0, 0.23],
-	kd: [0.0, 0.0, 0.28],
-	ks: [0.0, 0.0, 0.77],
-	n: 10
+	ka: [0.0, 0.0, 0.0],
+	kd: [0.1, 0.1, 0.1],
+	ks: [0.77, 0.47, 0.57],
+	n:10
 }
 
 var bronce = {
@@ -297,6 +297,8 @@ function onLoad() {
 }
 
 var cambio = 1;
+var cambio2 = 1;
+
 
 function onRender(now) {
 
@@ -343,12 +345,23 @@ function onRender(now) {
 	    //     transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
 			// 	}
 	    // }
-			console.log(luz_spot2.direccion[0])
-			if(luz_spot2.direccion[0] > 2)
-				cambio = -1;
-			if(luz_spot2.direccion[0] < -2)
-				cambio = 1;
-			luz_spot2.direccion[0] += cambio*delta_rad%360
+
+			if (cambio<465){
+				luz_spot2.direccion[0] = (Math.cos(cambio++/16)-1)/2
+				luz_spot2.direccion[2] = (Math.sin(cambio/16)-1)/2
+			}
+			else{
+				luz_spot2.direccion[0] = -1
+				luz_spot2.direccion[2] = -1
+			}
+			if (cambio<465){
+				luz_spot3.direccion[0] = (Math.cos(cambio/16)+1)/2
+				luz_spot3.direccion[2] = (Math.sin(-cambio/16)-1)/2
+			}
+			else{
+				luz_spot3.direccion[0] = 1
+				luz_spot3.direccion[2] = -1
+			}
 			if (inicioRotacion > 5){
 				musica_champions_league.play();
 			}
