@@ -22,7 +22,9 @@ function toggleSolid() {
 	refresh();
 }
 
+
 function rotarTrofeo1() {
+	inicioRotacion = 0;
 	rotar_champions = !rotar_champions;
 	if (isAnimated()) {
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;

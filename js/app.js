@@ -65,6 +65,7 @@ var pared;
 
 //Musica
 var musica_champions_league
+var inicioRotacion;
 
 var material_spot = {
 	ka: [0,0,0],
@@ -295,9 +296,10 @@ function onLoad() {
 	}
 }
 
+var cambio = 1;
+
 function onRender(now) {
 
-	musica_champions_league.play();
 	//...................LUCES....................................................
 	// 0 = spot, 1 = puntual, 2 = direccional
 	gl.useProgram(shader_luz.shader_program);
@@ -312,6 +314,7 @@ function onRender(now) {
 		} else {
 			// Obtiene el tiempo transcurrido entre el último frame y el actual.
 			delta_time = now - then;
+			inicioRotacion += delta_time;
 		}
 
 		if (delta_time >= fps) {
@@ -340,6 +343,15 @@ function onRender(now) {
 	    //     transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
 			// 	}
 	    // }
+			console.log(luz_spot2.direccion[0])
+			if(luz_spot2.direccion[0] > 2)
+				cambio = -1;
+			if(luz_spot2.direccion[0] < -2)
+				cambio = 1;
+			luz_spot2.direccion[0] += cambio*delta_rad%360
+			if (inicioRotacion > 5){
+				musica_champions_league.play();
+			}
 		}
 	} else {
 		// limpiar canvas
