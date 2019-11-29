@@ -43,6 +43,7 @@
 	<script src="assets/champions/champions.obj"></script>
 	<script src="assets/Modelos3D/championsBlender.obj"></script>
 	<script src="assets/Modelos3D/spot.obj"></script>
+	<script src="assets/Modelos3D/Camera.obj"></script>
 	<script src="assets/Modelos3D/puntual.obj"></script>
 	<script src="assets/Modelos3D/direccional.obj"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -54,262 +55,97 @@
 	<!-- <button onclick="onRender();">Render Method!</button> -->
 	<br>
 	<br>
-	<table class="table table-striped" border="2"
-		style='float:left; width: 40%;font-style: Georgia;font-size: 17px; background-color: seashell;'>
-		<thead class="table-info">
-			<tr style="font-size: 22px;">
-				<th scope="col" style="width: 15%">Param</th>
-				<th scope="col" style="width: 15%">Control</th>
-				<th scope="col" style="width: 10%">Value</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Camera FovY</td>
-				<td>10º&le;<input type="range" min="10" max="90" step="1" value="55"
-						oninput="onSliderFovy(this, 'lbl_fovy');">&le;90</td>
-				<td id="lbl_fovy">55</td>
-			</tr>
-			<tr>
-				<td class="pt-5" style="font-size: 25px; text-align: center;">Luz Puntual</td>
-				<td>
-					<div class="row">
-						<label>&nbsp;&nbsp;&nbsp;Posicion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<label>x:</label>
-						<input type="text" id="pos_puntualx" value="10" size="3" oninput="posicionx(id);">
-						<label>&nbsp;&nbsp;&nbsp;&nbsp;y:</label>
-						<input type="text" id="pos_puntualy" value="30" size="3" oninput="posiciony(id);">
-						<label>&nbsp;&nbsp;&nbsp;&nbsp;z:</label>
-						<input type="text" id="pos_puntualz" value="3" size="3" oninput="posicionz(id);">
+	<div class="row">
+		<div class="col-7">
+			<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30px"
+				onclick="onClick(event);"></canvas>
+		</div>
+		<div class="col-5">
+			<div class="row">
+					<table class="table table-striped"
+					style=' width: 700px; font-size: 22px; background-color: rgb(158, 176, 216); margin-top: 3px;'>
+					<thead class="table-info">
+						<tr>
+							<th scope="col">Cámaras</th>
+							<th scope="col">Animaciones</th>
+							<th scope="col"></th>
+							<th scope="col">Sentido</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>
+								<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"
+									onkeypress="onKeyDown(event);">Cámara esférica</button>
+							</th>
+							<th>
+								<button class="btn btn-success" type="button" id="rotarTrofeo1" onclick="rotarTrofeo1()"
+									onkeypress="onKeyDown(event);">rotación trofeo 1</button>
+							</th>
+							<th>
+								<label>Horario</label>
+							</th>
+							<th>
+								<div class="custom-control custom-switch">
+									<input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="horario1()">
+									<label class="custom-control-label"
+										for="customSwitch1">&nbsp;&nbsp;&nbsp;&nbsp;Anti-horario</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"
+									onkeypress="onKeyDown(event);">Cámara libre</button>
+							</th>
+							<th>
+								<button class="btn btn-success" type="button" id="rotarTrofeo2" onclick="rotarTrofeo2()"
+									onkeypress="onKeyDown(event);">Rotación trofeo 2</button>
+							</th>
+							<th>
+								<label>Horario</label>
+							</th>
+							<th>
+								<div class="custom-control custom-switch">
+									<input type="checkbox" class="custom-control-input" id="customSwitch2" onclick="horario2()">
+									<label class= "custom-control-label"
+										for="customSwitch2">&nbsp;&nbsp;&nbsp;&nbsp;Anti-horario</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<button class="btn btn-success" type="button" id="camaraAutomatica"
+									onclick="camaraAutomatica();">Cámara automática </button>
+							</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row pt-4">
+				<div class="col-4">
+						<button class="btn btn-danger" type="button" id="spot1"
+						onclick="toggleSpot1();">Encender/apagar Spot 1</button>
+				</div>
+				<div class="col-4">
+						<button class="btn btn-danger" type="button" id="spot2"
+						onclick="toggleSpot2();">Encender/apagar Spot 2</button>
+				</div>	
+			</div>
+			<div class="row pt-5">
+					<div class="col-6" >
+						<button class="btn btn-success" style="width: 300px; margin-left: 100px;" type="button" id="animacion"
+						onclick="Animacion();" >ANIMACIÓN</button>
 					</div>
-					<div class="row pt-4">
-						<label>&nbsp;&nbsp; Intensidad&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" id="intensidad_puntual" value="4" size="3" oninput="intensidad(id);">
-					</div>
-					<div class="row pt-4">
-						<label>&nbsp;&nbsp; Atenuación&nbsp;&nbsp;</label>
-						<label>a:</label>
-						<input type="text" id="atenuacion_puntuala" value="0" size="3" oninput="atenuaciona(id);">
-						<label>&nbsp;&nbsp;&nbsp;&nbsp;b:</label>
-						<input type="text" id="atenuacion_puntualb" value="0" size="3" oninput="atenuacionb(id);">
-						<label>&nbsp;&nbsp;&nbsp;&nbsp;c:</label>
-						<input type="text" id="atenuacion_puntualc" value="0" size="3" oninput="atenuacionc(id);">
-					</div>
-				</td>
-				<td>
-					<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="toggle_on_off()">ON/OFF</button>
-				</td>
-			</tr>
-			<tr>
-				<td >Material Champions</td>
-				<td>
-
-					<div class="row ">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;a1:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala1(id);">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;a2:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala2(id);">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;a3:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala3(id);">
-						</div>
-					<div class="row ">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;b1:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialb1(id);">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;b2:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialb2(id);">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;b3:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialb3(id);">
-						</div>
-					<div class="row ">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;c1:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialc1(id);">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;c2:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialc2(id);">
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;c3:</label>
-							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialc3(id);">
-						</div>
-				</td>
-				<td >
-					<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="resetChampions()">reset champions</button>
-				</td>
-			</tr>
-			<tr>
-					<td >Material trofeo</td>
-					<td>
-
-						<div class="row ">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;a1:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa1(id);">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;a2:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa2(id);">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;a3:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa3(id);">
-							</div>
-						<div class="row ">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;b1:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotab1(id);">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;b2:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotab2(id);">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;b3:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotab3(id);">
-							</div>
-						<div class="row ">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;c1:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotac1(id);">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;c2:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotac2(id);">
-								<label>&nbsp;&nbsp;&nbsp;&nbsp;c3:</label>
-								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotac3(id);">
-							</div>
-					</td>
-					<td >
-						<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="resetTrofeo()">Reset trofeo</button>
-					</td>
-				</tr>
-
-				<tr>
-					<td >Luz spot</td>
-					<td>
-						<input type="text" id="angulo" value="25" size="3" oninput="angulo(id);">
-					</td>
-					<td >
-						<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="toggle()">ON/OFF</button>
-					</td>
-				</tr>
-			<tr>
-				<td>Model Mode</td>
-				<td>
-					Solid mode (M)
-				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Scene Mode</td>
-				<td>
-					<!-- Animated mode (P) -->
-					<!-- <br> -->
-					Fullscreen (F)
-				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Free cam forward/backward</td>
-				<td>W/S</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Free cam left/right</td>
-				<td>A/D</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Free cam up/down</td>
-				<td>ArrowUp/ArrowDown</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Free cam pitch <font color="red">(X)</font>
-				</td>
-				<td>I/K</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Free cam yaw <font color="gree">(Y)</font>
-				</td>
-				<td>J/L</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Free cam roll <font color="blue">(Z)</font>
-				</td>
-				<td>U/O</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Spherical cam radius</td>
-				<td>+/-</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Spherical cam phi</td>
-				<td>Y/B</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Spherical cam theta</td>
-				<td>G/H</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Rotors Rotation on Y</td>
-				<td>0º&le;<input type="range" min="1" max="360" step="1" value="0"
-						oninput="onSliderRotation(this, 'lbl_rotation_y');">&le;360º</td>
-				<td id='lbl_rotation_y'>0</td>
-			</tr>
-		</tbody>
-	</table>
-	<br>
-	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30px"
-		onclick="onClick(event);"></canvas>
-	<table class="table table-striped"
-		style='position: relative;left: 180px; width: 800px; font-size: 22px; background-color: rgb(158, 176, 216); margin-top: 3px;'>
-		<thead class="table-info">
-			<tr>
-				<th scope="col">Cámaras</th>
-				<th scope="col">Animaciones</th>
-				<th scope="col"></th>
-				<th scope="col">Sentido</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th>
-					<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()"
-						onkeypress="onKeyDown(event);">Cámara esférica</button>
-				</th>
-				<th>
-					<button class="btn btn-success" type="button" id="rotarTrofeo1" onclick="rotarTrofeo1()"
-						onkeypress="onKeyDown(event);">rotación trofeo 1</button>
-				</th>
-				<th>
-					<label>Horario</label>
-				</th>
-				<th>
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="horario1()">
-						<label class="custom-control-label"
-							for="customSwitch1">&nbsp;&nbsp;&nbsp;&nbsp;Anti-horario</label>
-					</div>
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"
-						onkeypress="onKeyDown(event);">Cámara libre</button>
-				</th>
-				<th>
-					<button class="btn btn-success" type="button" id="rotarTrofeo2" onclick="rotarTrofeo2()"
-						onkeypress="onKeyDown(event);">Rotación trofeo 2</button>
-				</th>
-				<th>
-					<label>Horario</label>
-				</th>
-				<th>
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="customSwitch2" onclick="horario2()">
-						<label class= "custom-control-label"
-							for="customSwitch2">&nbsp;&nbsp;&nbsp;&nbsp;Anti-horario</label>
-					</div>
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<button class="btn btn-success" type="button" id="camaraAutomatica"
-						onclick="camaraAutomatica();">Cámara automática </button>
-				</th>
-			</tr>
-		</tbody>
-	</table>
+				
+			</div>
+				
+			
+		</div>
+		
+	</div>
+	
+	
 </body>
 
 </html>

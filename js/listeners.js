@@ -409,197 +409,6 @@ function posiciony(id) { luces[0].posicion[1] = document.getElementById(id).valu
 
 function posicionz(id) { luces[0].posicion[2] = document.getElementById(id).value*1000; onRender()}
 
-// funciones de intensidad de luces.
-function intensidad(id) {
-	let valor = document.getElementById(id).value;
-	luces[0].intencidad = valor;
-	onRender();
-}
-
-// atenuacion
-function atenuaciona(id) {
-	let fa = document.getElementById(id).value;
-	if ( !isNaN(fa) ) luces[0].fAtt[0] = fa/1000;
-	onRender();
-}
-
-function atenuacionb(id) {
-	let fb = document.getElementById(id).value;
-	if ( !isNaN(fb) ) luces[0].fAtt[1] = fb/1000;
-	onRender();
-}
-
-function atenuacionc(id) {
-	let fc = document.getElementById(id).value;
-	if ( !isNaN(fc) ) luces[0].fAtt[2] = fc/1000; //para no tener q poner muchos ceros
-	onRender();
-}
-
-// var mate = materials[0];
-// function schedule(material){
-// 	for(let i=0; i<materials.length; i++){
-// 		if(materials[i] == material ){
-// 			this.mate = materials[i];
-// 			break;
-// 		}
-// 	}
-// }
-
-//champiooooooooooons
-function coeficienteMateriala1(id){
-	let fc = document.getElementById(id).value;
-	materials[0].ka[0] = fc;
-	onRender();
-}
-
-function coeficienteMateriala2(id){
-	let fc = document.getElementById(id).value;
-	materials[0].ka[1] = fc;
-	onRender();
-}
-
-function coeficienteMateriala3(id){
-	let fc = document.getElementById(id).value;
-	materials[0].ka[2] = fc;
-	onRender();
-}
-
-function coeficienteMaterialb1(id){
-	let fc = document.getElementById(id).value;
-	materials[0].kd[0] = fc;
-	onRender();
-}
-
-function coeficienteMaterialb2(id){
-	let fc = document.getElementById(id).value;
-	materials[0].kd[1] = fc;
-	onRender();
-}
-
-function coeficienteMaterialb3(id){
-	let fc = document.getElementById(id).value;
-	materials[0].kd[2] = fc;
-	onRender();
-}
-
-function coeficienteMaterialc1(id){
-	let fc = document.getElementById(id).value;
-	materials[0].ks[0] = fc;
-	onRender();
-}
-
-function coeficienteMaterialc2(id){
-	let fc = document.getElementById(id).value;
-	materials[0].ks[1] = fc;
-	onRender();
-}
-
-function coeficienteMaterialc3(id){
-	let fc = document.getElementById(id).value;
-	materials[0].ks[2] = fc;
-	onRender();
-}
-
-//paredessss
-
-function coeficientePelotaa1(id){
-	let fc = document.getElementById(id).value;
-	materials[3].ka[0] = fc;
-	onRender();
-}
-
-function coeficientePelotaa2(id){
-	let fc = document.getElementById(id).value;
-	materials[3].ka[1] = fc;
-	onRender();
-}
-
-function coeficientePelotaa3(id){
-	let fc = document.getElementById(id).value;
-	materials[3].ka[2] = fc;
-	onRender();
-}
-
-function coeficientePelotab1(id){
-	let fc = document.getElementById(id).value;
-	materials[3].kd[0] = fc;
-	onRender();
-}
-
-function coeficientePelotab2(id){
-	let fc = document.getElementById(id).value;
-	materials[3].kd[1] = fc;
-	onRender();
-}
-
-function coeficientePelotab3(id){
-	let fc = document.getElementById(id).value;
-	materials[3].kd[2] = fc;
-	onRender();
-}
-
-function coeficientePelotac1(id){
-	let fc = document.getElementById(id).value;
-	materials[3].ks[0] = fc;
-	onRender();
-}
-
-function coeficientePelotac2(id){
-	let fc = document.getElementById(id).value;
-	materials[3].ks[1] = fc;
-	onRender();
-}
-
-function coeficientePelotac3(id){
-	let fc = document.getElementById(id).value;
-	materials[3].ks[2] = fc;
-	onRender();
-}
-
-function resetTrofeo(){
-	console.log(materials[3]);
-	materials[3].ka[0]=0.2125;
-	materials[3].ka[1]=0.1275;
-	materials[3].ka[2]=0.054;
-	materials[3].kd[0]=0.714;
-	materials[3].kd[1]=0.4284;
-	materials[3].kd[2]=0.18144;
-	materials[3].ks[0]=0.393548;
-	materials[3].ks[1]=0.271906;
-	materials[3].ks[2]=0.166721;
-	onRender();
-}
-
-function resetChampions(){
-	console.log(materials[3]);
-	materials[0].ka[0]=0.23125;
-	materials[0].ka[1]=0.23125;
-	materials[0].ka[2]=0.23125;
-	materials[0].kd[0]=0.2775;
-	materials[0].kd[1]=0.2775;
-	materials[0].kd[2]=0.2775;
-	materials[0].ks[0]=0.773911;
-	materials[0].ks[1]=0.773911;
-	materials[0].ks[2]=0.773911;
-	onRender();
-}
-
-function toggle_on_off(){
-	if(luces[0].enabled == 0)
-		luces[0].enabled = 1;
-	else
-		luces[0].enabled = 0;
-	onRender();
-}
-
-function toggle(){
-	if(luces[1].enabled == 0)
-		luces[1].enabled = 1;
-	else
-		luces[1].enabled = 0;
-	onRender();
-}
-
 function angulo(id){
 	let fc = document.getElementById(id).value;
 	luces[1].tita = fc/180;
@@ -613,11 +422,42 @@ function refresh() {
 		onRender();
 	}
 }
+var cambio = 1;
+function toggleSpot1(){
+	if (cambio == 1){
+		cambio = 0;
+		luz_spot2.intensidad = [0,0,0];
+		onRender();
+	}
+	else if (cambio == 0){
+		cambio = 1;
+		luz_spot2.intensidad = [10,10,0];
+		onRender();
+	}
+}
+
+var cambio1 = 1;
+function toggleSpot2(){
+	if (cambio1 == 1){
+		cambio1 = 0;
+		luz_spot3.intensidad = [0,0,0];
+		onRender();
+	}
+	else if (cambio1 == 0){
+		cambio1 = 1;
+		luz_spot3.intensidad = [15,0,15];
+		onRender();
+	}
+}
+
+function Animacion(){
+	console.log("hacer la animacion");
+}
 
 function inicializar_luces() {
 	luz_spot = new Light([0,4000,0],[0,-1,0],[0,0,0],10,[0,0,0]);
 	luz_spot2 = new Light([1200,50,1200],[-1,1,-1],[10,10,0],10,[0,0,0]);
-	luz_spot3 = new Light([-1200,50,1200],[1,0,0],[15,0,15],10,[0,0,0]);
+	luz_spot3 = new Light([-1200,50,1200],[1,1,-1],[15,0,15],10,[0,0,0]);
 	luz_puntual = new Light([0,4500,0],null,[0.5,0.5,0.4],null,[0.1,0.12,0.5]);
 	luz_direccional = new Light(null,[0,0,-1],[1.1,1.1,1.1],null,null);
 	luz_ambiente = new Light(null,null,[1,1,1.5],null,null);
