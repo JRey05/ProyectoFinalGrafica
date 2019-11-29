@@ -223,13 +223,13 @@ class Phong3 {
             NL = max(dot(N,L),0.0);
             NHn  = pow(max(dot(N,H),0.0),n);
             vec3 luzspot3 = vec3(0,0,0);
-            if ( angulo3 == 0.0 || dot(vL2,Dspot3) > angulo3 ) {
+            if ( angulo3 == 0.0 || dot(vL3,Dspot3) > angulo3 ) {
                 d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
                 fa = 1.0/(1.0+faspot3.x+faspot3.y*d+faspot3.z*d*d);
                 luzspot3 += fa*ispot3*(difuso*NL*+NHn);
             }
 
-            vec3 color =  FP*( luzspot2 + luzspot3 + luzpuntual + luzdireccional) ;
+            vec3 color =  FP*( luzspot2 + luzspot3 + luzpuntual + luzdireccional) + intensidad_ambiente*difuso;
             fragmentColor = vec4( color ,1);
 
         }`;
