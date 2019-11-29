@@ -301,7 +301,7 @@ function onLoad() {
 	//texturas
 	textura_pelota = inicializar_textura("assets/pelota.jpg");
 	textura_pared = inicializar_textura("assets/paredes.jpg")
-	textura_foto = inicializar_textura("assets/32.jpg")
+	textura_foto = inicializar_textura("assets/diegote.jpg")
 	textura_puerta = inicializar_textura("assets/puerta.jpg")
 	textura_ventana = inicializar_textura("assets/ventanita.jpg")
 
@@ -383,10 +383,10 @@ function onRender(now) {
 			if (inicioRotacion > 5){
 				musica_champions_league.play();
 				sleep(25000);
-				
+
 			}
 		}
-		
+
 	}
 	} else {
 		// limpiar canvas
@@ -803,7 +803,7 @@ function dibujar_pared6(shader){
 }
 
 const PARED7 = 19;
-transformations[PARED7]= [[0.15, 0.3, 0.15],[0, glMatrix.toRadian(180), 0],[1500,400,3500]];
+transformations[PARED7]= [[0.15, 0.3, 0.15],[0, glMatrix.toRadian(180), 0],[1500,400,3749]];
 function dibujar_pared7(shader){
 	matriz = mat4.create();
 	translation = mat4.create();

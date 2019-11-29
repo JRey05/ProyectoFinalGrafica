@@ -8,7 +8,7 @@ class FreeCamera extends Camera {
 		// Ídem dirección derecha.
 		this._right = vec3.fromValues(1, 0, 0);
 		// Razón de cambio de posición.
-		this._delta_pos = 20; //mm
+		this._delta_pos = 70; //mm
 		// Razón de cambio de rotación.
 		this._delta_rot = glMatrix.toRadian(5);
 	}
