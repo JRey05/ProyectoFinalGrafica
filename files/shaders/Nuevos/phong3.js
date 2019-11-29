@@ -201,7 +201,8 @@ class Phong3 {
             vec3 luzdireccional = vec3(0,0,0);
             H = normalize(Ldir+V);
             NHn  = pow(max(dot(N,H),0.0),n);
-            luzdireccional =  intensidad_ambiente*difuso + idireccional*(difuso* NL + NHn  );
+            luzdireccional =  idireccional*(difuso* NL + NHn  );
+            //luzdireccional =  intensidad_ambiente*difuso + idireccional*(difuso* NL + NHn  );
 
             vec3 Dspot2 = normalize(-dspot2);
             vec3 vL2 = normalize(Lspot2);

@@ -12,6 +12,7 @@ A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850d00
 A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 A	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+Animacion	js/listeners.js	/^function Animacion(){$/;"	f
 AnonymousFunction954053350100	js/listeners.js	/^window.addEventListener("keydown", function(evt) {$/;"	f
 AnonymousFunctionf1105c850100	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f
 AnonymousFunctionf1105c850200	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850100
@@ -39,6 +40,7 @@ AnonymousFunctionf1105c851700	common/glmatrix/gl-matrix-min.js	/^!function(t,n){
 AnonymousFunctionf1105c851800	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851700
 Axis	common/primitives/Axis.js	/^class Axis {$/;"	c
 C	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
+Camara_seguridad	js/listeners.js	/^async function  Camara_seguridad(){$/;"	f
 Camera	common/cameras/Camera.js	/^class Camera {$/;"	c
 D	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
 D	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
@@ -147,14 +149,9 @@ a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 a	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-angulo	index.html	/^						<input type="text" id="angulo" value="25" size="3" oninput="angulo(id);">$/;"	I
 angulo	js/listeners.js	/^function angulo(id){$/;"	f
-atenuacion_puntuala	index.html	/^						<input type="text" id="atenuacion_puntuala" value="0" size="3" oninput="atenuaciona(id);">$/;"	I
-atenuacion_puntualb	index.html	/^						<input type="text" id="atenuacion_puntualb" value="0" size="3" oninput="atenuacionb(id);">$/;"	I
-atenuacion_puntualc	index.html	/^						<input type="text" id="atenuacion_puntualc" value="0" size="3" oninput="atenuacionc(id);">$/;"	I
-atenuaciona	js/listeners.js	/^function atenuaciona(id) {$/;"	f
-atenuacionb	js/listeners.js	/^function atenuacionb(id) {$/;"	f
-atenuacionc	js/listeners.js	/^function atenuacionc(id) {$/;"	f
+animacion	index.html	/^						<button class="btn btn-success" style="width: 300px; margin-left: 100px;" type="button" id/;"	I
+animacion_completa	js/app.js	/^var animacion_completa = false;$/;"	v
 atributos_ambiente	js/listeners.js	/^	atributos_ambiente = {$/;"	c	class:inicializar_luces
 atributos_direccional	js/listeners.js	/^	atributos_direccional = {$/;"	c	class:inicializar_luces
 atributos_puntual	js/listeners.js	/^	atributos_puntual = {$/;"	c	class:inicializar_luces
@@ -181,63 +178,31 @@ c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 c	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
+cam_seguridad	index.html	/^						<button class="btn btn-success" style="width: 300px; margin-left: 100px;" type="button" id/;"	I
+cam_seguridad	js/app.js	/^var cam_seguridad;$/;"	v
 camara	js/app.js	/^var camara;$/;"	v
-camaraAutomatica	index.html	/^					<button class="btn btn-success" type="button" id="camaraAutomatica"$/;"	I
+camaraAutomatica	index.html	/^								<button class="btn btn-success" type="button" id="camaraAutomatica"$/;"	I
 camaraAutomatica	js/listeners.js	/^async function camaraAutomatica() {$/;"	f
-camaraEsferica	index.html	/^						<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="reset/;"	I
-camaraEsferica	index.html	/^						<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="toggl/;"	I
-camaraEsferica	index.html	/^					<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="resetC/;"	I
-camaraEsferica	index.html	/^					<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="toggle/;"	I
-camaraEsferica	index.html	/^					<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferica()/;"	I
+camaraEsferica	index.html	/^								<button class="btn btn-success" type="button" id="camaraEsferica" onclick="camaraEsferic/;"	I
 camaraEsferica	js/listeners.js	/^function camaraEsferica() {$/;"	f
-camaraLibre	index.html	/^					<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"$/;"	I
+camaraLibre	index.html	/^								<button class="btn btn-success" type="button" id="camaraLibre" onclick="camaraLibre()"$/;"	I
 camaraLibre	js/listeners.js	/^function camaraLibre() {$/;"	f
+camara_material	js/app.js	/^var camara_material = {$/;"	c
+camara_seguridad	js/app.js	/^var camara_seguridad = null;$/;"	v
+cambio	js/app.js	/^var cambio = 1;$/;"	v
+cambio	js/listeners.js	/^var cambio = 1;$/;"	v
+cambio1	js/listeners.js	/^var cambio1 = 1;$/;"	v
+cambio2	js/app.js	/^var cambio2 = 1;$/;"	v
 camera	js/app.js	/^var camera = null;$/;"	v
-canvas	index.html	/^	<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30px"$/;"	I
+canvas	index.html	/^			<canvas id='canvas' width="1024" height="768" style="border: 1px solid gray; margin-left: 30p/;"	I
 canvas	js/app.js	/^var canvas = null;$/;"	v
 cartesianas_a_esfericas	common/Utils.js	/^	static cartesianas_a_esfericas(cartesianas) {$/;"	m	class:Utils
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa1(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa2(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa3(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotab1(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotab2(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotab3(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotac1(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotac2(id);">$/;"	I
-champions	index.html	/^								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotac3(id);">$/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala1(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala2(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala3(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialb1(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialb2(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialb3(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialc1(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialc2(id);"/;"	I
-champions	index.html	/^							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMaterialc3(id);"/;"	I
 champions	js/app.js	/^var champions;$/;"	v
 champions_base	js/app.js	/^var champions_base;$/;"	v
 champions_base_material	js/app.js	/^var champions_base_material = {$/;"	c
 champions_material	js/app.js	/^var champions_material = {$/;"	c
 champions_stand	js/app.js	/^var champions_stand;$/;"	v
 champions_stand_material	js/app.js	/^var champions_stand_material = {$/;"	c
-coeficienteMateriala1	js/listeners.js	/^function coeficienteMateriala1(id){$/;"	f
-coeficienteMateriala2	js/listeners.js	/^function coeficienteMateriala2(id){$/;"	f
-coeficienteMateriala3	js/listeners.js	/^function coeficienteMateriala3(id){$/;"	f
-coeficienteMaterialb1	js/listeners.js	/^function coeficienteMaterialb1(id){$/;"	f
-coeficienteMaterialb2	js/listeners.js	/^function coeficienteMaterialb2(id){$/;"	f
-coeficienteMaterialb3	js/listeners.js	/^function coeficienteMaterialb3(id){$/;"	f
-coeficienteMaterialc1	js/listeners.js	/^function coeficienteMaterialc1(id){$/;"	f
-coeficienteMaterialc2	js/listeners.js	/^function coeficienteMaterialc2(id){$/;"	f
-coeficienteMaterialc3	js/listeners.js	/^function coeficienteMaterialc3(id){$/;"	f
-coeficientePelotaa1	js/listeners.js	/^function coeficientePelotaa1(id){$/;"	f
-coeficientePelotaa2	js/listeners.js	/^function coeficientePelotaa2(id){$/;"	f
-coeficientePelotaa3	js/listeners.js	/^function coeficientePelotaa3(id){$/;"	f
-coeficientePelotab1	js/listeners.js	/^function coeficientePelotab1(id){$/;"	f
-coeficientePelotab2	js/listeners.js	/^function coeficientePelotab2(id){$/;"	f
-coeficientePelotab3	js/listeners.js	/^function coeficientePelotab3(id){$/;"	f
-coeficientePelotac1	js/listeners.js	/^function coeficientePelotac1(id){$/;"	f
-coeficientePelotac2	js/listeners.js	/^function coeficientePelotac2(id){$/;"	f
-coeficientePelotac3	js/listeners.js	/^function coeficientePelotac3(id){$/;"	f
 cono_spot	js/app.js	/^var cono_spot;$/;"	v
 constructor	common/Light.js	/^    constructor(posicion, direccion, intensidad, angulo, atenuacion){$/;"	m	class:Light
 constructor	common/Modelo.js	/^	constructor(objectSource, material, loc_posicion, loc_normal, loc_textura) {$/;"	m	class:Modelo
@@ -259,8 +224,8 @@ create	common/VAOHelper.js	/^	static create(indices, vertex_attributes_info) {$/
 createEBO	common/VAOHelper.js	/^	static createEBO(indices) {$/;"	m	class:VAOHelper
 createShader	common/ShaderProgramHelper.js	/^	static createShader(type, shader_source) {$/;"	m	class:ShaderProgramHelper
 createVBO	common/VAOHelper.js	/^	static createVBO(data) {$/;"	m	class:VAOHelper
-customSwitch1	index.html	/^						<input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="horario1()/;"	I
-customSwitch2	index.html	/^						<input type="checkbox" class="custom-control-input" id="customSwitch2" onclick="horario2()/;"	I
+customSwitch1	index.html	/^									<input type="checkbox" class="custom-control-input" id="customSwitch1" onclick="horario/;"	I
+customSwitch2	index.html	/^									<input type="checkbox" class="custom-control-input" id="customSwitch2" onclick="horario/;"	I
 cyan_plastic	js/app.js	/^var cyan_plastic = {$/;"	c
 d	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 d	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500
@@ -276,21 +241,6 @@ decreaseRadius	js/listeners.js	/^function decreaseRadius() {$/;"	f
 decreaseTheta	js/listeners.js	/^function decreaseTheta() {$/;"	f
 deltaPos2Vec	common/cameras/FreeCamera.js	/^	deltaPos2Vec(unit_dir) {$/;"	m	class:FreeCamera
 delta_time	js/app.js	/^var delta_time = 0;$/;"	v
-dibujar	js/app.js	/^function dibujar(shader, objeto) {$/;"	f
-dibujar_basePelota	js/app.js	/^function dibujar_basePelota(shader){$/;"	f
-dibujar_champions	js/app.js	/^function dibujar_champions(shader){$/;"	f
-dibujar_champions_base	js/app.js	/^function dibujar_champions_base(shader){$/;"	f
-dibujar_champions_stand	js/app.js	/^function dibujar_champions_stand(shader){$/;"	f
-dibujar_copaDescargada	js/app.js	/^function dibujar_copaDescargada(shader){$/;"	f
-dibujar_luz	js/app.js	/^function dibujar_luz(luz, que_dibujar, objeto) {$/;"	f
-dibujar_marco	js/app.js	/^function dibujar_marco(shader){$/;"	f
-dibujar_pared	js/app.js	/^function dibujar_pared(shader){$/;"	f
-dibujar_pelota	js/app.js	/^function dibujar_pelota(shader){$/;"	f
-dibujar_piso	js/app.js	/^function dibujar_piso(shader, piso){$/;"	f
-dibujar_soportePelota	js/app.js	/^function dibujar_soportePelota(shader){$/;"	f
-dibujar_standDescargada	js/app.js	/^function dibujar_standDescargada(shader){$/;"	f
-dibujar_standPelota	js/app.js	/^function dibujar_standPelota(shader){$/;"	f
-dibujar_techo	js/app.js	/^function dibujar_techo(shader){$/;"	f
 draw	js/Model.js	/^	draw(solid, gl) {$/;"	m	class:Model
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850300
 e	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
@@ -356,7 +306,6 @@ h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 h	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-handleLoadedTex	js/app.js	/^function handleLoadedTex(tex) {$/;"	f
 hex2RgbFloat	common/Utils.js	/^	static hex2RgbFloat(hex) {$/;"	m	class:Utils
 hex2RgbInt	common/Utils.js	/^	static hex2RgbInt(hex) {$/;"	m	class:Utils
 horaria_champions	js/app.js	/^var horaria_champions =true;$/;"	v
@@ -374,11 +323,9 @@ i	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 increasePhi	js/listeners.js	/^function increasePhi() {$/;"	f
 increaseRadius	js/listeners.js	/^function increaseRadius() {$/;"	f
 increaseTheta	js/listeners.js	/^function increaseTheta() {$/;"	f
+increaseTheta2	js/listeners.js	/^function increaseTheta2() {$/;"	f
 inicializar_luces	js/listeners.js	/^function inicializar_luces() {$/;"	f
-inicializar_textura	js/app.js	/^function inicializar_textura(imagen) {$/;"	f
-initTex	js/app.js	/^function initTex(){$/;"	f
-intensidad	js/listeners.js	/^function intensidad(id) {$/;"	f
-intensidad_puntual	index.html	/^						<input type="text" id="intensidad_puntual" value="4" size="3" oninput="intensidad(id);">$/;"	I
+inicioRotacion	js/app.js	/^var inicioRotacion;$/;"	v
 isAnimated	js/app.js	/^function isAnimated() {$/;"	f
 is_free	js/listeners.js	/^let is_free = true;$/;"	v
 is_solid	js/app.js	/^var is_solid = false;$/;"	v
@@ -391,7 +338,7 @@ ka	js/app.js	/^	ka: [0, 0, 0],$/;"	p	class:marco_material
 ka	js/app.js	/^	ka: [0,0,0],$/;"	p	class:material_direccional
 ka	js/app.js	/^	ka: [0,0,0],$/;"	p	class:material_puntual
 ka	js/app.js	/^	ka: [0,0,0],$/;"	p	class:material_spot
-ka	js/app.js	/^	ka: [0.0, 0.0, 0.23],$/;"	p	class:techo_material
+ka	js/app.js	/^	ka: [0.0, 0.0, 0.0],$/;"	p	class:techo_material
 ka	js/app.js	/^	ka: [0.0, 0.1, 0.06],$/;"	p	class:cyan_plastic
 ka	js/app.js	/^	ka: [0.003,0.2,0.02053],$/;"	p	class:champions_base_material
 ka	js/app.js	/^	ka: [0.0123, 0.0253, 0.0323],$/;"	p	class:copaDescargada_stand_material
@@ -404,11 +351,12 @@ ka	js/app.js	/^	ka: [0.2, 0.2, 0.2],$/;"	p	class:pelota_material
 ka	js/app.js	/^	ka: [0.2125, 0.1275, 0.054],$/;"	p	class:bronce
 ka	js/app.js	/^	ka: [0.23, 0.23, 0.23],$/;"	p	class:suelo_material
 ka	js/app.js	/^	ka: [0.23125, 0.23125, 0.23125],$/;"	p	class:polished_silver
+ka	js/app.js	/^	ka: [0.5, 0, 0.2],$/;"	p	class:camara_material
 ka	js/app.js	/^	ka: [0.9, 0.23, 0.23],$/;"	p	class:paredes_material
 ka	js/app.js	/^	ka: [1, 0.13, 0],$/;"	p	class:soporte_pelota_material
 kd	js/app.js	/^	kd: [0, 0, 0],$/;"	p	class:marco_material
-kd	js/app.js	/^	kd: [0.0, 0.0, 0.28],$/;"	p	class:techo_material
 kd	js/app.js	/^	kd: [0.01, 0.01, 0.01],$/;"	p	class:cyan_plastic
+kd	js/app.js	/^	kd: [0.1, 0.1, 0.1],$/;"	p	class:techo_material
 kd	js/app.js	/^	kd: [0.128, 0.281, 0.228],$/;"	p	class:copaDescargada_stand_material
 kd	js/app.js	/^	kd: [0.128, 0.728, 0.728],$/;"	p	class:copaDescargada_material
 kd	js/app.js	/^	kd: [0.248, 0.28, 0.258],$/;"	p	class:champions_stand_material
@@ -421,21 +369,23 @@ kd	js/app.js	/^	kd: [0.28, 0.28, 0.28],$/;"	p	class:suelo_material
 kd	js/app.js	/^	kd: [0.328, 0.328, 0.0728],$/;"	p	class:pelota_material
 kd	js/app.js	/^	kd: [0.58, 0.0, 0.28],$/;"	p	class:champions_material
 kd	js/app.js	/^	kd: [0.714, 0.4284, 0.18144],$/;"	p	class:bronce
+kd	js/app.js	/^	kd: [0.714, 0.4284, 0.18144],$/;"	p	class:camara_material
 kd	js/app.js	/^	kd: [0.728, 0.428, 0.228],$/;"	p	class:champions_base_material
 kd	js/app.js	/^	kd: [1,1,1],$/;"	p	class:material_direccional
 kd	js/app.js	/^	kd: [1,1,1],$/;"	p	class:material_puntual
 kd	js/app.js	/^	kd: [1,1,1],$/;"	p	class:material_spot
 ks	js/app.js	/^	ks: [0, 0, 0],$/;"	p	class:marco_material
-ks	js/app.js	/^	ks: [0.0, 0.0, 0.77],$/;"	p	class:techo_material
 ks	js/app.js	/^	ks: [0.007, 0.0077, 0.077],$/;"	p	class:paredes_material
 ks	js/app.js	/^	ks: [0.0677, 0.0377, 0.05477],$/;"	p	class:pelota_material
 ks	js/app.js	/^	ks: [0.177, 0.77, 0.677],$/;"	p	class:champions_stand_material
 ks	js/app.js	/^	ks: [0.277, 0.477, 0.577],$/;"	p	class:copaDescargada_stand_material
 ks	js/app.js	/^	ks: [0.277, 0.877, 0.9797],$/;"	p	class:copaDescargada_material
 ks	js/app.js	/^	ks: [0.393548, 0.271906, 0.166721],$/;"	p	class:bronce
+ks	js/app.js	/^	ks: [0.393548, 0.271906, 0.166721],$/;"	p	class:camara_material
 ks	js/app.js	/^	ks: [0.50, 0.50, 0.50],$/;"	p	class:cyan_plastic
 ks	js/app.js	/^	ks: [0.57, 0.5, 0.77],$/;"	p	class:champions_material
 ks	js/app.js	/^	ks: [0.767, 0.757, 0.377],$/;"	p	class:champions_base_material
+ks	js/app.js	/^	ks: [0.77, 0.47, 0.57],$/;"	p	class:techo_material
 ks	js/app.js	/^	ks: [0.77, 0.77, 0.77],$/;"	p	class:base_pelota_material
 ks	js/app.js	/^	ks: [0.77, 0.77, 0.77],$/;"	p	class:pelota_stand_material
 ks	js/app.js	/^	ks: [0.77, 0.77, 0.77],$/;"	p	class:soporte_pelota_material
@@ -452,9 +402,7 @@ l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850e00
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 l	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
-lacunaridad	js/app.js	/^var lacunaridad =2.0;$/;"	v
-lbl_fovy	index.html	/^				<td id="lbl_fovy">55<\/td>$/;"	I
-lbl_rotation_y	index.html	/^				<td id='lbl_rotation_y'>0<\/td>$/;"	I
+lacunaridad	js/app.js	/^var lacunaridad =3.0;$/;"	v
 len	js/app.js	/^var len = coordenadas.length;$/;"	v
 load	common/primitives/Axis.js	/^	load() {$/;"	m	class:Axis
 lockChangeAlert	js/listeners.js	/^function lockChangeAlert() {$/;"	f
@@ -492,6 +440,7 @@ n	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 n	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:n
 n	js/app.js	/^	n: 10$/;"	p	class:base_pelota_material
 n	js/app.js	/^	n: 10$/;"	p	class:bronce
+n	js/app.js	/^	n: 10$/;"	p	class:camara_material
 n	js/app.js	/^	n: 10$/;"	p	class:champions_base_material
 n	js/app.js	/^	n: 10$/;"	p	class:champions_material
 n	js/app.js	/^	n: 10$/;"	p	class:champions_stand_material
@@ -507,8 +456,8 @@ n	js/app.js	/^	n: 10$/;"	p	class:pelota_stand_material
 n	js/app.js	/^	n: 10$/;"	p	class:polished_silver
 n	js/app.js	/^	n: 10$/;"	p	class:soporte_pelota_material
 n	js/app.js	/^	n: 10$/;"	p	class:suelo_material
-n	js/app.js	/^	n: 10$/;"	p	class:techo_material
 n	js/app.js	/^	n:10$/;"	p	class:copaDescargada_stand_material
+n	js/app.js	/^	n:10$/;"	p	class:techo_material
 normalmap	js/app.js	/^var shader_phong, shader_luz, shader_phong_procedural, normalmap;$/;"	v
 normalmap3	files/shaders/Nuevos/normalMap3.js	/^class normalmap3 {$/;"	c
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
@@ -520,7 +469,7 @@ o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850f00
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c851600
 o	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:n
-octavas	js/app.js	/^var octavas = 8;$/;"	v
+octavas	js/app.js	/^var octavas = 2;$/;"	v
 onClick	js/listeners.js	/^function onClick() {$/;"	f
 onDrone1BodyColor	js/listeners.js	/^function onDrone1BodyColor(picker) {$/;"	f
 onDrone1RotorsColor	js/listeners.js	/^function onDrone1RotorsColor(picker) {$/;"	f
@@ -530,8 +479,6 @@ onLoad	js/app.js	/^function onLoad() {$/;"	f
 onRender	js/app.js	/^function onRender(now) {$/;"	f
 onSliderFovy	js/listeners.js	/^function onSliderFovy(slider, labelId) {$/;"	f
 onSliderRotation	js/listeners.js	/^function onSliderRotation(slider, labelId) {$/;"	f
-onload	js/app.js	/^	tex.image.onload = function(){$/;"	f	function:tex.image
-onload	js/app.js	/^	textura.image.onload = function() { handleLoadedTex(textura); }$/;"	f	function:textura.image
 orbita	js/listeners.js	/^function orbita() {$/;"	f
 orbitaLaChampions	js/listeners.js	/^function orbitaLaChampions() {$/;"	f
 p	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
@@ -555,9 +502,6 @@ pitch	common/cameras/FreeCamera.js	/^	pitch(angle) {$/;"	m	class:FreeCamera
 pitchDown	common/cameras/FreeCamera.js	/^	pitchDown() {$/;"	m	class:FreeCamera
 pitchUp	common/cameras/FreeCamera.js	/^	pitchUp() {$/;"	m	class:FreeCamera
 polished_silver	js/app.js	/^var polished_silver = {$/;"	c
-pos_puntualx	index.html	/^						<input type="text" id="pos_puntualx" value="10" size="3" oninput="posicionx(id);">$/;"	I
-pos_puntualy	index.html	/^						<input type="text" id="pos_puntualy" value="30" size="3" oninput="posiciony(id);">$/;"	I
-pos_puntualz	index.html	/^						<input type="text" id="pos_puntualz" value="3" size="3" oninput="posicionz(id);">$/;"	I
 posicionx	js/listeners.js	/^function posicionx(id) { luces[0].posicion[0] = document.getElementById(id).value*1000; onRender/;"	f
 posiciony	js/listeners.js	/^function posiciony(id) { luces[0].posicion[1] = document.getElementById(id).value*1000; onRender/;"	f
 posicionz	js/listeners.js	/^function posicionz(id) { luces[0].posicion[2] = document.getElementById(id).value*1000; onRender/;"	f
@@ -574,15 +518,12 @@ rearrange2Lines	common/Utils.js	/^	static rearrange2Lines(indices) {$/;"	m	class
 refresh	js/listeners.js	/^function refresh() {$/;"	f
 render	common/primitives/Axis.js	/^	render(proj_mat, view_mat) {$/;"	m	class:Axis
 request	js/app.js	/^var request = null;$/;"	v
-resetChampions	js/listeners.js	/^function resetChampions(){$/;"	f
-resetTrofeo	js/listeners.js	/^function resetTrofeo(){$/;"	f
 roll	common/cameras/FreeCamera.js	/^	roll(angle) {$/;"	m	class:FreeCamera
 rollLeft	common/cameras/FreeCamera.js	/^	rollLeft() {$/;"	m	class:FreeCamera
 rollRight	common/cameras/FreeCamera.js	/^	rollRight() {$/;"	m	class:FreeCamera
-rotar	js/app.js	/^function rotar(direccion, matriz) {$/;"	f
-rotarTrofeo1	index.html	/^					<button class="btn btn-success" type="button" id="rotarTrofeo1" onclick="rotarTrofeo1()"$/;"	I
+rotarTrofeo1	index.html	/^								<button class="btn btn-success" type="button" id="rotarTrofeo1" onclick="rotarTrofeo1()"$/;"	I
 rotarTrofeo1	js/listeners.js	/^function rotarTrofeo1() {$/;"	f
-rotarTrofeo2	index.html	/^					<button class="btn btn-success" type="button" id="rotarTrofeo2" onclick="rotarTrofeo2()"$/;"	I
+rotarTrofeo2	index.html	/^								<button class="btn btn-success" type="button" id="rotarTrofeo2" onclick="rotarTrofeo2()"$/;"	I
 rotarTrofeo2	js/listeners.js	/^function rotarTrofeo2() {$/;"	f
 rotar_champions	js/app.js	/^var rotar_champions = false;$/;"	v
 rotar_pelota	js/app.js	/^var rotar_pelota = false;$/;"	v
@@ -599,9 +540,9 @@ setPhi	common/cameras/SphericalCamera.js	/^	setPhi(phi) {$/;"	m	class:SphericalC
 setRadius	common/cameras/SphericalCamera.js	/^	setRadius(radius) {$/;"	m	class:SphericalCamera
 setTheta	common/cameras/SphericalCamera.js	/^	setTheta(theta) {$/;"	m	class:SphericalCamera
 set_luz	files/shaders/Nuevos/normalMap3.js	/^    set_luz(ambiente, spot, puntual, direccional) {$/;"	m	class:normalmap3
-set_luz	files/shaders/Nuevos/phong3.js	/^    set_luz(ambiente, spot, spot2, puntual, direccional) {$/;"	m	class:Phong3
-set_luz	files/shaders/Nuevos/phong3_procedurales.js	/^    set_luz(ambiente, spot, spot2, puntual, direccional) {$/;"	m	class:Phong3_Procedurales
-set_luz	files/shaders/Nuevos/shader_luz.js	/^    set_luz(ambiente, spot, spot2, puntual, direccional) {$/;"	m	class:Shader_luz
+set_luz	files/shaders/Nuevos/phong3.js	/^    set_luz(ambiente, spot2, spot3, puntual, direccional) {$/;"	m	class:Phong3
+set_luz	files/shaders/Nuevos/phong3_procedurales.js	/^    set_luz(ambiente, spot2, spot3, puntual, direccional) {$/;"	m	class:Phong3_Procedurales
+set_luz	files/shaders/Nuevos/shader_luz.js	/^    set_luz(ambiente, spot2, spot3, puntual, direccional) {$/;"	m	class:Shader_luz
 set_material	files/shaders/Nuevos/normalMap3.js	/^    set_material(n) { this.gl.uniform1f(this.u_brillo,n); }$/;"	m	class:normalmap3
 set_material	files/shaders/Nuevos/phong3.js	/^    set_material(n) { this.gl.uniform1f(this.u_brillo,n); }$/;"	m	class:Phong3
 set_material	files/shaders/Nuevos/phong3_procedurales.js	/^    set_material(n) { this.gl.uniform1f(this.u_brillo,n); }$/;"	m	class:Phong3_Procedurales
@@ -614,6 +555,8 @@ sherical_cam	js/app.js	/^var sherical_cam = null;$/;"	v
 sleep	js/listeners.js	/^function sleep(ms) {$/;"	f
 soportePelota	js/app.js	/^var soportePelota;$/;"	v
 soporte_pelota_material	js/app.js	/^var soporte_pelota_material = {$/;"	c
+spot1	index.html	/^						<button class="btn btn-danger" type="button" id="spot1"$/;"	I
+spot2	index.html	/^						<button class="btn btn-danger" type="button" id="spot2"$/;"	I
 standDescargada	js/app.js	/^var standDescargada;$/;"	v
 standPelota	js/app.js	/^var standPelota;$/;"	v
 suelo	js/app.js	/^var suelo;$/;"	v
@@ -624,21 +567,22 @@ tex	js/app.js	/^var tex;$/;"	v
 tex2	js/app.js	/^var tex2;$/;"	v
 textura_height	js/app.js	/^var textura_metal, textura_height;$/;"	v
 textura_luna	js/app.js	/^var textura_luna, textura_oxido;$/;"	v
-textura_luna	js/app.js	/^var textura_luna, textura_suelo;$/;"	v
+textura_luna	js/app.js	/^var textura_luna, textura_pelota, textura_pared;$/;"	v
 textura_metal	js/app.js	/^var textura_metal, textura_height;$/;"	v
 textura_metalica	js/app.js	/^var textura_metalica, textura_oxido, textura_normales;$/;"	v
 textura_normales	js/app.js	/^var textura_metalica, textura_oxido, textura_normales;$/;"	v
 textura_oxido	js/app.js	/^var textura_luna, textura_oxido;$/;"	v
 textura_oxido	js/app.js	/^var textura_metalica, textura_oxido, textura_normales;$/;"	v
-textura_suelo	js/app.js	/^var textura_luna, textura_suelo;$/;"	v
+textura_pared	js/app.js	/^var textura_luna, textura_pelota, textura_pared;$/;"	v
+textura_pelota	js/app.js	/^var textura_luna, textura_pelota, textura_pared;$/;"	v
 texturas_seleccionadas	js/app.js	/^var texturas_seleccionadas = [1.0,1.0,1.0,1.0];$/;"	v
 then	js/app.js	/^var then = 0;$/;"	v
 theta_step	js/listeners.js	/^let theta_step = 1.0;$/;"	v
-toggle	js/listeners.js	/^function toggle(){$/;"	f
+theta_step2	js/listeners.js	/^let theta_step2 = 1.0;$/;"	v
 toggleFullscreen	js/listeners.js	/^function toggleFullscreen() {$/;"	f
 toggleSolid	js/listeners.js	/^function toggleSolid() {$/;"	f
-toggle_on_off	js/listeners.js	/^function toggle_on_off(){$/;"	f
-transformations	js/app.js	/^var transformations = [];$/;"	v
+toggleSpot1	js/listeners.js	/^function toggleSpot1(){$/;"	f
+toggleSpot2	js/listeners.js	/^function toggleSpot2(){$/;"	f
 u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850300
 u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850400
 u	common/glmatrix/gl-matrix-min.js	/^!function(t,n){if("object"==typeof exports&&"object"==typeof module)module.exports=n();else if("/;"	f	function:AnonymousFunctionf1105c850500

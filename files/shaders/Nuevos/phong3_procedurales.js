@@ -352,7 +352,7 @@ class Phong3_Procedurales {
             //float color_pattern = pattern2(p,r,qq,time);
             float color_pattern = pattern(p);
 
-            vec3 difuso = vec3(color_pattern,color_pattern*0.5,color_pattern*0.5)*3.5;
+            vec3 difuso = vec3(color_pattern,color_pattern,color_pattern)*3.5;
 
 
               // luz PUNTUAL
