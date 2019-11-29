@@ -21,7 +21,7 @@ var shader_program = null;
 // Variables Auxiliares para los shaders
 var shader_phong, shader_luz, shader_phong_procedural, normalmap;
 
-var textura_luna, textura_pelota;
+var textura_luna, textura_pelota, textura_pared;
 // Tecturas para las esferas
 var textura_metal, textura_height;
 var textura_metalica, textura_oxido, textura_normales;
@@ -51,9 +51,9 @@ var esfera_luna, esfera_metal;
 
 //Esfera Mármol
 var esfera_marmol;
-var lacunaridad =2.0;
+var lacunaridad =3.0;
 var ganancia = 0.45;
-var octavas = 8;
+var octavas = 2;
 
 // Variables Auxiliares para los objetos de luz
 var luz_spot, luz_spot2, luz_spot3, luz_puntual, luz_direccional, luz_ambiente;
@@ -249,7 +249,8 @@ function onLoad() {
 	cono_spot = new Modelo(spot_obj,material_spot,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	esfera_puntual = new Modelo(puntual_obj,material_puntual, shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	flecha_direccional = new Modelo(direccional_obj,material_direccional,shader_luz.loc_posicion,shader_luz.loc_normal,null);
-	pared = new Modelo(paredes_source,paredes_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	pared = new Modelo(paredes_source,10,shader_phong.loc_posicion,shader_phong.loc_normal,shader_phong.loc_textura);
+	pared2 = new Modelo(paredes2_source,10,shader_phong.loc_posicion,shader_phong.loc_normal,shader_phong.loc_textura);
 	piso = new Modelo(suelo_source,10, shader_phong_procedural.loc_posicion,shader_phong_procedural.loc_normal,shader_phong_procedural.loc_textura);
 	champions = new Modelo(champions_source,polished_silver, shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	techo = new Modelo(techo_source,techo_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
@@ -285,7 +286,7 @@ function onLoad() {
 
 	//texturas
 	textura_pelota = inicializar_textura("assets/pelota.jpg");
-
+	textura_pared = inicializar_textura("assets/paredes.jpg")
 
 	if (isAnimated()) {
 		request = requestAnimationFrame(onRender);
@@ -352,9 +353,10 @@ function onRender(now) {
 	dibujar_luz(luz_puntual,1, esfera_puntual);
 	dibujar_luz(luz_direccional,2,flecha_direccional);
 	//dibujar_piso(shader_luz,piso)
-	dibujar_pared(shader_luz);
+	// dibujar_pared(shader_luz);
 	dibujar_champions(shader_luz);
 	dibujar_techo(shader_luz);
+	dibujar_techo2(shader_luz);
 	dibujar_champions_base(shader_luz);
 	dibujar_champions_stand(shader_luz);
 	dibujar_copaDescargada(shader_luz);
@@ -377,6 +379,15 @@ function onRender(now) {
 
 
 	dibujar_pelota(shader_phong);
+
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, textura_pared);
+	gl.uniform1i(shader_phong.u_imagen , 0);
+
+	dibujar_pared(shader_phong);
+	dibujar_pared2(shader_phong);
+	dibujar_pared3(shader_phong);
+	dibujar_pared4(shader_phong);
 
 	gl.useProgram(null);
 
@@ -403,7 +414,7 @@ function onRender(now) {
 function dibujar_luz(luz, que_dibujar, objeto) {
 	// si la luz es spot o puntual, tengo que mover el objeto según su posición
 	let matriz = mat4.create();
-	shader_luz.set_luz(luz_ambiente, luz_spot, luz_spot2, luz_spot3, luz_puntual, luz_direccional);
+	shader_luz.set_luz(luz_ambiente, luz_spot2, luz_spot3, luz_puntual, luz_direccional);
 	if ( que_dibujar == 0 || que_dibujar == 1 || que_dibujar == 3 || que_dibujar == 4 ) {
 		mat4.translate(matriz,matriz,luz.posicion);
 
@@ -440,7 +451,7 @@ function dibujar_luz(luz, que_dibujar, objeto) {
 var transformations = [];
 
 const PARED = 0;
-transformations[PARED]= [[1, 1, 1.5],[0,0,0],[0, 0, 0]];
+transformations[PARED]= [[1, 1, 1],[0, 0, 0],[-5000,0,-3750]];
 function dibujar_pared(shader){
 	matriz = mat4.create();
 	translation = mat4.create();
@@ -640,6 +651,73 @@ function dibujar_piso(shader, piso){
 	dibujar(shader, piso);
 }
 
+const PARED2 = 12;
+transformations[PARED2]= [[1, 1, 1],[0, glMatrix.toRadian(180), 0],[5000,0,3750]];
+function dibujar_pared2(shader){
+	matriz = mat4.create();
+	translation = mat4.create();
+	rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PARED2][ESCALADO]);
+	mat4.fromYRotation(y_rotation_mat, transformations[PARED2][ROTACION][1]);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[PARED2][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
+	pared.matriz = matriz;
+	dibujar(shader, pared);
+}
+
+const PARED3 = 13;
+transformations[PARED3]= [[1, 1, 1],[0, glMatrix.toRadian(-90), 0],[5000,0,-3750]];
+function dibujar_pared3(shader){
+	matriz = mat4.create();
+	translation = mat4.create();
+	rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PARED3][ESCALADO]);
+	mat4.fromYRotation(y_rotation_mat, transformations[PARED3][ROTACION][1]);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[PARED3][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
+	pared2.matriz = matriz;
+	dibujar(shader, pared2);
+}
+
+const PARED4 = 14;
+transformations[PARED4]= [[1, 1, 1],[0, glMatrix.toRadian(90), 0],[-5000,0,3750]];
+function dibujar_pared4(shader){
+	matriz = mat4.create();
+	translation = mat4.create();
+	rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	mat4.scale(matriz,matriz,transformations[PARED4][ESCALADO]);
+	mat4.fromYRotation(y_rotation_mat, transformations[PARED4][ROTACION][1]);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[PARED4][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
+	pared2.matriz = matriz;
+	dibujar(shader, pared2);
+}
+
+const TECHO2 = 15;
+transformations[TECHO2]= [[1, 1, 1.5],[0,glMatrix.toRadian(180),0],[0, 0, 0]];
+function dibujar_techo2(shader){
+	matriz = mat4.create();
+	translation = mat4.create();
+	rotation_mat = mat4.create();
+	y_rotation_mat = mat4.create();
+	mat4.scale(matriz,matriz,transformations[TECHO2][ESCALADO]);
+	mat4.fromYRotation(y_rotation_mat, transformations[TECHO2][ROTACION][1]);
+	mat4.mul(rotation_mat, y_rotation_mat, rotation_mat);
+	mat4.mul(matriz, rotation_mat, matriz);
+	mat4.fromTranslation(translation,transformations[TECHO2][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
+	techo.matriz = matriz;
+	dibujar(shader, techo);
+}
 function rotar(direccion, matriz) {
 	let esferico = Utils.cartesianas_a_esfericas(direccion);
 	// crea un cuaternión con las rotaciones de Phi y Theta de esferico
@@ -652,7 +730,7 @@ function rotar(direccion, matriz) {
 }
 
 function dibujar(shader, objeto) {
-	shader.set_luz(luz_ambiente,luz_spot, luz_spot2, luz_spot3, luz_puntual,luz_direccional);
+	shader.set_luz(luz_ambiente, luz_spot2, luz_spot3, luz_puntual,luz_direccional);
 	shader.set_material(objeto.material);
 
 	// setea uniforms de matrices de modelo y normales

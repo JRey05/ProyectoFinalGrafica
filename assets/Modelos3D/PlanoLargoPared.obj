@@ -1,0 +1,11 @@
+# FreeCAD v0.18.4 build Arch module
+# http://www.freecadweb.org
+mtllib PlanoLargoPared.mtl
+o Plane
+usemtl color_cccccc
+v 7500.0 0.0 0.0
+v 0.0 3000.0 0.0
+v 0.0 0.0 0.0
+v 7500.0 3000.0 0.0
+f 1 2 3
+f 4 2 1

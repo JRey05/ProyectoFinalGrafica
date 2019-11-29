@@ -25,11 +25,12 @@
 	<script src="files/shaders/Nuevos/shader_luz.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/listeners.js"></script>
-	
+
 
 	<script src="assets/Modelos3D/suelo.obj"></script>
-	<script src="assets/Modelos3D/paredes.obj"></script>
-	<script src="assets/Modelos3D/techo.obj"></script>
+	<script src="assets/Modelos3D/PlanoLargoPared2.obj"></script>
+	<script src="assets/Modelos3D/PlanoAnchoPared2.obj"></script>
+	<script src="assets/Modelos3D/techo2.obj"></script>
 	<script src="assets/copaDescargada/copaV2.obj"></script>
 	<script src="assets/Modelos3D/Pelota.obj"></script>
 	<script src="assets/Modelos3D/Cuadro.obj"></script>
@@ -93,7 +94,7 @@
 						<input type="text" id="atenuacion_puntualb" value="0" size="3" oninput="atenuacionb(id);">
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;c:</label>
 						<input type="text" id="atenuacion_puntualc" value="0" size="3" oninput="atenuacionc(id);">
-					</div>	
+					</div>
 				</td>
 				<td>
 					<button class="btn btn-success mt-5 ml-2" type="button" id="camaraEsferica" onclick="toggle_on_off()">ON/OFF</button>
@@ -101,8 +102,8 @@
 			</tr>
 			<tr>
 				<td >Material Champions</td>
-				<td>  
-					
+				<td>
+
 					<div class="row ">
 							<label>&nbsp;&nbsp;&nbsp;&nbsp;a1:</label>
 							<input type="text" id="champions" value="0" size="3" oninput="coeficienteMateriala1(id);">
@@ -134,8 +135,8 @@
 			</tr>
 			<tr>
 					<td >Material trofeo</td>
-					<td>  
-						
+					<td>
+
 						<div class="row ">
 								<label>&nbsp;&nbsp;&nbsp;&nbsp;a1:</label>
 								<input type="text" id="champions" value="0" size="3" oninput="coeficientePelotaa1(id);">
@@ -168,7 +169,7 @@
 
 				<tr>
 					<td >Luz spot</td>
-					<td>  
+					<td>
 						<input type="text" id="angulo" value="25" size="3" oninput="angulo(id);">
 					</td>
 					<td >

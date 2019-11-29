@@ -106,16 +106,16 @@ class Phong3 {
         uniform mat4 projectionMatrix;
         uniform mat4 normalMatrix;
         uniform mat4 modelMatrix;
-        
+
         uniform vec3 ppuntual;
         uniform vec3 pspot2;
         uniform vec3 pspot3;
         uniform vec3 ddireccional;
-        
+
         in vec3 vertexNormal;
         in vec3 vertexPosition;
         in vec2 vertexTextureCoordinates;
-        
+
         out vec3 normal;
         out vec3 Lpuntual;
         out vec3 ojo;
@@ -125,7 +125,7 @@ class Phong3 {
         out vec3 LEspot3;
         out vec3 ddir;
         out vec2 ftextCoord;
-        
+
         void main() {
             vec3 vPE = vec3(viewMatrix * modelMatrix * vec4(vertexPosition, 1));
             vec3 LE = vec3(viewMatrix * vec4(ppuntual,1));
@@ -134,7 +134,7 @@ class Phong3 {
             normal = normalize(vec3(normalMatrix*vec4(vertexNormal,1)));
             ojo = normalize(-vPE);  // distancia entre la posicion del ojo (0,0,0) y un vertice del objeto
             ftextCoord = vertexTextureCoordinates;
-        
+
             LEspot2 = vec3(viewMatrix * vec4(pspot2,1));
             Lspot2 = normalize( pspot2 - vec3(modelMatrix * vec4(vertexPosition, 1)) );
             LEspot2 = normalize(vec3(LEspot2-vPE));
@@ -149,11 +149,11 @@ class Phong3 {
     fragment() {
         return `#version 300 es
         precision mediump float;
-        
+
         uniform vec3 intensidad_ambiente;
-        
+
         uniform float n;
-        
+
         uniform vec3 ipuntual;
         uniform vec3 fapuntual;
 
@@ -167,7 +167,7 @@ class Phong3 {
         uniform vec3 faspot3;
         uniform vec3 idireccional;
         uniform sampler2D imagen;
-        
+
         in vec2 ftextCoord;
         in vec3 Lspot2;
         in vec3 LEspot2;
@@ -177,9 +177,9 @@ class Phong3 {
         in vec3 Lpuntual;
         in vec3 ojo;
         in vec3 ddir;
-        
+
         out vec4 fragmentColor;
-        
+
         void main() {
 
             vec3 difuso =  vec3(texture(imagen, ftextCoord));
@@ -194,18 +194,18 @@ class Phong3 {
             float d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
             float fa = 1.0/(1.0+fapuntual.x+fapuntual.y*d+fapuntual.z*d*d);
             vec3 luzpuntual = intensidad_ambiente*difuso + fa*ipuntual*(difuso*NL + NHn);
-            
-            
+
+
             vec3 Ldir = normalize(-ddir);
             NL = max(dot(N,Ldir),0.0);
             vec3 luzdireccional = vec3(0,0,0);
             H = normalize(Ldir+V);
             NHn  = pow(max(dot(N,H),0.0),n);
-            luzdireccional =  intensidad_ambiente*difuso + idireccional*(difuso* NL + NHn  );   
+            luzdireccional =  intensidad_ambiente*difuso + idireccional*(difuso* NL + NHn  );
 
             vec3 Dspot2 = normalize(-dspot2);
             vec3 vL2 = normalize(Lspot2);
-            L = normalize(LEspot2);   
+            L = normalize(LEspot2);
             H = normalize(L+V);
             NL = max(dot(N,L),0.0);
             NHn  = pow(max(dot(N,H),0.0),n);
@@ -213,12 +213,12 @@ class Phong3 {
             if ( angulo2 == 0.0 || dot(vL2,Dspot2) > angulo2 ) {
                 d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
                 fa = 1.0/(1.0+faspot2.x+faspot2.y*d+faspot2.z*d*d);
-                luzspot2 += intensidad_ambiente*difuso + fa*ispot2*(difuso*NL*+NHn);
+                luzspot2 += fa*ispot2*(difuso*NL*+NHn);
             }
 
             vec3 Dspot3 = normalize(-dspot3);
             vec3 vL3 = normalize(Lspot3);
-            L = normalize(LEspot3);   
+            L = normalize(LEspot3);
             H = normalize(L+V);
             NL = max(dot(N,L),0.0);
             NHn  = pow(max(dot(N,H),0.0),n);
@@ -226,12 +226,12 @@ class Phong3 {
             if ( angulo3 == 0.0 || dot(vL2,Dspot3) > angulo3 ) {
                 d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
                 fa = 1.0/(1.0+faspot3.x+faspot3.y*d+faspot3.z*d*d);
-                luzspot3 += intensidad_ambiente*difuso + fa*ispot3*(difuso*NL*+NHn);
+                luzspot3 += fa*ispot3*(difuso*NL*+NHn);
             }
-            
+
             vec3 color =  FP*( luzspot2 + luzspot3 + luzpuntual + luzdireccional) ;
             fragmentColor = vec4( color ,1);
-        
+
         }`;
     }
 

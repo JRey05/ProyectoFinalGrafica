@@ -31,7 +31,7 @@ class Phong3_Procedurales {
         this.u_faspot3 = this.gl.getUniformLocation(this.shader_program,'faspot3');
         this.u_dspot3 = this.gl.getUniformLocation(this.shader_program,'dspot3');
         this.u_angulo3 = this.gl.getUniformLocation(this.shader_program,'angulo3');
-    
+
 
         this.u_ppuntual = this.gl.getUniformLocation(this.shader_program,'ppuntual');
         this.u_ipuntual = this.gl.getUniformLocation(this.shader_program,'ipuntual');
@@ -104,17 +104,17 @@ class Phong3_Procedurales {
     vertex() {
         return `#version 300 es
         precision mediump float;
-        
+
         uniform mat4 viewMatrix;
         uniform mat4 projectionMatrix;
         uniform mat4 normalMatrix;
         uniform mat4 modelMatrix;
-        
+
         uniform vec3 ppuntual;
         uniform vec3 pspot2;
         uniform vec3 pspot3;
         uniform vec3 ddireccional;
-        
+
         in vec2 vertexTextureCoordinates;
         in vec3 vertexNormal;
         in vec3 vertexPosition;
@@ -127,7 +127,7 @@ class Phong3_Procedurales {
         out vec3 LEspot3;
         out vec3 ddir;
         out vec2 coordenadas_texturas;
-        
+
         void main() {
             vec3 vPE = vec3(viewMatrix * modelMatrix * vec4(vertexPosition, 1));
             vec3 LE = vec3(viewMatrix * vec4(ppuntual,1));
@@ -135,7 +135,7 @@ class Phong3_Procedurales {
             Lpuntual = normalize(vec3(LE-vPE));
             normal = normalize(vec3(normalMatrix*vec4(vertexNormal,1)));
             ojo = normalize(-vPE);  // distancia entre la posicion del ojo (0,0,0) y un vertice del objeto
-        
+
             LEspot2 = vec3(viewMatrix * vec4(pspot2,1));
             Lspot2 = normalize( pspot2 - vec3(modelMatrix * vec4(vertexPosition, 1)) );
             LEspot2 = normalize(vec3(LEspot2-vPE));
@@ -144,7 +144,7 @@ class Phong3_Procedurales {
             LEspot3 = normalize(vec3(LEspot3-vPE));
            // coordenada de textura
             coordenadas_texturas = vertexTextureCoordinates;
-            
+
             gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertexPosition, 1);
         }`;
     }
@@ -155,14 +155,14 @@ class Phong3_Procedurales {
         uniform float time;
         //intensidad ambiente
         uniform vec3 ia;
-        
+
         //solo brillo
         uniform float n;
-        
+
         //parametros luz puntual
         uniform vec3 ipuntual;
         uniform vec3 fapuntual;
-        
+
         //parametros luz spot
         uniform vec3 dspot2;
         uniform vec3 ispot2;
@@ -172,10 +172,10 @@ class Phong3_Procedurales {
         uniform vec3 ispot3;
         uniform float angulo3;
         uniform vec3 faspot3;
-        
+
         //parametros luz direccional
         uniform vec3 idireccional;
-        
+
         //vectores de entrada al fragment shader
         in vec3 Lspot2;
         in vec3 LEspot2;
@@ -185,34 +185,34 @@ class Phong3_Procedurales {
         in vec3 Lpuntual;
         in vec3 ojo;
         in vec3 ddir;
-        
+
         //parametros octava ,lacunaridad(frecuencia) y ganancia(amplitud)
         in vec2 coordenadas_texturas;
         uniform float lacunaridad;
         uniform float ganancia;
         uniform float octavas;
         out vec4 fragmentColor;
-         
+
         vec4 mod289(vec4 x)
         {
             return x - floor(x * (1.0 / 289.0)) * 289.0;
         }
-         
+
         vec4 permute(vec4 x)
         {
             return mod289(((x*34.0)+1.0)*x);
         }
-         
+
         vec4 taylorInvSqrt(vec4 r)
         {
             return 1.79284291400159 - 0.85373472095314 * r;
         }
-         
-        // interpolación quíntica curva ( f (x) = 6x ^ 5 -15t ^ 4 + 10t ^ 3 ).  
+
+        // interpolación quíntica curva ( f (x) = 6x ^ 5 -15t ^ 4 + 10t ^ 3 ).
         vec2 fade(vec2 t) {
             return t*t*t*(t*(t*6.0-15.0)+10.0);
         }
-         
+
         // Perlin Noise Clasico
         float cnoise(vec2 P)
         {
@@ -223,36 +223,36 @@ class Phong3_Procedurales {
             vec4 iy = Pi.yyww;
             vec4 fx = Pf.xzxz;
             vec4 fy = Pf.yyww;
-             
+
             vec4 i = permute(permute(ix) + iy);
-             
+
             vec4 gx = fract(i * (1.0 / 41.0)) * 2.0 - 1.0 ;
             vec4 gy = abs(gx) - 0.5 ;
             vec4 tx = floor(gx + 0.5);
             gx = gx - tx;
-             
+
             vec2 g00 = vec2(gx.x,gy.x);
             vec2 g10 = vec2(gx.y,gy.y);
             vec2 g01 = vec2(gx.z,gy.z);
             vec2 g11 = vec2(gx.w,gy.w);
-             
+
             vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
-            g00 *= norm.x;  
-            g01 *= norm.y;  
-            g10 *= norm.z;  
-            g11 *= norm.w;  
-             
+            g00 *= norm.x;
+            g01 *= norm.y;
+            g10 *= norm.z;
+            g11 *= norm.w;
+
             float n00 = dot(g00, vec2(fx.x, fy.x));
             float n10 = dot(g10, vec2(fx.y, fy.y));
             float n01 = dot(g01, vec2(fx.z, fy.z));
             float n11 = dot(g11, vec2(fx.w, fy.w));
-             
+
             vec2 fade_xy = fade(Pf.xy);
             vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
             float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
             return 2.3 * n_xy;
         }
-         
+
         // Ruido de Perlin 2D variante periodico
         float pnoise(vec2 P, vec2 rep)
         {
@@ -264,96 +264,96 @@ class Phong3_Procedurales {
             vec4 iy = Pi.yyww;
             vec4 fx = Pf.xzxz;
             vec4 fy = Pf.yyww;
-             
+
             vec4 i = permute(permute(ix) + iy);
-             
+
             vec4 gx = fract(i * (1.0 / 41.0)) * 2.0 - 1.0 ;
             vec4 gy = abs(gx) - 0.5 ;
             vec4 tx = floor(gx + 0.5);
             gx = gx - tx;
-             
+
             vec2 g00 = vec2(gx.x,gy.x);
             vec2 g10 = vec2(gx.y,gy.y);
             vec2 g01 = vec2(gx.z,gy.z);
             vec2 g11 = vec2(gx.w,gy.w);
-             
+
             vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
-            g00 *= norm.x;  
-            g01 *= norm.y;  
-            g10 *= norm.z;  
-            g11 *= norm.w;  
-             
+            g00 *= norm.x;
+            g01 *= norm.y;
+            g10 *= norm.z;
+            g11 *= norm.w;
+
             float n00 = dot(g00, vec2(fx.x, fy.x));
             float n10 = dot(g10, vec2(fx.y, fy.y));
             float n01 = dot(g01, vec2(fx.z, fy.z));
             float n11 = dot(g11, vec2(fx.w, fy.w));
-             
+
             vec2 fade_xy = fade(Pf.xy);
             vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
             float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
             return 2.3 * n_xy;
         }
-         
+
         float fbm(vec2 P, int octaves, float lacunarity, float gain)
         {
             float sum = 0.0;
             float amp = 1.0;
             vec2 pp = P;
-             
+
             int i;
-             
+
             for(i = 0; i < octaves; i+=1)
             {
-                amp *= gain; 
+                amp *= gain;
                 sum += amp * cnoise(pp);
                 pp *= lacunarity;
             }
             return sum;
-         
+
         }
-        
-        
+
+
         //Patron 1
         float pattern(in vec2 coordenadas_texturas) {
             //float lacunaridad = 2.5;
             //float ganancia = 0.4;
             //int octavas = 10
-             
+
             vec2 q = vec2( fbm( coordenadas_texturas + vec2(0.0,0.0),int (octavas),lacunaridad,ganancia),fbm( coordenadas_texturas + vec2(5.2,1.3),int (octavas),lacunaridad,ganancia));
             vec2 r = vec2( fbm( coordenadas_texturas + 4.0*q + vec2(1.7,9.2),int (octavas),lacunaridad,ganancia ), fbm( coordenadas_texturas + 4.0*q + vec2(8.3,2.8) ,int (octavas),lacunaridad,ganancia));
-            return fbm( coordenadas_texturas + 4.0*r ,int (octavas),lacunaridad,ganancia);    
+            return fbm( coordenadas_texturas + 4.0*r ,int (octavas),lacunaridad,ganancia);
         }
-        
-        // Patron 2 
+
+        // Patron 2
         float pattern2( in vec2 coordenadas_texturas, out vec2 q, out vec2 r , float time)
         {
             //float l = 2.3;
             //float g = 0.4;
             //int octavas = 10
-        
-             
+
+
             q.x = fbm( coordenadas_texturas + vec2(time,time),int (octavas),lacunaridad,ganancia);
             q.y = fbm( coordenadas_texturas + vec2(5.2*time,1.3*time) ,int (octavas),lacunaridad,ganancia);
-             
+
             r.x = fbm( coordenadas_texturas + 4.0*q + vec2(1.7,9.2),int (octavas),lacunaridad,ganancia );
             r.y = fbm( coordenadas_texturas + 4.0*q + vec2(8.3,2.8) ,int (octavas),lacunaridad,ganancia);
-             
+
             return fbm( coordenadas_texturas + 4.0*r ,int (octavas),lacunaridad,ganancia);
         }
-         
-        void main() { 
+
+        void main() {
 
 
             vec2 st = coordenadas_texturas;
             vec2 p = -1.0 + 2.0 * st;
             vec2 qq;
             vec2 r;
-            
+
             //float color_pattern = pattern2(p,r,qq,time);
             float color_pattern = pattern(p);
 
-            vec3 difuso = vec3(color_pattern,color_pattern,color_pattern)*3.5;
-             
+            vec3 difuso = vec3(color_pattern,color_pattern*0.5,color_pattern*0.5)*3.5;
+
 
               // luz PUNTUAL
             float FP = 1.0/3.0;
@@ -366,18 +366,18 @@ class Phong3_Procedurales {
             float d = sqrt(L.x*L.x + L.y*L.y + L.z*L.z  );
             float fa = 1.0/(1.0+fapuntual.x+fapuntual.y*d+fapuntual.z*d*d);
             vec3 luzpuntual = ia*difuso + fa*ipuntual*(NL*difuso + NHn);
-            
+
             // luz DIRECCIONAL
             vec3 Ldir = normalize(-ddir);
             NL = max(dot(N,Ldir),0.0);
             vec3 luzdireccional = vec3(0,0,0);
             H = normalize(Ldir+V);
             NHn  = pow(max(dot(N,H),0.0),n);
-            luzdireccional =  ia*difuso + idireccional*( NL*difuso + NHn  );   
+            luzdireccional =  ia*difuso + idireccional*( NL*difuso + NHn  );
 
             vec3 Dspot2 = normalize(-dspot2);
             vec3 vL2 = normalize(Lspot2);
-            L = normalize(LEspot2);   
+            L = normalize(LEspot2);
             H = normalize(L+V);
             NL = max(dot(N,L),0.0);
             NHn  = pow(max(dot(N,H),0.0),n);
@@ -390,7 +390,7 @@ class Phong3_Procedurales {
 
             vec3 Dspot3 = normalize(-dspot3);
             vec3 vL3 = normalize(Lspot3);
-            L = normalize(LEspot3);   
+            L = normalize(LEspot3);
             H = normalize(L+V);
             NL = max(dot(N,L),0.0);
             NHn  = pow(max(dot(N,H),0.0),n);
@@ -400,9 +400,9 @@ class Phong3_Procedurales {
                 fa = 1.0/(1.0+faspot3.x+faspot3.y*d+faspot3.z*d*d);
                 luzspot3 +=  fa*ispot3*(difuso*NL*+NHn);
             }
-            
+
             vec3 color =  FP*(  luzpuntual + luzspot2 + luzspot3 + luzdireccional ) ;
-            
+
             fragmentColor =vec4( color ,1.0);
         }`;
 }
