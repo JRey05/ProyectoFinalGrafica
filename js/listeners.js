@@ -132,6 +132,13 @@ function increaseRadius() {
 	}
 }
 
+let theta_step2 = 1.0;
+function increaseTheta2() {
+	let theta = cam_seguridad.getTheta();
+	theta = (theta + theta_step2) % 360;
+	cam_seguridad.setTheta(theta);
+}
+
 function decreaseRadius() {
 	let radius = camera.getRadius();
 	radius -= radius_step;
@@ -453,13 +460,36 @@ function toggleSpot2(){
 }
 
 function Animacion(){
-	console.log("hacer la animacion");
+	animacion_completa = !animacion_completa;
+	if(animacion_completa == false){
+		musica_champions_league.pause();
+	}
+
+	luz_spot2.intensidad = [10,10,0];
+	luz_spot3.intensidad = [15,0,15];
+	if (isAnimated()) {
+		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+		window.requestAnimationFrame(onRender);
+	} else {
+		onRender();
+	}
+}
+
+async function  Camara_seguridad(){
+	console.log("que onda");
+	camera = camara_seguridad;
+	while (1) {
+		increaseTheta();
+		await sleep(15);
+		refresh();
+	}
+
 }
 
 function inicializar_luces() {
 	luz_spot = new Light([0,4000,0],[0,-1,0],[0,0,0],10,[0,0,0]);
-	luz_spot2 = new Light([1200,50,1200],[-1,1,-1],[10,10,0],10,[0,0,0]);
-	luz_spot3 = new Light([-1200,50,1200],[1,1,-1],[15,0,15],10,[0,0,0]);
+	luz_spot2 = new Light([1200,50,1200],[-1,1,-1],[0,0,0],10,[0,0,0]);
+	luz_spot3 = new Light([-1200,50,1200],[1,1,-1],[0,0,0],10,[0,0,0]);
 	luz_puntual = new Light([0,4500,0],null,[0.5,0.5,0.4],null,[0.1,0.12,0.5]);
 	luz_direccional = new Light(null,[0,0,-1],[1.1,1.1,1.1],null,null);
 	luz_ambiente = new Light(null,null,[1,1,1.5],null,null);

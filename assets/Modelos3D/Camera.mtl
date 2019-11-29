@@ -1,27 +1,45 @@
-#
-## Alias OBJ Material File
-# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
-
-newmtl Quartz_Light_Grey
-Ka 0.000000 0.000000 0.000000
-Kd 0.984314 0.984314 0.988235
-Ks 0.330000 0.330000 0.330000
-map_Kd Camera/Quartz_Light_Grey.jpg
-
-newmtl Formica_Laminate_Dark
-Ka 0.000000 0.000000 0.000000
-Kd 0.196078 0.207843 0.235294
-Ks 0.330000 0.330000 0.330000
-map_Kd Camera/Formica_Laminate_Dark.jpg
-
-newmtl FrontColor
-Ka 0.000000 0.000000 0.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.330000 0.330000 0.330000
+# Blender MTL File: 'None'
+# Material Count: 4
 
 newmtl Blinds_Cloth_Horizontal
+Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.439216 0.443137 0.431373
 Ks 0.330000 0.330000 0.330000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
 map_Kd Camera/Blinds_Cloth_Horizontal.jpg
 
+newmtl Formica_Laminate_Dark
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.196078 0.207843 0.235294
+Ks 0.330000 0.330000 0.330000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Camera/Formica_Laminate_Dark.jpg
+
+newmtl FrontColor
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.330000 0.330000 0.330000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Quartz_Light_Grey
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.984314 0.984314 0.988235
+Ks 0.330000 0.330000 0.330000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Camera/Quartz_Light_Grey.jpg

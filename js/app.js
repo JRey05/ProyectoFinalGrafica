@@ -45,6 +45,7 @@ var basePelota;
 var pelota;
 var soportePelota;
 var marco;
+var cam_seguridad;
 
 // Esferas multitexturada , textura normal y procedural
 var esfera_luna, esfera_metal;
@@ -111,6 +112,13 @@ var techo_material = {
 
 var bronce = {
 	ka: [0.2125, 0.1275, 0.054],
+	kd: [0.714, 0.4284, 0.18144],
+	ks: [0.393548, 0.271906, 0.166721],
+	n: 10
+}
+
+var camara_material = {
+	ka: [0.5, 0, 0.2],
 	kd: [0.714, 0.4284, 0.18144],
 	ks: [0.393548, 0.271906, 0.166721],
 	n: 10
@@ -202,6 +210,7 @@ var is_solid = false;
 // var is_animated = false;
 var rotar_champions = false;
 var rotar_pelota = false;
+var animacion_completa = false;
 var horaria_champions =true;
 var horaria_pelota =true;
 var request = null;
@@ -213,6 +222,7 @@ var axis;
 var camera = null;
 var free_cam = null;
 var sherical_cam = null;
+var camara_seguridad = null;
 
 var tex;
 var tex2;
@@ -232,7 +242,7 @@ var fps = 1/60;
 	* Verifica si se requiere una animación.
 	*/
 function isAnimated() {
-	return (rotar_champions || rotar_pelota);
+	return (rotar_champions || rotar_pelota || animacion_completa);
 }
 
 
@@ -265,6 +275,7 @@ function onLoad() {
 	//pelota = new Modelo(pelotaRugby_source,10,shader_phong_procedural.loc_posicion,shader_phong_procedural.loc_normal, shader_phong_procedural.loc_textura);
 	soportePelota = new Modelo(soportePelotaRugby_source,soporte_pelota_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	marco = new Modelo(marcoCuadro_source,marco_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
+	cam_seguridad = new Modelo(Camera_source,camara_material,shader_luz.loc_posicion,shader_luz.loc_normal,null);
 	//champions = new Modelo(champions_source,polished_silver,shader_phong.loc_posicion,shader_phong.loc_normal,null);
 
 	musica_champions_league = document.getElementById("musica_champions");
@@ -280,6 +291,8 @@ function onLoad() {
 	// Crea las cámaras en base a las dimensiones del canvas.
 	free_cam = new FreeCamera(80, canvas.clientWidth / canvas.clientHeight);
 	spherical_cam = new SphericalCamera(80, canvas.clientWidth / canvas.clientHeight);
+	camara_seguridad = new SphericalCamera(80, canvas.clientWidth / canvas.clientHeight);
+
 	camera = free_cam;
 
 	//INICIALIZAR LUCEEEEEEEEESSS (esta en el listener)
@@ -313,6 +326,7 @@ function onRender(now) {
 		if (then == -1) {
 			delta_time = 0;
 			then = now;
+			inicioRotacion = 0;
 		} else {
 			// Obtiene el tiempo transcurrido entre el último frame y el actual.
 			delta_time = now - then;
@@ -345,6 +359,7 @@ function onRender(now) {
 	    //     transformations[COPA_DESCARGADA][ORBITAR][2] -= rotation_speed * delta_time;
 			// 	}
 	    // }
+		if(animacion_completa){
 
 			if (cambio<465){
 				luz_spot2.direccion[0] = (Math.cos(cambio++/16)-1)/2
@@ -364,8 +379,12 @@ function onRender(now) {
 			}
 			if (inicioRotacion > 5){
 				musica_champions_league.play();
+				sleep(25000);
+				
 			}
 		}
+		
+	}
 	} else {
 		// limpiar canvas
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -391,6 +410,7 @@ function onRender(now) {
 	//dibujar_pelota(shader_luz);
 	dibujar_soportePelota(shader_luz);
 	dibujar_marco(shader_luz);
+	dibujar_cam_seguridad (shader_luz);
 	gl.useProgram(null);
 //..................................................................................
 
@@ -743,6 +763,19 @@ function dibujar_techo2(shader){
 	techo.matriz = matriz;
 	dibujar(shader, techo);
 }
+
+const CAM = 16;
+transformations[CAM]= [[100, 100, 100],[0,0,0],[4300, 2900, -3150]];
+function dibujar_cam_seguridad(shader){
+	matriz = mat4.create();
+	translation = mat4.create();
+	mat4.scale(matriz,matriz,transformations[CAM][ESCALADO]);
+	mat4.fromTranslation(translation,transformations[CAM][TRASLACION]);
+	mat4.mul(matriz, translation, matriz);
+	cam_seguridad.matriz = matriz;
+	dibujar(shader, cam_seguridad);
+}
+
 function rotar(direccion, matriz) {
 	let esferico = Utils.cartesianas_a_esfericas(direccion);
 	// crea un cuaternión con las rotaciones de Phi y Theta de esferico
